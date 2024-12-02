@@ -1,5 +1,6 @@
 ﻿using System;
 using Game;
+using Monster;
 using UnityEngine;
 
 
@@ -14,7 +15,7 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
             Debug.LogError("[MessageHandler] UnityMainThreadDispatcher is null!");
             return;
         }
-        
+
         if (UnityMainThreadDispatcher.Instance.ExecutionQueue == null)
         {
             Debug.LogError("[MessageHandler] ExecutionQueue is null!");
@@ -23,56 +24,76 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
 
         while (UnityMainThreadDispatcher.Instance.ExecutionQueue.Count > 0)
         {
-            
             GameMessage msg = UnityMainThreadDispatcher.Instance.ExecutionQueue.Dequeue();
-            Debug.Log($"MessageHandler processing: {msg.PayloadCase}");
+            // Debug.Log($"MessageHandler processing: {msg.PayloadCase}");
 
-
-            try
+            switch (msg.PayloadCase)
             {
-                switch (msg.PayloadCase)
-                {
-                    case GameMessage.PayloadOneofCase.LoginResponse:
-                        Debug.Log("로그인 리스폰스 수신");
-                        if (msg.LoginResponse.Success)
-                        {
-                            SuperManager.Instance.PlayerId = msg.LoginResponse.PlayerId;
-                            SuperManager.Instance.PlayerNickname = msg.LoginResponse.Username;
-                            if (SuperManager.Instance.IsHost)
-                            {
-                                TcpProtobufClient.Instance.SendMonsterSpawn();
-                            }
-                        }
-                        else
-                        {
-                            Debug.LogError(msg.LoginResponse.ErrorMessage);
-                        }
-
-                        break;
-                    case GameMessage.PayloadOneofCase.LogoutResponse:
-                        Debug.Log("로그아웃 리스폰스 수신");
-                        break;
-                    
-                    case GameMessage.PayloadOneofCase.MonsterSpawn:
-                        Debug.Log("몬스터 스폰 메시지 수신");
-                        SpawnManager.Instance.SpawnMonster(msg.MonsterSpawn);
-                        
-                        break;
-                    case GameMessage.PayloadOneofCase.MonsterAction:
-                        Debug.Log("몬스터 액션 메시지 수신");
-                        HandleMonsterAction(msg.MonsterAction);
-                        break;
-                    default:
-                        Debug.LogError($"정의되지 않은 케이스 ({msg.PayloadCase})");
-                        break;
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[MessageHandler] Error processing message: {e.Message}\n{e.StackTrace}");
+                case GameMessage.PayloadOneofCase.LoginResponse:
+                    Debug.Log("로그인 리스폰스 수신");
+                    HandleLoginResponse(msg.LoginResponse);
+                    break;
+                case GameMessage.PayloadOneofCase.LogoutResponse:
+                    Debug.Log("로그아웃 리스폰스 수신");
+                    break;
+                case GameMessage.PayloadOneofCase.MonsterSpawn:
+                    Debug.Log("몬스터 스폰 메시지 수신");
+                    SpawnManager.Instance.SpawnMonster(msg.MonsterSpawn);
+                    break;
+                case GameMessage.PayloadOneofCase.MonsterAnim:
+                    Debug.Log("몬스터 애니메이션 스테이트 변경 메시지 수신");
+                    HandleMonsterAnim(msg.MonsterAnim);
+                    break;
+                case GameMessage.PayloadOneofCase.MonsterAction:
+                    Debug.Log("몬스터 액션 메시지 수신");
+                    HandleMonsterAction(msg.MonsterAction);
+                    break;
+                default:
+                    Debug.LogError($"정의되지 않은 케이스 ({msg.PayloadCase})");
+                    break;
             }
         }
     }
+
+    private void HandleLoginResponse(LoginResponse msg)
+    {
+        if (msg.Success)
+        {
+            SuperManager.Instance.PlayerId = msg.PlayerId;
+            SuperManager.Instance.PlayerNickname = msg.Username;
+            
+            SpawnManager.Instance.SpawnPlayer(msg.PlayerId);
+            
+            SpawnManager.Instance.ScanPlayer();
+            if (SuperManager.Instance.IsHost)
+            {
+                TcpProtobufClient.Instance.SendMonsterSpawn();
+            }
+        }
+        else
+        {
+            Debug.LogError(msg.ErrorMessage);
+        }
+    }
+
+
+    #region 몬스터 관련
+
+    #region 몬스터 애니메이션 스테이트
+
+    private void HandleMonsterAnim(MonsterAnim msg)
+    {
+        if (SpawnManager.Instance.SpawnedMonsters.TryGetValue(msg.MonsterId, out MonsterController mc))
+        {
+            mc.SetParameter(msg);
+        }
+        else
+        {
+            Debug.LogError("MonsterController를 찾을 수 없음.");
+        }
+    }
+
+    #endregion
 
     #region 몬스터 액션
 
@@ -81,7 +102,15 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
         switch (msg.ActionType)
         {
             case ActionType.MonsterActionSetStatus:
-                
+                if (SpawnManager.Instance.SpawnedMonsters.TryGetValue(msg.MonsterId, out MonsterController mc))
+                {
+                    mc.ChangeState(msg.MonsterState);
+                }
+                else
+                {
+                    Debug.LogError("MonsterController를 찾을 수 없음.");
+                }
+
                 break;
             default:
                 Debug.LogError($"정의되지 않은 액션 타입 ({msg.ActionType})");
@@ -91,9 +120,5 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
 
     #endregion
 
-    //게임 종료 시 로그아웃 메시지를 보내는 메소드
-    void OnApplicationQuit()
-    {
-        TcpProtobufClient.Instance.SendLogoutMessage(SuperManager.Instance.PlayerId);
-    }
+    #endregion
 }

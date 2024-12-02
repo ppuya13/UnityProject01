@@ -4,7 +4,6 @@ using UnityEngine.Serialization;
 
 public abstract class PlayerController : MonoBehaviour
 {
-    protected CharacterController CharacterController;
     
     public enum CharacterType
     {
@@ -14,13 +13,16 @@ public abstract class PlayerController : MonoBehaviour
         Dummy,
     }
 
+    public string playerId;
     public CharacterType type;
+    
     protected const float gravity = -9.81f; // 중력 값
     protected float Speed = 5f;  // 이동 속도
     protected float JumpHeight = 2.0f;  // 점프 높이 (추가적으로 점프를 적용할 경우)
-    
     protected Vector3 Velocity;
 
+    protected CharacterController CharacterController;
+    
     protected virtual void Awake()
     {
         CharacterController = GetComponent<CharacterController>();

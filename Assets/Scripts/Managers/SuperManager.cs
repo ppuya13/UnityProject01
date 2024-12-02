@@ -13,4 +13,10 @@
 
         IsHost = true; //UI만들고부터는 UI에 연계하기 (방파기 버튼 누르면 true)
     }
+    
+    //게임 종료 시 로그아웃 메시지를 보낸다.
+    void OnApplicationQuit()
+    {
+        TcpProtobufClient.Instance.SendLogoutMessage(PlayerId);
+    }
 }

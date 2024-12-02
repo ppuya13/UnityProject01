@@ -82,7 +82,6 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
     // OnLengthReceived: 메시지 길이를 수신한 후 호출되는 콜백 메서드
     void OnLengthReceived(IAsyncResult ar)
     {
-        // Debug.Log("3");
         try
         {
             int bytesRead = stream.EndRead(ar); // 읽기 작업 완료
@@ -221,6 +220,7 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
     
     public void SendMonsterChangeState(string monsterId, MonsterState state)
     {
+        Debug.Log($"몬스터 상태 변경 메시지 발신: {state}");
         var message = new GameMessage()
         {
             MonsterAction = new MonsterAction()
@@ -240,6 +240,25 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
         var message = new GameMessage()
         {
             MonsterSpawn = new MonsterSpawn()
+        };
+        SendMessage(message);
+    }
+
+    public void SendMonsterAnimMessage(string monsterId, int hash, ParameterType type, int intValue = 0,
+        float floatValue = 0, bool boolValue = false)
+
+    {
+        var message = new GameMessage()
+        {
+            MonsterAnim = new MonsterAnim()
+            {
+                MonsterId = monsterId,
+                AnimHash = hash,
+                ParameterType = type,
+                IntValue = intValue,
+                FloatValue = floatValue,
+                BoolValue = boolValue,
+            }
         };
         SendMessage(message);
     }

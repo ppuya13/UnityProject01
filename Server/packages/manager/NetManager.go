@@ -30,7 +30,7 @@ func newNetManager(ctx *ManagerContext) *NetManager {
 	return netManager
 }
 
-func (nm *NetManager) SendMessage(msg *pb.GameMessage, conn *net.Conn) error {
+func (nm *NetManager) SendMessage(msg *pb.GameMessage, conn net.Conn) error {
 	response, err := proto.Marshal(msg)
 	if err != nil {
 		log.Printf("Failed to marshal message: %v", err)
@@ -41,7 +41,7 @@ func (nm *NetManager) SendMessage(msg *pb.GameMessage, conn *net.Conn) error {
 	binary.LittleEndian.PutUint32(lengthBuf, uint32(len(response)))
 	lengthBuf = append(lengthBuf, response...)
 
-	_, err = (*conn).Write(lengthBuf)
+	_, err = conn.Write(lengthBuf)
 	if err != nil {
 		log.Printf("Failed to send message: %v", err)
 		return fmt.Errorf("failed to send message: %w", err)
@@ -52,12 +52,14 @@ func (nm *NetManager) SendMessage(msg *pb.GameMessage, conn *net.Conn) error {
 }
 
 func (nm *NetManager) SendMessageToAll(msg *pb.GameMessage) error {
-	accounts := nm.mcx.AccountManager().GetOnlineAccounts()
+	am := nm.mcx.AccountManager()
+	accounts := am.GetOnlineAccounts()
 
 	var firstErr error
 	for _, account := range accounts {
 		if err := nm.SendMessage(msg, account.Conn); err != nil {
 			log.Printf("Failed to send message to %s: %v", account.ID, err)
+			am.SetPlayerOffline(account.ID)
 			if firstErr == nil {
 				firstErr = err
 			}
@@ -67,7 +69,8 @@ func (nm *NetManager) SendMessageToAll(msg *pb.GameMessage) error {
 }
 
 func (nm *NetManager) SendMessageToAllExcept(msg *pb.GameMessage, excludeID string) error {
-	accounts := nm.mcx.AccountManager().GetOnlineAccounts()
+	am := nm.mcx.AccountManager()
+	accounts := am.GetOnlineAccounts()
 
 	var firstErr error
 	for _, account := range accounts {
@@ -76,6 +79,7 @@ func (nm *NetManager) SendMessageToAllExcept(msg *pb.GameMessage, excludeID stri
 		}
 		if err := nm.SendMessage(msg, account.Conn); err != nil {
 			log.Printf("Failed to send message to %s: %v", account.ID, err)
+			am.SetPlayerOffline(account.ID)
 			if firstErr == nil {
 				firstErr = err
 			}

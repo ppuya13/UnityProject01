@@ -7,19 +7,16 @@ namespace Monster
     {
         public override void EnterState()
         {
-            Debug.Log($"{Monster.CurrentState} EnterState 실행");
+            Monster.SendMonsterAnim(Monster.Spawn, ParameterType.ParameterTrigger);
         }
 
         public override void ExitState()
         {
-            Debug.Log($"{Monster.CurrentState} ExitState 실행");
         }
 
         public override void UpdateState()
         {
-            Debug.Log($"{Monster.CurrentState} UpdateState 실행");
-            // Monster.CurrentState = MonsterState.MonsterStatusIdle;
-            Monster.SendChangeState(MonsterState.MonsterStatusIdle);
+            //Idle로의 변경은 Spawn Animation의 AnimationEvent로 한다.
         }
     }
 }

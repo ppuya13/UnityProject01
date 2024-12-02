@@ -72,10 +72,18 @@ message MonsterSpawn{
 message MonsterAnim{ //몬스터의 애니메이터의 해시와 파라미터를 변경
   string monster_id = 1;
   int32 anim_hash = 2;
-  int32 int_value = 3;
-  float float_value = 4;
-  bool bool_value = 5;
-  bool is_trigger = 6; //SetTrigger일 경우
+  ParameterType parameter_type = 3;
+  int32 int_value = 4;
+  float float_value = 5;
+  bool bool_value = 6;
+}
+
+enum ParameterType{
+  PARAMETER_UNKNOWN = 0;
+  PARAMETER_INT = 1;
+  PARAMETER_FLOAT = 2;
+  PARAMETER_BOOL = 3;
+  PARAMETER_TRIGGER = 4;
 }
 
 message MonsterAction{
@@ -83,6 +91,8 @@ message MonsterAction{
   ActionType action_type = 2;
   MonsterState monster_state = 3;
   AttackType attack_type = 4;
+  string targetId = 5;
+  GoVector3 destination = 6;
 }
 
 enum ActionType{

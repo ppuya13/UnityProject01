@@ -54,11 +54,7 @@ func main() {
 func handleConnection(conn net.Conn) {
 	defer conn.Close() // 함수 종료 시 연결 닫기
 
-	// // 인증 처리
-	// if !authenticateClient(client) {
-	// 	log.Printf("Authentication failed for client")
-	// 	return
-	// }
+	var playerId string
 
 	for {
 		// 메시지 길이를 먼저 읽음 (4바이트)
@@ -66,8 +62,12 @@ func handleConnection(conn net.Conn) {
 		_, err := conn.Read(lengthBuf) // 버퍼에 데이터 읽기
 		if err != nil {                // 에러 체크
 			log.Printf("Failed to read message length: %v", err) // 실패 시 로그 출력
-			return                                               // 함수 종료
+			if playerId != "" {
+				mc.AccountManager().SetPlayerOffline(playerId)
+			}
+			return // 함수 종료
 		}
+
 		// 리틀 엔디안으로 메시지 길이를 해석
 		length := binary.LittleEndian.Uint32(lengthBuf) // 바이트를 uint32로 변환
 
@@ -76,7 +76,10 @@ func handleConnection(conn net.Conn) {
 		_, err = conn.Read(messageBuf)     // 버퍼에 데이터 읽기
 		if err != nil {                    // 에러 체크
 			log.Printf("Failed to read message body: %v", err) // 실패 시 로그 출력
-			return                                             // 함수 종료
+			if playerId != "" {
+				mc.AccountManager().SetPlayerOffline(playerId)
+			}
+			return // 함수 종료
 		}
 
 		// Protocol Buffers 메시지를 파싱
@@ -84,10 +87,13 @@ func handleConnection(conn net.Conn) {
 		err = proto.Unmarshal(messageBuf, message) // 바이트 슬라이스를 구조체로 변환
 		if err != nil {                            // 에러 체크
 			log.Printf("Failed to unmarshal message: %v", err) // 실패 시 로그 출력
-			continue                                           // 다음 메시지 처리로 넘어감
+			if playerId != "" {
+				mc.AccountManager().SetPlayerOffline(playerId)
+			}
+			continue // 다음 메시지 처리로 넘어감
 		}
 
 		// 메시지를 처리
-		mh.ProcessMessage(message, &conn) // 메시지 처리 함수 호출
+		mh.ProcessMessage(message, conn, &playerId) // 메시지 처리 함수 호출
 	}
 }

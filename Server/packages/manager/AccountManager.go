@@ -19,19 +19,13 @@ type Account struct {
 	Name       string //닉네임
 	GameUserID string
 	Password   string //해시해야한다.
-	Conn       *net.Conn
+	Conn       net.Conn
 }
-
-// AccountStatus:
-// ACCOUNT_IDLE = 0;        //아무것도 하지 않고 있는 상태
-// ACCOUNT_MATCHMAKING = 1; //매칭 돌리는 중
-// ACCOUNT_INTHEROOM = 2;   //매칭 아니고 사설 게임방 참가(대기) 중
-// ACCOUNT_INGAME = 3;      //게임 시작됨
 
 type AccountManager struct {
 	mcx      *ManagerContext
 	accounts map[string]*Account
-	mu       sync.RWMutex // 읽기/쓰기 뮤텍스 추가
+	mu       sync.RWMutex
 }
 
 func newAccountManager(ctx *ManagerContext) *AccountManager {
@@ -54,7 +48,6 @@ func (am *AccountManager) GetOnlineAccounts() []*Account {
 			onlineAccounts = append(onlineAccounts, account)
 		}
 	}
-
 	return onlineAccounts
 }
 
@@ -80,21 +73,23 @@ func (am *AccountManager) GetOnlineAccounts() []*Account {
 // }
 
 // // 계정 생성
-func (am *AccountManager) CreateAccount(id, name, gameUserID string, conn *net.Conn) error {
+func (am *AccountManager) CreateAccount(id, name, gameUserID string, conn net.Conn) (*Account, error) {
 	am.mu.Lock()
 	defer am.mu.Unlock()
 
 	if _, exists := am.accounts[id]; exists {
-		return errors.New("account already exists")
+		return nil, errors.New("account already exists")
 	}
 
-	am.accounts[id] = &Account{
+	account := &Account{
 		ID:         id,
 		Name:       name,
 		GameUserID: gameUserID,
 		Conn:       conn,
 	}
-	return nil
+
+	am.accounts[id] = account
+	return account, nil
 }
 
 // id로 계정 조회
@@ -147,31 +142,29 @@ func (am *AccountManager) IsPlayerOnline(playerID string) bool {
 	return false
 }
 
-// // 계정을 온라인 상태로 설정
-// func (am *AccountManager) SetPlayerOnline(id string, conn *net.Conn) bool {
-// 	am.mu.Lock()
-// 	defer am.mu.Unlock()
+// 계정을 온라인 상태로 설정
+func (am *AccountManager) SetPlayerOnline(id string, conn net.Conn) bool {
+	am.mu.Lock()
+	defer am.mu.Unlock()
 
-// 	account, exists := am.accounts[id]
-// 	if !exists || account.IsOnline {
-// 		return false
-// 	}
+	account, exists := am.accounts[id]
+	if !exists || account.Conn != nil {
+		return false
+	}
 
-// 	account.IsOnline = true
-// 	account.Conn = conn
-// 	return true
-// }
+	account.Conn = conn
+	return true
+}
 
-// // 계정을 오프라인 상태로 설정
-// func (am *AccountManager) SetPlayerOffline(id string) {
-// 	am.mu.Lock()
-// 	defer am.mu.Unlock()
+// 계정을 오프라인 상태로 설정
+func (am *AccountManager) SetPlayerOffline(id string) {
+	am.mu.Lock()
+	defer am.mu.Unlock()
 
-// 	if account, exists := am.accounts[id]; exists {
-// 		account.IsOnline = false
-// 		account.Conn = nil
-// 	}
-// }
+	if account, exists := am.accounts[id]; exists {
+		account.Conn = nil
+	}
+}
 
 // func (am *AccountManager) SetSessionID(playerID, sessionID string) error {
 // 	am.mu.Lock()

@@ -26,12 +26,12 @@ public class UnityMainThreadDispatcher : DDSingletonManager<UnityMainThreadDispa
         }
     }
 
-    private void Update()
-    {
-        if(executionQueue.Count > 0)
-        {
-            Debug.Log($"[Dispatcher] Update - Queue size: {executionQueue.Count}");
-        }
-    }
+    // private void Update()
+    // {
+    //     if(executionQueue.Count > 0)
+    //     {
+    //         Debug.Log($"[Dispatcher] Update - Queue size: {executionQueue.Count}");
+    //     }
+    // }
 
 }
