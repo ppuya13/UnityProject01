@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package game;
+
+option go_package = "Server/messages";
+
+message GameMessage {
+  oneof payload {
+    LoginRequest login_request = 1;
+    LoginResponse login_response = 2;
+    LogoutRequest logout_request = 3;
+    LogoutResponse logout_response = 4;
+
+    //플레이어 관련은 11~30
+    PlayerInput player_input = 11;
+
+    //몬스터관련은 31-40
+    MonsterSpawn monster_spawn = 31;
+    MonsterPositionUpdate monster_position_update = 32;
+    MonsterAnim monster_anim = 33;
+    MonsterAction monster_action = 34;
+    
+  }
+}
+
+// 3D 벡터를 표현하는 메시지
+message GoVector3 {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+// 로그인 요청 메시지
+message LoginRequest {
+  string id = 1;  // 사용자 이름, Stove에서 ulong(uint64)형식의 member_no를 받아온다. 아마 유니크할 것으로 보임.
+  string nickname = 2;
+  string game_user_id = 3;
+}
+
+// 로그인 응답 메시지
+message LoginResponse {
+  bool success = 1;        // 로그인 성공 여부
+  string player_id = 2;    // 플레이어의 id
+  string username = 3;     // 사용자 닉네임
+  string game_user_id = 4; // gameuserid
+  string error_message = 5; // 오류 메시지 (실패 시)
+}
+
+// 로그아웃 요청 메시지
+message LogoutRequest {
+  string player_id = 1;  // 로그아웃할 플레이어의 ID
+}
+
+// 로그아웃 응답 메시지
+message LogoutResponse {
+  bool success = 1;        // 로그아웃 성공 여부
+  string error_message = 2; // 오류 메시지 (실패 시)
+}
+
+message PlayerInput{
+  string temp = 1;
+}
+
+message MonsterPositionUpdate{
+  GoVector3 position = 1;
+}
+
+message MonsterSpawn{
+  string monster_id = 1;
+}
+
+message MonsterAnim{ //몬스터의 애니메이터의 해시와 파라미터를 변경
+  string monster_id = 1;
+  int32 anim_hash = 2;
+  int32 int_value = 3;
+  float float_value = 4;
+  bool bool_value = 5;
+  bool is_trigger = 6; //SetTrigger일 경우
+}
+
+message MonsterAction{
+  string monster_id = 1;
+  ActionType action_type = 2;
+  MonsterState monster_state = 3;
+  AttackType attack_type = 4;
+}
+
+enum ActionType{
+  MONSTER_ACTION_UNKNOWN = 0;
+  MONSTER_ACTION_SET_STATUS = 1;
+  MONSTER_ACTION_SET_TARGET = 2; //바라볼 타겟을 설정
+  MONSTER_ACTION_SET_DESTINATION = 3; //이동할 목적지를 설정
+}
+
+enum MonsterState{
+  MONSTER_STATUS_UNKNOWN = 0;
+  MONSTER_STATUS_SPAWN = 1;
+  MONSTER_STATUS_IDLE = 2;
+  MONSTER_STATUS_MOVE = 3;
+  MONSTER_STATUS_DASH = 4;
+  MONSTER_STATUS_DODGE = 5;
+  MONSTER_STATUS_ATTACK = 6;
+}
+
+enum AttackType{
+  MONSTER_ATTACK_UNKNOWN = 0;
+}
