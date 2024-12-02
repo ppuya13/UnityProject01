@@ -114,4 +114,20 @@ enum MonsterState{
 
 enum AttackType{
   MONSTER_ATTACK_UNKNOWN = 0;
+
+  //1~10 근접상태 공격
+  MONSTER_ATTACK_CLOSE_01 = 1;    //두번썰고 발차기
+  MONSTER_ATTACK_CLOSE_02 = 2;    //세번썰기
+
+  //11~20 근거리 공격    
+  MONSTER_ATTACK_SHORTRANGE_01 = 11;  
+
+  //21~30 중거리 공격
+  MONSTER_ATTACK_MIDRANGE_01 = 21;    
+
+  //31~40 원거리 공격
+  MONSTER_ATTACK_LONGRANGE_01 = 31;   
+
+  //41~50 초장거리 공격
+  MONSTER_ATTACK_EXTRARANGE_01 = 41;  
 }

@@ -7,7 +7,6 @@ namespace Monster
     {
         public override void EnterState()
         {
-            Monster.agent.speed = 1f;
             Monster.SendDestination(Monster.FindMoveDestination());
         }
 
@@ -38,7 +37,7 @@ namespace Monster
                 if (!Monster.agent.hasPath || Monster.agent.velocity.sqrMagnitude == 0f)
                 {
                     // Idle 상태로 전환
-                    Monster.ChangeState(MonsterState.MonsterStatusIdle);
+                    Monster.SendChangeState(MonsterState.MonsterStatusIdle);
                 }
             }
         }

@@ -63,8 +63,13 @@ namespace Game {
             "VEVSX1NUQVRVU19TUEFXThABEhcKE01PTlNURVJfU1RBVFVTX0lETEUQAhIX",
             "ChNNT05TVEVSX1NUQVRVU19NT1ZFEAMSFwoTTU9OU1RFUl9TVEFUVVNfREFT",
             "SBAEEhgKFE1PTlNURVJfU1RBVFVTX0RPREdFEAUSGQoVTU9OU1RFUl9TVEFU",
-            "VVNfQVRUQUNLEAYqKAoKQXR0YWNrVHlwZRIaChZNT05TVEVSX0FUVEFDS19V",
-            "TktOT1dOEABCEVoPU2VydmVyL21lc3NhZ2VzYgZwcm90bzM="));
+            "VVNfQVRUQUNLEAYq5wEKCkF0dGFja1R5cGUSGgoWTU9OU1RFUl9BVFRBQ0tf",
+            "VU5LTk9XThAAEhsKF01PTlNURVJfQVRUQUNLX0NMT1NFXzAxEAESGwoXTU9O",
+            "U1RFUl9BVFRBQ0tfQ0xPU0VfMDIQAhIgChxNT05TVEVSX0FUVEFDS19TSE9S",
+            "VFJBTkdFXzAxEAsSHgoaTU9OU1RFUl9BVFRBQ0tfTUlEUkFOR0VfMDEQFRIf",
+            "ChtNT05TVEVSX0FUVEFDS19MT05HUkFOR0VfMDEQHxIgChxNT05TVEVSX0FU",
+            "VEFDS19FWFRSQVJBTkdFXzAxEClCEVoPU2VydmVyL21lc3NhZ2VzYgZwcm90",
+            "bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Game.ParameterType), typeof(global::Game.ActionType), typeof(global::Game.MonsterState), typeof(global::Game.AttackType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -118,6 +123,30 @@ namespace Game {
 
   public enum AttackType {
     [pbr::OriginalName("MONSTER_ATTACK_UNKNOWN")] MonsterAttackUnknown = 0,
+    /// <summary>
+    ///1~10 근접상태 공격
+    /// </summary>
+    [pbr::OriginalName("MONSTER_ATTACK_CLOSE_01")] MonsterAttackClose01 = 1,
+    /// <summary>
+    ///세번썰기
+    /// </summary>
+    [pbr::OriginalName("MONSTER_ATTACK_CLOSE_02")] MonsterAttackClose02 = 2,
+    /// <summary>
+    ///11~20 근거리 공격    
+    /// </summary>
+    [pbr::OriginalName("MONSTER_ATTACK_SHORTRANGE_01")] MonsterAttackShortrange01 = 11,
+    /// <summary>
+    ///21~30 중거리 공격
+    /// </summary>
+    [pbr::OriginalName("MONSTER_ATTACK_MIDRANGE_01")] MonsterAttackMidrange01 = 21,
+    /// <summary>
+    ///31~40 원거리 공격
+    /// </summary>
+    [pbr::OriginalName("MONSTER_ATTACK_LONGRANGE_01")] MonsterAttackLongrange01 = 31,
+    /// <summary>
+    ///41~50 초장거리 공격
+    /// </summary>
+    [pbr::OriginalName("MONSTER_ATTACK_EXTRARANGE_01")] MonsterAttackExtrarange01 = 41,
   }
 
   #endregion

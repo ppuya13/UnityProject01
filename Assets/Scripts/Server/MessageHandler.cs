@@ -105,7 +105,7 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
             {
                 if (SpawnManager.Instance.SpawnedMonsters.TryGetValue(msg.MonsterId, out MonsterController mc))
                 {
-                    mc.ChangeState(msg.MonsterState);
+                    mc.ChangeState(msg);
                 }
                 else
                 {

@@ -218,7 +218,7 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
     #region 몬스터 관련
 
     
-    public void SendMonsterChangeState(string monsterId, MonsterState state)
+    public void SendMonsterChangeState(string monsterId, MonsterState state, AttackType attackType)
     {
         Debug.Log($"몬스터 상태 변경 메시지 발신: {state}");
         var message = new GameMessage()
@@ -228,6 +228,7 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
                 ActionType = ActionType.MonsterActionSetStatus,
                 MonsterId = monsterId,
                 MonsterState = state,
+                AttackType = attackType,
             }
         };
         

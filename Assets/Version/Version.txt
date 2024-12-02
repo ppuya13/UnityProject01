@@ -4,6 +4,14 @@
 
 
 
+004 - 241203
+    한거:
+    몬스터 공격 로직 만들 준비 : AttackState로 변환할 땐 AttackType을 같이 보낼 것
+    MonsterStateAttack의 EnterState에서 Monster.CurrentAttack에 따라 공격을 실행하면 될 것 같다.
+    
+    할거:
+    몬스터 공격 만들기
+
 003 - 241203
     한거:
     몬스터 이동 애니메이션 적용

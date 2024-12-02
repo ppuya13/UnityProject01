@@ -25,6 +25,8 @@ namespace Monster
                 Sm.ChangeState(value);
             }
         }
+
+        public AttackType currentAttack = AttackType.MonsterAttackUnknown;
     
         [HideInInspector] public NavMeshAgent agent;
         [HideInInspector] public Animator animator;
@@ -35,7 +37,6 @@ namespace Monster
         public PlayerController currentTarget; 
         
         public readonly int Spawn = Animator.StringToHash("Spawn");
-        public readonly int Move = Animator.StringToHash("Move");
         public readonly int Horizontal = Animator.StringToHash("Horizontal");
         public readonly int Vertical = Animator.StringToHash("Vertical");
         public readonly int Dash = Animator.StringToHash("Dash");
@@ -69,11 +70,12 @@ namespace Monster
             
             //NavMesh 초기화
             agent = GetComponent<NavMeshAgent>();
+            agent.speed = 1.52f;
             
-            //기타 스테이터스 초기화
+            //애니메이터 초기화
             animator = GetComponent<Animator>();
             
-            // 애니메이션 클립의 길이 저장
+            //기타 스테이터스 초기화
             turnLeftAnimationDuration = turnLeftClip ? turnLeftClip.length : 1.0f;
             turnRightAnimationDuration = turnRightClip ? turnRightClip.length : 1.0f;
         }
@@ -83,15 +85,20 @@ namespace Monster
             Sm.Update();
         }
 
-        public void SendChangeState(MonsterState state)
+        public void SendChangeState(MonsterState state, AttackType attackType = AttackType.MonsterAttackUnknown)
         {
             if(!SuperManager.Instance.IsHost) return;
-            TcpProtobufClient.Instance.SendMonsterChangeState(monsterId, state);
+            TcpProtobufClient.Instance.SendMonsterChangeState(monsterId, state, attackType);
         }
 
-        public void ChangeState(MonsterState state)
+        public void ChangeState(MonsterAction msg)
         {
-            CurrentState = state;
+            if (msg.MonsterState is MonsterState.MonsterStatusAttack)
+            {
+                //어택스테이트일 경우 어떤 공격인지도 받아온다.
+                currentAttack = msg.AttackType;
+            }
+            CurrentState = msg.MonsterState;
         }
 
         //서버에 애니메이터 파라미터값을 변경하기 위해 보내는 값
@@ -144,7 +151,7 @@ namespace Monster
             }
         }
         
-        //타겟 리스트에서 랜덤한 타겟의 id를 반환한다.
+        //타겟 리스트에서 랜덤한 타겟의 id를 반환한다. 거리가 가까운 적을 타겟으로 설정할 확률이 더 높다.
         public string SelectRandomTarget()
         {
             SetTargetList();
@@ -153,9 +160,39 @@ namespace Monster
                 Debug.LogWarning("타겟 리스트가 비어있음!!");
                 return string.Empty;
             }
-            int rd = Random.Range(0, targetList.Count);
             
-            return targetList[rd].playerId;
+            // 가중치 리스트와 총 가중치 초기화
+            List<float> weights = new List<float>();
+            float totalWeight = 0f;
+            
+            foreach (var target in targetList)
+            {
+                float distance = Vector3.Distance(transform.position, target.transform.position);
+        
+                // 거리가 너무 가까운 경우(예: 0)이면 최소 거리로 설정하여 무한대 가중치를 방지
+                float adjustedDistance = Mathf.Max(distance, 0.1f);
+        
+                // 가중치는 거리의 역수로 설정 (거리가 짧을수록 가중치가 높아짐)
+                float weight = 1f / adjustedDistance;
+                weights.Add(weight);
+                totalWeight += weight;
+            }
+
+            // 누적 가중치 리스트 생성
+            float randomValue = Random.Range(0, totalWeight);
+            float cumulativeWeight = 0f;
+
+            for (int i = 0; i < targetList.Count; i++)
+            {
+                cumulativeWeight += weights[i];
+                if (randomValue <= cumulativeWeight)
+                {
+                    return targetList[i].playerId;
+                }
+            }
+
+            // 예외적으로 모든 가중치를 합쳐도 선택되지 않는 경우 마지막 타겟 반환
+            return targetList[^1].playerId;
         }
 
         //선택한 타겟을 서버에 전송
