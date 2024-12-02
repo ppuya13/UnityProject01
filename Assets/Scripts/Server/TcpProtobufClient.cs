@@ -263,6 +263,41 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
         SendMessage(message);
     }
 
+    public void SendMonsterTarget(string monsterId, string targetId)
+    {
+        var message = new GameMessage()
+        {
+            MonsterAction = new MonsterAction()
+            {
+                MonsterId = monsterId,
+                ActionType = ActionType.MonsterActionSetTarget,
+                TargetId = targetId
+            }
+        };
+        SendMessage(message);
+    }
+
+    public void SendDestination(string monsterId, Vector3 destination)
+    {
+        GoVector3 _destination = new GoVector3()
+        {
+            X = destination.x,
+            Y = destination.y,
+            Z = destination.z,
+        };
+        
+        var message = new GameMessage()
+        {
+            MonsterAction = new MonsterAction()
+            {
+                MonsterId = monsterId,
+                ActionType = ActionType.MonsterActionSetDestination,
+                Destination = _destination
+            }
+        };
+        SendMessage(message);
+    }
+
     #endregion
 
 }

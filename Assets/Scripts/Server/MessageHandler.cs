@@ -61,9 +61,9 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
         {
             SuperManager.Instance.PlayerId = msg.PlayerId;
             SuperManager.Instance.PlayerNickname = msg.Username;
-            
+
             SpawnManager.Instance.SpawnPlayer(msg.PlayerId);
-            
+
             SpawnManager.Instance.ScanPlayer();
             if (SuperManager.Instance.IsHost)
             {
@@ -102,6 +102,7 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
         switch (msg.ActionType)
         {
             case ActionType.MonsterActionSetStatus:
+            {
                 if (SpawnManager.Instance.SpawnedMonsters.TryGetValue(msg.MonsterId, out MonsterController mc))
                 {
                     mc.ChangeState(msg.MonsterState);
@@ -110,7 +111,31 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
                 {
                     Debug.LogError("MonsterController를 찾을 수 없음.");
                 }
-
+            }
+                break;
+            case ActionType.MonsterActionSetTarget:
+            {
+                if (SpawnManager.Instance.SpawnedMonsters.TryGetValue(msg.MonsterId, out MonsterController mc))
+                {
+                    mc.SetTarget(msg);
+                }
+                else
+                {
+                    Debug.LogError("MonsterController를 찾을 수 없음.");
+                }
+            }
+                break;
+            case ActionType.MonsterActionSetDestination:
+            {
+                if (SpawnManager.Instance.SpawnedMonsters.TryGetValue(msg.MonsterId, out MonsterController mc))
+                {
+                    mc.SetDestination(msg);
+                }
+                else
+                {
+                    Debug.LogError("MonsterController를 찾을 수 없음.");
+                }
+            }
                 break;
             default:
                 Debug.LogError($"정의되지 않은 액션 타입 ({msg.ActionType})");

@@ -24596,6 +24596,8 @@ MonoBehaviour:
   agent: {fileID: 0}
   animator: {fileID: 0}
   dummyMode: 1
+  targetList: []
+  currentTarget: {fileID: 0}
 --- !u!195 &7935232124976658901
 NavMeshAgent:
   m_ObjectHideFlags: 0

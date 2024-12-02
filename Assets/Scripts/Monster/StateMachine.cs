@@ -25,8 +25,9 @@ namespace Monster
                 case MonsterState.MonsterStatusIdle:
                     newState = new MonsterStateIdle();
                     break;
-                // case MonsterState.MonsterStatusMove:
-                //     break;
+                case MonsterState.MonsterStatusMove:
+                    newState = new MonsterStateMove();
+                    break;
                 // case MonsterState.MonsterStatusDash:
                 //     break;
                 // case MonsterState.MonsterStatusDodge:

@@ -134,6 +134,18 @@ func (mh *MessageHandler) handleMonsterAction(request *pb.MonsterAction) {
 				MonsterAction: request,
 			},
 		}
+	case pb.ActionType_MONSTER_ACTION_SET_TARGET:
+		message = &pb.GameMessage{
+			Payload: &pb.GameMessage_MonsterAction{
+				MonsterAction: request,
+			},
+		}
+	case pb.ActionType_MONSTER_ACTION_SET_DESTINATION:
+		message = &pb.GameMessage{
+			Payload: &pb.GameMessage_MonsterAction{
+				MonsterAction: request,
+			},
+		}
 	}
 
 	nm.SendMessageToAll(message)
