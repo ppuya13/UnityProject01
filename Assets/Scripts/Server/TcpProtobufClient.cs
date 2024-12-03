@@ -280,6 +280,7 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
 
     public void SendDestination(string monsterId, Vector3 destination)
     {
+        Debug.Log("이동목표발신");
         GoVector3 _destination = new GoVector3()
         {
             X = destination.x,

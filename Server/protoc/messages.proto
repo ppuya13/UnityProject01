@@ -118,6 +118,7 @@ enum AttackType{
   //1~10 근접상태 공격
   MONSTER_ATTACK_CLOSE_01 = 1;    //두번썰고 발차기
   MONSTER_ATTACK_CLOSE_02 = 2;    //세번썰기
+  MONSTER_ATTACK_CLOSE_COUNTER = 3; //반격기
 
   //11~20 근거리 공격    
   MONSTER_ATTACK_SHORTRANGE_01 = 11;  

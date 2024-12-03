@@ -63,13 +63,13 @@ namespace Game {
             "VEVSX1NUQVRVU19TUEFXThABEhcKE01PTlNURVJfU1RBVFVTX0lETEUQAhIX",
             "ChNNT05TVEVSX1NUQVRVU19NT1ZFEAMSFwoTTU9OU1RFUl9TVEFUVVNfREFT",
             "SBAEEhgKFE1PTlNURVJfU1RBVFVTX0RPREdFEAUSGQoVTU9OU1RFUl9TVEFU",
-            "VVNfQVRUQUNLEAYq5wEKCkF0dGFja1R5cGUSGgoWTU9OU1RFUl9BVFRBQ0tf",
+            "VVNfQVRUQUNLEAYqiQIKCkF0dGFja1R5cGUSGgoWTU9OU1RFUl9BVFRBQ0tf",
             "VU5LTk9XThAAEhsKF01PTlNURVJfQVRUQUNLX0NMT1NFXzAxEAESGwoXTU9O",
-            "U1RFUl9BVFRBQ0tfQ0xPU0VfMDIQAhIgChxNT05TVEVSX0FUVEFDS19TSE9S",
-            "VFJBTkdFXzAxEAsSHgoaTU9OU1RFUl9BVFRBQ0tfTUlEUkFOR0VfMDEQFRIf",
-            "ChtNT05TVEVSX0FUVEFDS19MT05HUkFOR0VfMDEQHxIgChxNT05TVEVSX0FU",
-            "VEFDS19FWFRSQVJBTkdFXzAxEClCEVoPU2VydmVyL21lc3NhZ2VzYgZwcm90",
-            "bzM="));
+            "U1RFUl9BVFRBQ0tfQ0xPU0VfMDIQAhIgChxNT05TVEVSX0FUVEFDS19DTE9T",
+            "RV9DT1VOVEVSEAMSIAocTU9OU1RFUl9BVFRBQ0tfU0hPUlRSQU5HRV8wMRAL",
+            "Eh4KGk1PTlNURVJfQVRUQUNLX01JRFJBTkdFXzAxEBUSHwobTU9OU1RFUl9B",
+            "VFRBQ0tfTE9OR1JBTkdFXzAxEB8SIAocTU9OU1RFUl9BVFRBQ0tfRVhUUkFS",
+            "QU5HRV8wMRApQhFaD1NlcnZlci9tZXNzYWdlc2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Game.ParameterType), typeof(global::Game.ActionType), typeof(global::Game.MonsterState), typeof(global::Game.AttackType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -131,6 +131,10 @@ namespace Game {
     ///세번썰기
     /// </summary>
     [pbr::OriginalName("MONSTER_ATTACK_CLOSE_02")] MonsterAttackClose02 = 2,
+    /// <summary>
+    ///반격기
+    /// </summary>
+    [pbr::OriginalName("MONSTER_ATTACK_CLOSE_COUNTER")] MonsterAttackCloseCounter = 3,
     /// <summary>
     ///11~20 근거리 공격    
     /// </summary>

@@ -45,7 +45,6 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
                     HandleMonsterAnim(msg.MonsterAnim);
                     break;
                 case GameMessage.PayloadOneofCase.MonsterAction:
-                    Debug.Log("몬스터 액션 메시지 수신");
                     HandleMonsterAction(msg.MonsterAction);
                     break;
                 default:
@@ -102,6 +101,7 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
         switch (msg.ActionType)
         {
             case ActionType.MonsterActionSetStatus:
+                Debug.Log("몬스터 셋스테이터스 메시지 수신");
             {
                 if (SpawnManager.Instance.SpawnedMonsters.TryGetValue(msg.MonsterId, out MonsterController mc))
                 {
@@ -114,6 +114,7 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
             }
                 break;
             case ActionType.MonsterActionSetTarget:
+                Debug.Log("몬스터 셋타겟 메시지 수신");
             {
                 if (SpawnManager.Instance.SpawnedMonsters.TryGetValue(msg.MonsterId, out MonsterController mc))
                 {
@@ -126,6 +127,7 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
             }
                 break;
             case ActionType.MonsterActionSetDestination:
+                Debug.Log("몬스터 이동 목표 설정 메시지 수신");
             {
                 if (SpawnManager.Instance.SpawnedMonsters.TryGetValue(msg.MonsterId, out MonsterController mc))
                 {
