@@ -24627,16 +24627,186 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3ff89a26e746ee8e8f98642fdcd9f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 1bbc653f0c47a5e46b1c2c9b1e0ba670, type: 2}
+    - {fileID: 11400000, guid: 3caa5c605a5026247a88fc959f24ae40, type: 2}
+    - {fileID: 11400000, guid: 91840a3e1ba499142817e9876e35405d, type: 2}
+    - {fileID: 11400000, guid: c31d58fcf1a621442803fcd55ead02f1, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: tuple
+      Entry: 7
+      Data: System.ValueTuple`2[[System.Int32, mscorlib],[System.String, mscorlib]],
+        mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 0
+    - Name: Item2
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Spawn
+      Entry: 3
+      Data: 1372578019
+    - Name: Horizontal
+      Entry: 3
+      Data: 475924382
+    - Name: Vertical
+      Entry: 3
+      Data: 1358960330
+    - Name: Dash
+      Entry: 3
+      Data: 995914302
+    - Name: Dodge
+      Entry: 3
+      Data: 1353639306
+    - Name: TurnLeft
+      Entry: 3
+      Data: -1847120011
+    - Name: TurnRight
+      Entry: 3
+      Data: -685270779
+    - Name: MoveAnimSpeed
+      Entry: 3
+      Data: 541295930
+    - Name: AttackClose01
+      Entry: 3
+      Data: 2016119741
+    - Name: AttackClose02
+      Entry: 3
+      Data: -517809657
+    - Name: AttackCounter
+      Entry: 3
+      Data: 1130465550
+    - Name: ReadyToAction
+      Entry: 6
+      Data: 
+    - Name: AttackConfigs
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.ValueTuple`2[[Game.AttackType,
+        Assembly-CSharp],[System.Int32, mscorlib]], mscorlib],[Monster.AttackConfig,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.ValueTuple`2[[Game.AttackType,
+        Assembly-CSharp],[System.Int32, mscorlib]], mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 1
+    - Name: Item2
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 1
+    - Name: Item2
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 1
+    - Name: Item2
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 2
+    - Name: Item2
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   monsterId: 
   currentAttack: 0
   agent: {fileID: 0}
   animator: {fileID: 0}
-  lookAtIK: {fileID: 0}
   dummyMode: 1
   targetList: []
   currentTarget: {fileID: 0}
-  turnLeftClip: {fileID: 0}
-  turnRightClip: {fileID: 0}
+  turnLeftClip: {fileID: 7400000, guid: 8dd2048633c6ab14d9f8957bd430364a, type: 2}
+  turnRightClip: {fileID: 7400000, guid: b12ae6a2b307ae24297c3ec744d9c14c, type: 2}
   moveDistance: 3
   moveStart: 0
   horizontalDamp: 0.1
@@ -25172,7 +25342,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5102316048502176271}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 776adaaacdc5c4e8ab0395120a6e972b, type: 3}
   m_Name: 

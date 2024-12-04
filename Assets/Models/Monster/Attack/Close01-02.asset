@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ed0c9f9d9a4edb845b31d3ac6b04b1, type: 3}
+  m_Name: Close01-02
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: ColliderConfig
+      Entry: 7
+      Data: 0|Monster.BoxColliderConfig, Assembly-CSharp
+    - Name: Size
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 2.5
+    - Name: 
+      Entry: 4
+      Data: 0.5
+    - Name: 
+      Entry: 4
+      Data: 2.5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Center
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Rotation
+      Entry: 7
+      Data: UnityEngine.Quaternion, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0.342020124
+    - Name: 
+      Entry: 4
+      Data: 0.9396926
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  damageAmount: 10
+  moveSpeed: 2
+  moveTime: 5
+  moveDirection: {x: 0, y: 0, z: 1}
+  rotateSpeed: 90
+  rotateTime: 5
+  distance: 1
+  attackPositionOffset: {x: 0, y: 0.6, z: 0}
+  knockBackType: 3
+  knockBackPower: 2.5
+  knockBackTime: 0
+  knockBackForceMode: 0
+  particleEffect: {fileID: 1872147318604286, guid: 3fd0e4ff64fe4a441a08416e525e8a8a, type: 3}
+  effectPosition: {x: 0, y: 0.1, z: -0.7}
+  effectRotation: {x: 0, y: 0, z: 0.34202012, w: 0.9396926}
+  effectScale: {x: 0.6, y: 0.6, z: 0.8}
+  soundEffects: []

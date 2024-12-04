@@ -1,9 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game;
+using Monster;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public abstract class PlayerController : MonoBehaviour
 {
@@ -30,6 +29,7 @@ public abstract class PlayerController : MonoBehaviour
     private float hitInterval; //같은 속성의 공격을 더 이상 받지 않는 쿨타임
     private const float HitThreshold = 0.5f; //쿨타임이 임계점에 도달하면 같은 공격을 받을 수 있음
     private Dictionary<(AttackType, int), bool> hitDict = new(); //이미 맞은 공격들
+    private bool isStun = false;
 
     protected virtual void Awake()
     {
@@ -38,8 +38,12 @@ public abstract class PlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (type == CharacterType.Dummy) return;
+        // if (type == CharacterType.Dummy) return;
         Gravity();
+        
+        // Velocity를 기반으로 플레이어 이동
+        CharacterController.Move(Velocity * Time.deltaTime);
+        Velocity = Vector3.Lerp(Velocity, Vector3.zero, Time.deltaTime * 5f);
     }
 
 
@@ -58,17 +62,16 @@ public abstract class PlayerController : MonoBehaviour
             Velocity.y += gravity * Time.deltaTime; // 중력 적용
         }
     }
-
-
-    public void TakeDamage(float damage, AttackType attackType, int attackIdx)
+    
+    //닿은 공격이 유효한지 체크
+    public void HitCheck(AttackConfig config, AttackType attackType, int attackIdx, Transform monsterTransform)
     {
         if (attackIdx < 0) //0미만이면 다단히트라서 조건 계산 할 필요 없음 
         {
-            Debug.Log("");
+            TakeDamage(config, monsterTransform);
         }
         else if (attackIdx > 0)
         {
-            Debug.Log("");
             if (hitDict.TryGetValue((attackType, attackIdx), out bool value))
             {
                 //value값은 의미없고, 일단 true면 같은 공격에 맞았다는 뜻
@@ -77,8 +80,7 @@ public abstract class PlayerController : MonoBehaviour
             }
 
             StartCoroutine(HitIntervalTimer(attackType, attackIdx));
-            
-            Debug.Log($"공격 히트(damage: {damage}, AttackType: {attackType}, index: {attackIdx})");
+            TakeDamage(config, monsterTransform);
         }
         else //0이면 사실 불릴 일이 없음
         {
@@ -93,4 +95,54 @@ public abstract class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(HitThreshold);
         hitDict.Remove((attackType, attackIdx));
     }
+
+    //실제 데미지를 적용하고, 다른 효과들을 적용하는 메소드
+    private void TakeDamage(AttackConfig config, Transform monsterTransform)
+    {
+        Debug.Log($"공격 히트(damage: {config.damageAmount})");
+        //일단 넉백만 적용하도록 로직을 짤 것.
+        Vector3 attackDirection = (transform.position - monsterTransform.position).normalized;
+        
+        Vector3 knockback = Vector3.zero;
+
+        switch (config.knockBackType)
+        {
+            case KnockBackType.KnockbackNone:
+                Debug.Log($"넉백 없음");
+                // 넉백 없음
+                break;
+            case KnockBackType.KnockbackUp:
+                // 위쪽으로 넉백
+                knockback = Vector3.up * config.knockBackPower;
+                // Debug.Log($"넉백 방향: Up, 넉백값: {knockback}");
+                break;
+            case KnockBackType.KnockbackPush:
+                // 몬스터 방향으로 넉백 (밀려남)
+                knockback = attackDirection.normalized * config.knockBackPower;
+                // Debug.Log($"넉백 방향: Push, 넉백값: {knockback}");
+                break;
+            case KnockBackType.KnockbackPull:
+                // 몬스터 반대 방향으로 넉백 (당겨옴)
+                knockback = (-attackDirection).normalized * config.knockBackPower;
+                // Debug.Log($"넉백 방향: Pull, 넉백값: {knockback}");
+                break;
+            case KnockBackType.KnockbackBound:
+                // 몬스터 방향과 약간의 위쪽 방향으로 넉백 (날아감)
+                knockback = (attackDirection.normalized + Vector3.up).normalized * config.knockBackPower;
+                // Debug.Log($"넉백 방향: Bound, 넉백값: {knockback}");
+                break;
+            default:
+                Debug.LogWarning($"알 수 없는 KnockBackType: {config.knockBackType}");
+                break;
+        }
+        
+        TcpProtobufClient.Instance.SendPlayerTakeDamage(knockback, config.stunDuration);
+        
+        // 넉백 벡터를 현재 속도에 추가
+        Velocity += knockback;
+        
+        
+    }
+    
+    
 }

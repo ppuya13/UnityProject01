@@ -215,6 +215,32 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
 
     #endregion
 
+    #region 플레이어 액션
+
+    public void SendPlayerTakeDamage(Vector3 knockBack, float stunDuration)
+    {
+        GoVector3 _knockback = new GoVector3()
+        {
+            X = knockBack.x,
+            Y = knockBack.y,
+            Z = knockBack.z
+        };
+
+        var message = new GameMessage()
+        {
+            PlayerInput = new PlayerInput()
+            {
+                PlayerId = SuperManager.Instance.PlayerId,
+                PlayerActionType = PlayerActionType.PlayerActionTakedamage,
+                Knockback = _knockback,
+                StunDuration = stunDuration,
+            }
+        };
+        SendMessage(message);
+    }
+
+    #endregion
+
     #region 몬스터 관련
 
     

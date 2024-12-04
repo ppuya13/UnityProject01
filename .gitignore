@@ -73,16 +73,20 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+# Ignore the auto-generated AOT compatibility dll.
+/Assets/Plugins/Sirenix/Assemblies/AOT/*
+
+# Ignore all unpacked demos.
+/Assets/Plugins/Sirenix/Demos/*
+
+# But keep the demo packages themselves.
+!/Assets/Plugins/Sirenix/Demos/*.unitypackage 
+
 # PJW 내용 추가
 *.idea
 **/.idea/workspace.xml 
 **/.idea/tasks.xml
 
 # PSH 내용 추가
-<<<<<<< HEAD
 **/StovePCSDK.log
-Assets/WORK/PJW/Player_JW/CharacterTestScene.unity
-Assets/WORK/PJW/Player_JW/CharacterTestScene.unity.meta
-=======
 StovePCSDK.log
->>>>>>> merge11

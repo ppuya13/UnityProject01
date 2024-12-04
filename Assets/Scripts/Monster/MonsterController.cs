@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using Game;
 using RootMotion.FinalIK;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Monster
 {
-    public class MonsterController : MonoBehaviour
+    public class MonsterController : SerializedMonoBehaviour
     {
         public string monsterId;
+        public (int, string) tuple;
 
         protected StateMachine Sm;
 
@@ -40,26 +41,24 @@ namespace Monster
         public List<PlayerController> targetList = new();
         public PlayerController currentTarget;
 
-        public readonly int Spawn = Animator.StringToHash("Spawn");
-        public readonly int Horizontal = Animator.StringToHash("Horizontal");
-        public readonly int Vertical = Animator.StringToHash("Vertical");
-        public readonly int Dash = Animator.StringToHash("Dash");
-        public readonly int Dodge = Animator.StringToHash("Dodge");
-        public readonly int TurnLeft = Animator.StringToHash("TurnLeft");
-        public readonly int TurnRight = Animator.StringToHash("TurnRight");
-        public readonly int MoveAnimSpeed = Animator.StringToHash("MoveAnimSpeed");
+        [HideInInspector]public readonly int Spawn = Animator.StringToHash("Spawn");
+        [HideInInspector]public readonly int Horizontal = Animator.StringToHash("Horizontal");
+        [HideInInspector]public readonly int Vertical = Animator.StringToHash("Vertical");
+        [HideInInspector]public readonly int Dash = Animator.StringToHash("Dash");
+        [HideInInspector]public readonly int Dodge = Animator.StringToHash("Dodge");
+        [HideInInspector]public readonly int TurnLeft = Animator.StringToHash("TurnLeft");
+        [HideInInspector]public readonly int TurnRight = Animator.StringToHash("TurnRight");
+        [HideInInspector]public readonly int MoveAnimSpeed = Animator.StringToHash("MoveAnimSpeed");
 
-        public readonly int AttackClose01 = Animator.StringToHash("AttackClose01");
-        public readonly int AttackClose02 = Animator.StringToHash("AttackClose02");
-        public readonly int AttackCounter = Animator.StringToHash("AttackCounter");
+        [HideInInspector]public readonly int AttackClose01 = Animator.StringToHash("AttackClose01");
+        [HideInInspector]public readonly int AttackClose02 = Animator.StringToHash("AttackClose02");
+        [HideInInspector]public readonly int AttackCounter = Animator.StringToHash("AttackCounter");
 
         //회전 관련 변수
         public AnimationClip turnLeftClip;
         public AnimationClip turnRightClip;
         private float turnLeftAnimationDuration;
         private float turnRightAnimationDuration;
-        private bool isRotating = false;
-
         public Action ReadyToAction;
 
         public float moveDistance = 15.0f; // 랜덤 이동 반경
@@ -73,10 +72,14 @@ namespace Monster
         //같은 공격에 여러번 히트하지 않게 하기 위한 인덱스
         public int attackIdx = 0; //-1일 경우 다단히트
         public LayerMask targetLayer;
-        public Dictionary<(AttackType attackType, int index), AttackConfig> AttackConfigs = new(); //공격 판정이 담긴 리스트
-
+        [SerializeField]public Dictionary<(AttackType attackType, int index), AttackConfig> AttackConfigs = new(); //공격 판정이 담긴 리스트
+        
         private float patternCooldown = 0f; //패턴이 발동된 이후 일정시간동안 다른 패턴이 발동되지 못하게 함
         private const float PatternThreshold = 0.2f; //다른 패턴이 발동되지 못하게 하는 시간
+
+        private Coroutine moveCoroutine;
+        private Coroutine rotateCoroutine;
+        private bool isRotating = false; 
 
         /// <summary>
         /// 스킬 추가 시 해야하는 것:
@@ -91,6 +94,7 @@ namespace Monster
             //NavMesh 초기화
             agent = GetComponent<NavMeshAgent>();
             agent.speed = 1.52f;
+            agent.updateRotation = false;
 
             //애니메이터 초기화
             animator = GetComponent<Animator>();
@@ -99,42 +103,6 @@ namespace Monster
             turnLeftAnimationDuration = turnLeftClip ? turnLeftClip.length : 1.0f;
             turnRightAnimationDuration = turnRightClip ? turnRightClip.length : 1.0f;
             lookAtIK = GetComponent<LookAtIK>();
-
-            // AttackConfigs 초기화
-            InitializeAttackConfigs();
-        }
-
-        private void InitializeAttackConfigs()
-        {
-            // 예시: MonsterAttackClose01 공격 설정
-            AttackConfigs.Add((AttackType.MonsterAttackClose01, 1), new AttackConfig
-            {
-                DamageAmount = 10f,
-                Distance = 2.0f,
-                AttackPositionOffset = Vector3.zero,
-                ColliderConfig = new SphereColliderConfig { Radius = 1.0f }
-            });
-            AttackConfigs.Add((AttackType.MonsterAttackClose01, 2), new AttackConfig
-            {
-                DamageAmount = 10f,
-                Distance = 2.0f,
-                AttackPositionOffset = Vector3.zero,
-                ColliderConfig = new BoxColliderConfig { Size = new Vector3(2.0f, 2.0f, 2.0f), Center = Vector3.zero }
-            });
-            AttackConfigs.Add((AttackType.MonsterAttackClose01, 3), new AttackConfig
-            {
-                DamageAmount = 30f,
-                Distance = 3.0f,
-                AttackPositionOffset = Vector3.zero,
-                ColliderConfig = new CapsuleColliderConfig { Height = 3.0f, Radius = 0.5f, Direction = Vector3.up }
-            });
-            AttackConfigs.Add((AttackType.MonsterAttackClose02, 1), new AttackConfig
-            {
-                DamageAmount = 20f,
-                Distance = 4.0f,
-                AttackPositionOffset = Vector3.zero,
-                ColliderConfig = new SphereColliderConfig { Radius = 2.0f }
-            });
         }
 
         private void Update()
@@ -345,7 +313,7 @@ namespace Monster
                     elapsed += Time.deltaTime;
                     yield return null;
                 }
-
+                
                 // 정확히 타겟 방향을 바라보도록 설정
                 transform.rotation = targetRotation;
             }
@@ -373,7 +341,7 @@ namespace Monster
                     elapsedRotation += Time.deltaTime;
                     yield return null;
                 }
-
+                
                 // 정확히 타겟 방향을 바라보도록 설정
                 transform.rotation = targetRotation;
 
@@ -429,6 +397,9 @@ namespace Monster
                 animator.SetFloat(MoveAnimSpeed, 0.5f, speedDamp, Time.deltaTime);
                 return;
             }
+
+            //타겟을 향해 정확히 회전하는건 idle이나 move상태일 때만
+            if (currentState is not (MonsterState.MonsterStatusIdle or MonsterState.MonsterStatusMove) ) return;
 
             // 타겟을 향한 방향
             Vector3 targetForward = (currentTarget.transform.position - transform.position).normalized;
@@ -489,7 +460,7 @@ namespace Monster
                 List<(string, AttackType, int)> patternList = new();
                 if (distance < 3.0f)
                 {
-                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
+                    // patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
                     // patternList.Add(("Attack", AttackType.MonsterAttackCloseCounter, 20));
                     patternList.Add(("Attack", AttackType.MonsterAttackClose01, 50));
                     // patternList.Add(("Attack", AttackType.MonsterAttackClose02, 50));
@@ -626,9 +597,9 @@ namespace Monster
             }
 
             //데미지를 설정
-            float damageAmount = config.DamageAmount;
-            float distance = config.Distance;
-            Vector3 attackPositionOffset = config.AttackPositionOffset;
+            float damageAmount = config.damageAmount;
+            float distance = config.distance;
+            Vector3 attackPositionOffset = config.attackPositionOffset;
 
             // 공격 위치 계산
             Vector3 attackPosition = transform.position + transform.forward * distance +
@@ -655,8 +626,8 @@ namespace Monster
                     if (config.ColliderConfig is BoxColliderConfig boxConfig)
                     {
                         Vector3 boxCenterWorld = attackPosition + transform.TransformDirection(boxConfig.Center);
-                        hitColliders = Physics.OverlapBox(boxCenterWorld, boxConfig.Size * 0.5f, transform.rotation,
-                            targetLayer);
+                        Quaternion worldRotation = transform.rotation * boxConfig.Rotation;
+                        hitColliders = Physics.OverlapBox(boxCenterWorld, boxConfig.Size * 0.5f, worldRotation, targetLayer);
                     }
                     else
                     {
@@ -694,10 +665,185 @@ namespace Monster
                 if (player)
                 {
                     // 데미지 적용
-                    player.TakeDamage(damageAmount, currentAttack, attackIdx);
-                    Debug.Log($"Hit: {player.playerId}에게 {damageAmount} 데미지 적용");
+                    player.HitCheck(config, currentAttack, attackIdx, transform);
                 }
             }
+        }
+
+        //HitCheck처럼 현재 공격에 따라서 해당하는 AttackConfig의 이펙트 파티클을 소환한다. 애니메이션 이벤트로 호출.
+        public void CreateAttackParticle()
+        {
+            // 현재 공격 타입과 인덱스에 해당하는 AttackConfig를 가져옵니다.
+            if (!AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig config))
+            {
+                Debug.LogError($"InitializeAttackConfigs에서 공격이 정의되지 않음: {currentAttack}, AttackIdx: {attackIdx}");
+                return;
+            }
+            // 파티클 이펙트가 설정되어 있는지 확인합니다.
+            if (config.particleEffect)
+            {
+                // 공격 위치 계산 (HitCheck와 유사하게)
+                Vector3 attackPosition = transform.position + transform.forward * config.distance +
+                                         transform.TransformDirection(config.attackPositionOffset);
+
+                // 이펙트의 위치, 회전, 크기를 설정합니다.
+                Vector3 effectPosition = attackPosition + transform.TransformDirection(config.effectPosition);
+                Quaternion effectRotation = transform.rotation * config.effectRotation;
+                Vector3 effectScale = config.effectScale != Vector3.zero ? config.effectScale : Vector3.one;
+
+                // 파티클 이펙트를 인스턴스화합니다.
+                GameObject effect = Instantiate(config.particleEffect, effectPosition, effectRotation, transform);
+                effect.transform.localScale = effectScale;
+
+                // 이펙트가 일정 시간 후에 자동으로 파괴되도록 설정 (선택 사항)
+                ParticleSystem ps = effect.GetComponent<ParticleSystem>();
+                if (ps)
+                {
+                    Destroy(effect, ps.main.duration + ps.main.startLifetime.constantMax);
+                }
+                else
+                {
+                    // ParticleSystem이 없을 경우 기본적으로 5초 후 파괴
+                    Destroy(effect, 5f);
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"AttackConfig에 파티클 이펙트가 설정되어 있지 않습니다: {currentAttack}, AttackIdx: {attackIdx}");
+            }
+
+            // 사운드 이펙트가 설정되어 있는지 확인하고 재생합니다.
+            if (config.soundEffects is { Length: > 0 })
+            {
+                // AudioSource가 존재하는지 확인하고 없으면 추가합니다.
+                AudioSource audioSource = GetComponent<AudioSource>();
+                if (!audioSource)
+                {
+                    audioSource = gameObject.AddComponent<AudioSource>();
+                }
+
+                // 사운드 클립을 랜덤으로 선택하여 재생합니다.
+                AudioClip selectedClip = config.soundEffects[Random.Range(0, config.soundEffects.Length)];
+                audioSource.PlayOneShot(selectedClip);
+            }
+        }
+
+        //공격 중에 이동을 하는 메소드, 애니메이션을 재생하지 않으며, AnimationEvent로 호출된다.
+        public void MoveStart()
+        {
+            if (moveCoroutine != null)
+            {
+                StopCoroutine(moveCoroutine);
+                moveCoroutine = null;
+            }
+
+            if (AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig config))
+            {
+                moveCoroutine = StartCoroutine(AttackMove(config));
+            }
+            else
+            {
+                Debug.LogError($"AttackConfig을 찾을 수 없습니다: {currentAttack}, {attackIdx}");
+            }
+        }
+
+        public void MoveStop()
+        {
+            if (moveCoroutine != null)
+            {
+                StopCoroutine(moveCoroutine);
+                moveCoroutine = null;
+            }
+        }
+        
+        IEnumerator AttackMove(AttackConfig config)
+        {
+            Vector3 startPosition = transform.position;
+            Vector3 direction;
+
+            if (config.moveDirection == Vector3.zero && currentTarget)
+            {
+                direction = (currentTarget.transform.position - startPosition).normalized;
+            }
+            else
+            {
+                direction = transform.TransformDirection(config.moveDirection.normalized);
+            }
+
+            float elapsed = 0f;
+
+            while (elapsed < config.moveTime)
+            {
+                // 이동 방향이 타겟을 향하도록 설정
+                if (config.moveDirection == Vector3.zero && currentTarget)
+                {
+                    direction = (currentTarget.transform.position - startPosition).normalized;
+                }
+
+                // 이동 속도와 방향에 따라 위치 업데이트
+                Vector3 movement = direction * (config.moveSpeed * Time.deltaTime);
+                transform.position += movement;
+                agent.SetDestination(transform.position);
+
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+        }
+        
+        //공격 중에 회전을 하는 메소드, 애니메이션을 재생하지 않으며, AnimationEvent로 호출된다.
+        public void RotateStart()
+        {
+            Debug.Log("로테이트 시작");
+            if (rotateCoroutine != null)
+            {
+                StopCoroutine(rotateCoroutine);
+                rotateCoroutine = null;
+            }
+
+            if (AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig config))
+            {
+                rotateCoroutine = StartCoroutine(AttackRotate(config));
+            }
+            else
+            {
+                Debug.LogError($"AttackConfig을 찾을 수 없습니다: {currentAttack}, {attackIdx}");
+            }
+        }
+
+        //공격 중에 회전을 하는 메소드, 애니메이션을 재생하지 않으며, AnimationEvent로 호출된다.
+        public void RotateStop()
+        {
+            Debug.Log("로테이트 종료");
+            if (rotateCoroutine != null)
+            {
+                StopCoroutine(rotateCoroutine);
+                rotateCoroutine = null;
+            }
+        }
+
+        IEnumerator AttackRotate(AttackConfig config)
+        {
+            if (!currentTarget)
+                yield break;
+
+
+            float rotateSpeed = config.rotateSpeed;
+
+            Debug.Log($"AttackRotate started with rotateSpeed: {rotateSpeed}");
+
+            Quaternion targetRotation = Quaternion.LookRotation(currentTarget.transform.position - transform.position);
+            Quaternion startRotation = transform.rotation;
+            
+            while (Quaternion.Angle(transform.rotation, targetRotation) > 1f)
+            {
+                float step = rotateSpeed * Time.deltaTime; // rotateSpeed가 degrees per second임을 가정
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
+                yield return null;
+            }
+            
+            // 최종 정렬
+            transform.rotation = targetRotation;
+            
         }
 
 #if UNITY_EDITOR
@@ -710,8 +856,8 @@ namespace Monster
             }
 
             // 공격 위치 계산 (로컬 좌표계 적용)
-            Vector3 attackPosition = transform.position + transform.forward * config.Distance +
-                                     transform.TransformDirection(config.AttackPositionOffset);
+            Vector3 attackPosition = transform.position + transform.forward * config.distance +
+                                     transform.TransformDirection(config.attackPositionOffset);
 
             Gizmos.color = Color.red;
 
@@ -730,7 +876,12 @@ namespace Monster
                     if (config.ColliderConfig is BoxColliderConfig boxConfig)
                     {
                         Vector3 boxCenterWorld = attackPosition + transform.TransformDirection(boxConfig.Center);
-                        Gizmos.DrawWireCube(boxCenterWorld, boxConfig.Size);
+                        Quaternion worldBoxRotation = transform.rotation * boxConfig.Rotation;
+
+                        Matrix4x4 oldMatrix = Gizmos.matrix;
+                        Gizmos.matrix = Matrix4x4.TRS(boxCenterWorld, worldBoxRotation, Vector3.one);
+                        Gizmos.DrawWireCube(Vector3.zero, boxConfig.Size);
+                        Gizmos.matrix = oldMatrix;
                     }
 
                     break;
@@ -751,7 +902,7 @@ namespace Monster
 
                 default:
                     // 기본적으로 Sphere로 시각화
-                    Gizmos.DrawWireSphere(attackPosition, config.Distance);
+                    Gizmos.DrawWireSphere(attackPosition, config.distance);
                     break;
             }
 

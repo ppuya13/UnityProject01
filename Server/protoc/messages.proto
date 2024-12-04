@@ -58,7 +58,38 @@ message LogoutResponse {
 }
 
 message PlayerInput{
-  string temp = 1;
+  string player_id = 1;
+  PlayerActionType player_action_type = 2;
+
+  //위치 업데이트에 사용할 변수들
+  GoVector3 position = 3;
+  GoVector3 velocity = 4;
+  GoVector3 rotation = 5;
+
+  //공격에 사용할 변수들
+  int32 anim_hash = 6; //공격 애니메이션 해시
+
+  //피격 효과에 사용할 변수들
+  //GoVector3 attack_direction = 7; //피격 시 넉백 방향
+  //KnockBackType knockback_type = 8;
+  GoVector3 knockback = 9; //클라이언트에서 방향, 넉백 타입, 파워에 의해 계산된 넉백 방향
+  float stun_duration = 10;
+}
+
+enum PlayerActionType{
+  PLAYER_ACTION_UNKNOWN = 0;
+  PLAYER_ACTION_MOVE = 1;
+  PLAYER_ACTION_ATTACK = 2;
+  PLAYER_ACTION_TAKEDAMAGE = 3;
+}
+
+enum KnockBackType{
+  KNOCKBACK_UNKNOWN = 0;
+  KNOCKBACK_NONE = 1;
+  KNOCKBACK_UP = 2;
+  KNOCKBACK_PUSH = 3;
+  KNOCKBACK_PULL = 4;
+  KNOCKBACK_BOUND = 5;
 }
 
 message MonsterPositionUpdate{

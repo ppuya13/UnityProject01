@@ -41,45 +41,57 @@ namespace Game {
             "CXBsYXllcl9pZBgCIAEoCRIQCgh1c2VybmFtZRgDIAEoCRIUCgxnYW1lX3Vz",
             "ZXJfaWQYBCABKAkSFQoNZXJyb3JfbWVzc2FnZRgFIAEoCSIiCg1Mb2dvdXRS",
             "ZXF1ZXN0EhEKCXBsYXllcl9pZBgBIAEoCSI4Cg5Mb2dvdXRSZXNwb25zZRIP",
-            "CgdzdWNjZXNzGAEgASgIEhUKDWVycm9yX21lc3NhZ2UYAiABKAkiGwoLUGxh",
-            "eWVySW5wdXQSDAoEdGVtcBgBIAEoCSI6ChVNb25zdGVyUG9zaXRpb25VcGRh",
-            "dGUSIQoIcG9zaXRpb24YASABKAsyDy5nYW1lLkdvVmVjdG9yMyIiCgxNb25z",
-            "dGVyU3Bhd24SEgoKbW9uc3Rlcl9pZBgBIAEoCSKdAQoLTW9uc3RlckFuaW0S",
-            "EgoKbW9uc3Rlcl9pZBgBIAEoCRIRCglhbmltX2hhc2gYAiABKAUSKwoOcGFy",
-            "YW1ldGVyX3R5cGUYAyABKA4yEy5nYW1lLlBhcmFtZXRlclR5cGUSEQoJaW50",
-            "X3ZhbHVlGAQgASgFEhMKC2Zsb2F0X3ZhbHVlGAUgASgCEhIKCmJvb2xfdmFs",
-            "dWUYBiABKAgi1AEKDU1vbnN0ZXJBY3Rpb24SEgoKbW9uc3Rlcl9pZBgBIAEo",
-            "CRIlCgthY3Rpb25fdHlwZRgCIAEoDjIQLmdhbWUuQWN0aW9uVHlwZRIpCg1t",
-            "b25zdGVyX3N0YXRlGAMgASgOMhIuZ2FtZS5Nb25zdGVyU3RhdGUSJQoLYXR0",
-            "YWNrX3R5cGUYBCABKA4yEC5nYW1lLkF0dGFja1R5cGUSEAoIdGFyZ2V0SWQY",
-            "BSABKAkSJAoLZGVzdGluYXRpb24YBiABKAsyDy5nYW1lLkdvVmVjdG9yMyp5",
-            "Cg1QYXJhbWV0ZXJUeXBlEhUKEVBBUkFNRVRFUl9VTktOT1dOEAASEQoNUEFS",
-            "QU1FVEVSX0lOVBABEhMKD1BBUkFNRVRFUl9GTE9BVBACEhIKDlBBUkFNRVRF",
-            "Ul9CT09MEAMSFQoRUEFSQU1FVEVSX1RSSUdHRVIQBCqKAQoKQWN0aW9uVHlw",
-            "ZRIaChZNT05TVEVSX0FDVElPTl9VTktOT1dOEAASHQoZTU9OU1RFUl9BQ1RJ",
-            "T05fU0VUX1NUQVRVUxABEh0KGU1PTlNURVJfQUNUSU9OX1NFVF9UQVJHRVQQ",
-            "AhIiCh5NT05TVEVSX0FDVElPTl9TRVRfREVTVElOQVRJT04QAyrEAQoMTW9u",
-            "c3RlclN0YXRlEhoKFk1PTlNURVJfU1RBVFVTX1VOS05PV04QABIYChRNT05T",
-            "VEVSX1NUQVRVU19TUEFXThABEhcKE01PTlNURVJfU1RBVFVTX0lETEUQAhIX",
-            "ChNNT05TVEVSX1NUQVRVU19NT1ZFEAMSFwoTTU9OU1RFUl9TVEFUVVNfREFT",
-            "SBAEEhgKFE1PTlNURVJfU1RBVFVTX0RPREdFEAUSGQoVTU9OU1RFUl9TVEFU",
-            "VVNfQVRUQUNLEAYqiQIKCkF0dGFja1R5cGUSGgoWTU9OU1RFUl9BVFRBQ0tf",
-            "VU5LTk9XThAAEhsKF01PTlNURVJfQVRUQUNLX0NMT1NFXzAxEAESGwoXTU9O",
-            "U1RFUl9BVFRBQ0tfQ0xPU0VfMDIQAhIgChxNT05TVEVSX0FUVEFDS19DTE9T",
-            "RV9DT1VOVEVSEAMSIAocTU9OU1RFUl9BVFRBQ0tfU0hPUlRSQU5HRV8wMRAL",
-            "Eh4KGk1PTlNURVJfQVRUQUNLX01JRFJBTkdFXzAxEBUSHwobTU9OU1RFUl9B",
-            "VFRBQ0tfTE9OR1JBTkdFXzAxEB8SIAocTU9OU1RFUl9BVFRBQ0tfRVhUUkFS",
-            "QU5HRV8wMRApQhFaD1NlcnZlci9tZXNzYWdlc2IGcHJvdG8z"));
+            "CgdzdWNjZXNzGAEgASgIEhUKDWVycm9yX21lc3NhZ2UYAiABKAkiiwIKC1Bs",
+            "YXllcklucHV0EhEKCXBsYXllcl9pZBgBIAEoCRIyChJwbGF5ZXJfYWN0aW9u",
+            "X3R5cGUYAiABKA4yFi5nYW1lLlBsYXllckFjdGlvblR5cGUSIQoIcG9zaXRp",
+            "b24YAyABKAsyDy5nYW1lLkdvVmVjdG9yMxIhCgh2ZWxvY2l0eRgEIAEoCzIP",
+            "LmdhbWUuR29WZWN0b3IzEiEKCHJvdGF0aW9uGAUgASgLMg8uZ2FtZS5Hb1Zl",
+            "Y3RvcjMSEQoJYW5pbV9oYXNoGAYgASgFEiIKCWtub2NrYmFjaxgJIAEoCzIP",
+            "LmdhbWUuR29WZWN0b3IzEhUKDXN0dW5fZHVyYXRpb24YCiABKAIiOgoVTW9u",
+            "c3RlclBvc2l0aW9uVXBkYXRlEiEKCHBvc2l0aW9uGAEgASgLMg8uZ2FtZS5H",
+            "b1ZlY3RvcjMiIgoMTW9uc3RlclNwYXduEhIKCm1vbnN0ZXJfaWQYASABKAki",
+            "nQEKC01vbnN0ZXJBbmltEhIKCm1vbnN0ZXJfaWQYASABKAkSEQoJYW5pbV9o",
+            "YXNoGAIgASgFEisKDnBhcmFtZXRlcl90eXBlGAMgASgOMhMuZ2FtZS5QYXJh",
+            "bWV0ZXJUeXBlEhEKCWludF92YWx1ZRgEIAEoBRITCgtmbG9hdF92YWx1ZRgF",
+            "IAEoAhISCgpib29sX3ZhbHVlGAYgASgIItQBCg1Nb25zdGVyQWN0aW9uEhIK",
+            "Cm1vbnN0ZXJfaWQYASABKAkSJQoLYWN0aW9uX3R5cGUYAiABKA4yEC5nYW1l",
+            "LkFjdGlvblR5cGUSKQoNbW9uc3Rlcl9zdGF0ZRgDIAEoDjISLmdhbWUuTW9u",
+            "c3RlclN0YXRlEiUKC2F0dGFja190eXBlGAQgASgOMhAuZ2FtZS5BdHRhY2tU",
+            "eXBlEhAKCHRhcmdldElkGAUgASgJEiQKC2Rlc3RpbmF0aW9uGAYgASgLMg8u",
+            "Z2FtZS5Hb1ZlY3RvcjMqfQoQUGxheWVyQWN0aW9uVHlwZRIZChVQTEFZRVJf",
+            "QUNUSU9OX1VOS05PV04QABIWChJQTEFZRVJfQUNUSU9OX01PVkUQARIYChRQ",
+            "TEFZRVJfQUNUSU9OX0FUVEFDSxACEhwKGFBMQVlFUl9BQ1RJT05fVEFLRURB",
+            "TUFHRRADKokBCg1Lbm9ja0JhY2tUeXBlEhUKEUtOT0NLQkFDS19VTktOT1dO",
+            "EAASEgoOS05PQ0tCQUNLX05PTkUQARIQCgxLTk9DS0JBQ0tfVVAQAhISCg5L",
+            "Tk9DS0JBQ0tfUFVTSBADEhIKDktOT0NLQkFDS19QVUxMEAQSEwoPS05PQ0tC",
+            "QUNLX0JPVU5EEAUqeQoNUGFyYW1ldGVyVHlwZRIVChFQQVJBTUVURVJfVU5L",
+            "Tk9XThAAEhEKDVBBUkFNRVRFUl9JTlQQARITCg9QQVJBTUVURVJfRkxPQVQQ",
+            "AhISCg5QQVJBTUVURVJfQk9PTBADEhUKEVBBUkFNRVRFUl9UUklHR0VSEAQq",
+            "igEKCkFjdGlvblR5cGUSGgoWTU9OU1RFUl9BQ1RJT05fVU5LTk9XThAAEh0K",
+            "GU1PTlNURVJfQUNUSU9OX1NFVF9TVEFUVVMQARIdChlNT05TVEVSX0FDVElP",
+            "Tl9TRVRfVEFSR0VUEAISIgoeTU9OU1RFUl9BQ1RJT05fU0VUX0RFU1RJTkFU",
+            "SU9OEAMqxAEKDE1vbnN0ZXJTdGF0ZRIaChZNT05TVEVSX1NUQVRVU19VTktO",
+            "T1dOEAASGAoUTU9OU1RFUl9TVEFUVVNfU1BBV04QARIXChNNT05TVEVSX1NU",
+            "QVRVU19JRExFEAISFwoTTU9OU1RFUl9TVEFUVVNfTU9WRRADEhcKE01PTlNU",
+            "RVJfU1RBVFVTX0RBU0gQBBIYChRNT05TVEVSX1NUQVRVU19ET0RHRRAFEhkK",
+            "FU1PTlNURVJfU1RBVFVTX0FUVEFDSxAGKokCCgpBdHRhY2tUeXBlEhoKFk1P",
+            "TlNURVJfQVRUQUNLX1VOS05PV04QABIbChdNT05TVEVSX0FUVEFDS19DTE9T",
+            "RV8wMRABEhsKF01PTlNURVJfQVRUQUNLX0NMT1NFXzAyEAISIAocTU9OU1RF",
+            "Ul9BVFRBQ0tfQ0xPU0VfQ09VTlRFUhADEiAKHE1PTlNURVJfQVRUQUNLX1NI",
+            "T1JUUkFOR0VfMDEQCxIeChpNT05TVEVSX0FUVEFDS19NSURSQU5HRV8wMRAV",
+            "Eh8KG01PTlNURVJfQVRUQUNLX0xPTkdSQU5HRV8wMRAfEiAKHE1PTlNURVJf",
+            "QVRUQUNLX0VYVFJBUkFOR0VfMDEQKUIRWg9TZXJ2ZXIvbWVzc2FnZXNiBnBy",
+            "b3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Game.ParameterType), typeof(global::Game.ActionType), typeof(global::Game.MonsterState), typeof(global::Game.AttackType), }, null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Game.PlayerActionType), typeof(global::Game.KnockBackType), typeof(global::Game.ParameterType), typeof(global::Game.ActionType), typeof(global::Game.MonsterState), typeof(global::Game.AttackType), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.GameMessage), global::Game.GameMessage.Parser, new[]{ "LoginRequest", "LoginResponse", "LogoutRequest", "LogoutResponse", "PlayerInput", "MonsterSpawn", "MonsterPositionUpdate", "MonsterAnim", "MonsterAction" }, new[]{ "Payload" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.GoVector3), global::Game.GoVector3.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.LoginRequest), global::Game.LoginRequest.Parser, new[]{ "Id", "Nickname", "GameUserId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.LoginResponse), global::Game.LoginResponse.Parser, new[]{ "Success", "PlayerId", "Username", "GameUserId", "ErrorMessage" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.LogoutRequest), global::Game.LogoutRequest.Parser, new[]{ "PlayerId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.LogoutResponse), global::Game.LogoutResponse.Parser, new[]{ "Success", "ErrorMessage" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.PlayerInput), global::Game.PlayerInput.Parser, new[]{ "Temp" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.PlayerInput), global::Game.PlayerInput.Parser, new[]{ "PlayerId", "PlayerActionType", "Position", "Velocity", "Rotation", "AnimHash", "Knockback", "StunDuration" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterPositionUpdate), global::Game.MonsterPositionUpdate.Parser, new[]{ "Position" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterSpawn), global::Game.MonsterSpawn.Parser, new[]{ "MonsterId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterAnim), global::Game.MonsterAnim.Parser, new[]{ "MonsterId", "AnimHash", "ParameterType", "IntValue", "FloatValue", "BoolValue" }, null, null, null, null),
@@ -90,6 +102,22 @@ namespace Game {
 
   }
   #region Enums
+  public enum PlayerActionType {
+    [pbr::OriginalName("PLAYER_ACTION_UNKNOWN")] PlayerActionUnknown = 0,
+    [pbr::OriginalName("PLAYER_ACTION_MOVE")] PlayerActionMove = 1,
+    [pbr::OriginalName("PLAYER_ACTION_ATTACK")] PlayerActionAttack = 2,
+    [pbr::OriginalName("PLAYER_ACTION_TAKEDAMAGE")] PlayerActionTakedamage = 3,
+  }
+
+  public enum KnockBackType {
+    [pbr::OriginalName("KNOCKBACK_UNKNOWN")] KnockbackUnknown = 0,
+    [pbr::OriginalName("KNOCKBACK_NONE")] KnockbackNone = 1,
+    [pbr::OriginalName("KNOCKBACK_UP")] KnockbackUp = 2,
+    [pbr::OriginalName("KNOCKBACK_PUSH")] KnockbackPush = 3,
+    [pbr::OriginalName("KNOCKBACK_PULL")] KnockbackPull = 4,
+    [pbr::OriginalName("KNOCKBACK_BOUND")] KnockbackBound = 5,
+  }
+
   public enum ParameterType {
     [pbr::OriginalName("PARAMETER_UNKNOWN")] ParameterUnknown = 0,
     [pbr::OriginalName("PARAMETER_INT")] ParameterInt = 1,
@@ -2227,7 +2255,14 @@ namespace Game {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public PlayerInput(PlayerInput other) : this() {
-      temp_ = other.temp_;
+      playerId_ = other.playerId_;
+      playerActionType_ = other.playerActionType_;
+      position_ = other.position_ != null ? other.position_.Clone() : null;
+      velocity_ = other.velocity_ != null ? other.velocity_.Clone() : null;
+      rotation_ = other.rotation_ != null ? other.rotation_.Clone() : null;
+      animHash_ = other.animHash_;
+      knockback_ = other.knockback_ != null ? other.knockback_.Clone() : null;
+      stunDuration_ = other.stunDuration_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2237,15 +2272,110 @@ namespace Game {
       return new PlayerInput(this);
     }
 
-    /// <summary>Field number for the "temp" field.</summary>
-    public const int TempFieldNumber = 1;
-    private string temp_ = "";
+    /// <summary>Field number for the "player_id" field.</summary>
+    public const int PlayerIdFieldNumber = 1;
+    private string playerId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string Temp {
-      get { return temp_; }
+    public string PlayerId {
+      get { return playerId_; }
       set {
-        temp_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        playerId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "player_action_type" field.</summary>
+    public const int PlayerActionTypeFieldNumber = 2;
+    private global::Game.PlayerActionType playerActionType_ = global::Game.PlayerActionType.PlayerActionUnknown;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Game.PlayerActionType PlayerActionType {
+      get { return playerActionType_; }
+      set {
+        playerActionType_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "position" field.</summary>
+    public const int PositionFieldNumber = 3;
+    private global::Game.GoVector3 position_;
+    /// <summary>
+    ///위치 업데이트에 사용할 변수들
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Game.GoVector3 Position {
+      get { return position_; }
+      set {
+        position_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "velocity" field.</summary>
+    public const int VelocityFieldNumber = 4;
+    private global::Game.GoVector3 velocity_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Game.GoVector3 Velocity {
+      get { return velocity_; }
+      set {
+        velocity_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "rotation" field.</summary>
+    public const int RotationFieldNumber = 5;
+    private global::Game.GoVector3 rotation_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Game.GoVector3 Rotation {
+      get { return rotation_; }
+      set {
+        rotation_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "anim_hash" field.</summary>
+    public const int AnimHashFieldNumber = 6;
+    private int animHash_;
+    /// <summary>
+    ///공격에 사용할 변수들
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int AnimHash {
+      get { return animHash_; }
+      set {
+        animHash_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "knockback" field.</summary>
+    public const int KnockbackFieldNumber = 9;
+    private global::Game.GoVector3 knockback_;
+    /// <summary>
+    ///피격 효과에 사용할 변수들
+    ///GoVector3 attack_direction = 7; //피격 시 넉백 방향
+    ///KnockBackType knockback_type = 8;
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Game.GoVector3 Knockback {
+      get { return knockback_; }
+      set {
+        knockback_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "stun_duration" field.</summary>
+    public const int StunDurationFieldNumber = 10;
+    private float stunDuration_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float StunDuration {
+      get { return stunDuration_; }
+      set {
+        stunDuration_ = value;
       }
     }
 
@@ -2264,7 +2394,14 @@ namespace Game {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Temp != other.Temp) return false;
+      if (PlayerId != other.PlayerId) return false;
+      if (PlayerActionType != other.PlayerActionType) return false;
+      if (!object.Equals(Position, other.Position)) return false;
+      if (!object.Equals(Velocity, other.Velocity)) return false;
+      if (!object.Equals(Rotation, other.Rotation)) return false;
+      if (AnimHash != other.AnimHash) return false;
+      if (!object.Equals(Knockback, other.Knockback)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(StunDuration, other.StunDuration)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2272,7 +2409,14 @@ namespace Game {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Temp.Length != 0) hash ^= Temp.GetHashCode();
+      if (PlayerId.Length != 0) hash ^= PlayerId.GetHashCode();
+      if (PlayerActionType != global::Game.PlayerActionType.PlayerActionUnknown) hash ^= PlayerActionType.GetHashCode();
+      if (position_ != null) hash ^= Position.GetHashCode();
+      if (velocity_ != null) hash ^= Velocity.GetHashCode();
+      if (rotation_ != null) hash ^= Rotation.GetHashCode();
+      if (AnimHash != 0) hash ^= AnimHash.GetHashCode();
+      if (knockback_ != null) hash ^= Knockback.GetHashCode();
+      if (StunDuration != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(StunDuration);
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2291,9 +2435,37 @@ namespace Game {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Temp.Length != 0) {
+      if (PlayerId.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(Temp);
+        output.WriteString(PlayerId);
+      }
+      if (PlayerActionType != global::Game.PlayerActionType.PlayerActionUnknown) {
+        output.WriteRawTag(16);
+        output.WriteEnum((int) PlayerActionType);
+      }
+      if (position_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Position);
+      }
+      if (velocity_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(Velocity);
+      }
+      if (rotation_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(Rotation);
+      }
+      if (AnimHash != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(AnimHash);
+      }
+      if (knockback_ != null) {
+        output.WriteRawTag(74);
+        output.WriteMessage(Knockback);
+      }
+      if (StunDuration != 0F) {
+        output.WriteRawTag(85);
+        output.WriteFloat(StunDuration);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -2305,9 +2477,37 @@ namespace Game {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Temp.Length != 0) {
+      if (PlayerId.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(Temp);
+        output.WriteString(PlayerId);
+      }
+      if (PlayerActionType != global::Game.PlayerActionType.PlayerActionUnknown) {
+        output.WriteRawTag(16);
+        output.WriteEnum((int) PlayerActionType);
+      }
+      if (position_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Position);
+      }
+      if (velocity_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(Velocity);
+      }
+      if (rotation_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(Rotation);
+      }
+      if (AnimHash != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(AnimHash);
+      }
+      if (knockback_ != null) {
+        output.WriteRawTag(74);
+        output.WriteMessage(Knockback);
+      }
+      if (StunDuration != 0F) {
+        output.WriteRawTag(85);
+        output.WriteFloat(StunDuration);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -2319,8 +2519,29 @@ namespace Game {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Temp.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Temp);
+      if (PlayerId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(PlayerId);
+      }
+      if (PlayerActionType != global::Game.PlayerActionType.PlayerActionUnknown) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) PlayerActionType);
+      }
+      if (position_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
+      }
+      if (velocity_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Velocity);
+      }
+      if (rotation_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Rotation);
+      }
+      if (AnimHash != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(AnimHash);
+      }
+      if (knockback_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Knockback);
+      }
+      if (StunDuration != 0F) {
+        size += 1 + 4;
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2334,8 +2555,41 @@ namespace Game {
       if (other == null) {
         return;
       }
-      if (other.Temp.Length != 0) {
-        Temp = other.Temp;
+      if (other.PlayerId.Length != 0) {
+        PlayerId = other.PlayerId;
+      }
+      if (other.PlayerActionType != global::Game.PlayerActionType.PlayerActionUnknown) {
+        PlayerActionType = other.PlayerActionType;
+      }
+      if (other.position_ != null) {
+        if (position_ == null) {
+          Position = new global::Game.GoVector3();
+        }
+        Position.MergeFrom(other.Position);
+      }
+      if (other.velocity_ != null) {
+        if (velocity_ == null) {
+          Velocity = new global::Game.GoVector3();
+        }
+        Velocity.MergeFrom(other.Velocity);
+      }
+      if (other.rotation_ != null) {
+        if (rotation_ == null) {
+          Rotation = new global::Game.GoVector3();
+        }
+        Rotation.MergeFrom(other.Rotation);
+      }
+      if (other.AnimHash != 0) {
+        AnimHash = other.AnimHash;
+      }
+      if (other.knockback_ != null) {
+        if (knockback_ == null) {
+          Knockback = new global::Game.GoVector3();
+        }
+        Knockback.MergeFrom(other.Knockback);
+      }
+      if (other.StunDuration != 0F) {
+        StunDuration = other.StunDuration;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -2357,7 +2611,47 @@ namespace Game {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            Temp = input.ReadString();
+            PlayerId = input.ReadString();
+            break;
+          }
+          case 16: {
+            PlayerActionType = (global::Game.PlayerActionType) input.ReadEnum();
+            break;
+          }
+          case 26: {
+            if (position_ == null) {
+              Position = new global::Game.GoVector3();
+            }
+            input.ReadMessage(Position);
+            break;
+          }
+          case 34: {
+            if (velocity_ == null) {
+              Velocity = new global::Game.GoVector3();
+            }
+            input.ReadMessage(Velocity);
+            break;
+          }
+          case 42: {
+            if (rotation_ == null) {
+              Rotation = new global::Game.GoVector3();
+            }
+            input.ReadMessage(Rotation);
+            break;
+          }
+          case 48: {
+            AnimHash = input.ReadInt32();
+            break;
+          }
+          case 74: {
+            if (knockback_ == null) {
+              Knockback = new global::Game.GoVector3();
+            }
+            input.ReadMessage(Knockback);
+            break;
+          }
+          case 85: {
+            StunDuration = input.ReadFloat();
             break;
           }
         }
@@ -2380,7 +2674,47 @@ namespace Game {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            Temp = input.ReadString();
+            PlayerId = input.ReadString();
+            break;
+          }
+          case 16: {
+            PlayerActionType = (global::Game.PlayerActionType) input.ReadEnum();
+            break;
+          }
+          case 26: {
+            if (position_ == null) {
+              Position = new global::Game.GoVector3();
+            }
+            input.ReadMessage(Position);
+            break;
+          }
+          case 34: {
+            if (velocity_ == null) {
+              Velocity = new global::Game.GoVector3();
+            }
+            input.ReadMessage(Velocity);
+            break;
+          }
+          case 42: {
+            if (rotation_ == null) {
+              Rotation = new global::Game.GoVector3();
+            }
+            input.ReadMessage(Rotation);
+            break;
+          }
+          case 48: {
+            AnimHash = input.ReadInt32();
+            break;
+          }
+          case 74: {
+            if (knockback_ == null) {
+              Knockback = new global::Game.GoVector3();
+            }
+            input.ReadMessage(Knockback);
+            break;
+          }
+          case 85: {
+            StunDuration = input.ReadFloat();
             break;
           }
         }
