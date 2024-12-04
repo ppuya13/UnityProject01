@@ -13,7 +13,7 @@ namespace Monster
     public class MonsterController : SerializedMonoBehaviour
     {
         public string monsterId;
-        public (int, string) tuple;
+        public Transform lookAtThis;
 
         protected StateMachine Sm;
 
@@ -103,6 +103,13 @@ namespace Monster
             turnLeftAnimationDuration = turnLeftClip ? turnLeftClip.length : 1.0f;
             turnRightAnimationDuration = turnRightClip ? turnRightClip.length : 1.0f;
             lookAtIK = GetComponent<LookAtIK>();
+            
+            //플레이어 캐릭터들의 시선을 가져옴
+            foreach (var players in SpawnManager.Instance.SpawnedPlayers.Values)
+            {
+                Debug.Log("시선설정");
+                players.lookAtIK.solver.target = lookAtThis;
+            }
         }
 
         private void Update()

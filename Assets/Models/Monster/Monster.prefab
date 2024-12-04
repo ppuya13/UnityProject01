@@ -15248,6 +15248,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3368274929241202996}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2492953407682673601
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 772563401325919270}
+  m_Layer: 0
+  m_Name: LookAtThis
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &772563401325919270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2492953407682673601}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5102316047752364240}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5102316047653762607
 GameObject:
   m_ObjectHideFlags: 0
@@ -24554,6 +24585,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 772563401325919270}
   - {fileID: 5102316048722249717}
   - {fileID: 5102316049132701236}
   - {fileID: 5102316048352399942}
@@ -24640,19 +24672,6 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: tuple
-      Entry: 7
-      Data: System.ValueTuple`2[[System.Int32, mscorlib],[System.String, mscorlib]],
-        mscorlib
-    - Name: Item1
-      Entry: 3
-      Data: 0
-    - Name: Item2
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: Spawn
       Entry: 3
       Data: 1372578019
@@ -24799,9 +24818,11 @@ MonoBehaviour:
       Entry: 8
       Data: 
   monsterId: 
+  lookAtThis: {fileID: 772563401325919270}
   currentAttack: 0
   agent: {fileID: 0}
   animator: {fileID: 0}
+  lookAtIK: {fileID: 0}
   dummyMode: 1
   targetList: []
   currentTarget: {fileID: 0}
