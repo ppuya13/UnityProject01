@@ -41,18 +41,18 @@ namespace Monster
         public List<PlayerController> targetList = new();
         public PlayerController currentTarget;
 
-        [HideInInspector]public readonly int Spawn = Animator.StringToHash("Spawn");
-        [HideInInspector]public readonly int Horizontal = Animator.StringToHash("Horizontal");
-        [HideInInspector]public readonly int Vertical = Animator.StringToHash("Vertical");
-        [HideInInspector]public readonly int Dash = Animator.StringToHash("Dash");
-        [HideInInspector]public readonly int Dodge = Animator.StringToHash("Dodge");
-        [HideInInspector]public readonly int TurnLeft = Animator.StringToHash("TurnLeft");
-        [HideInInspector]public readonly int TurnRight = Animator.StringToHash("TurnRight");
-        [HideInInspector]public readonly int MoveAnimSpeed = Animator.StringToHash("MoveAnimSpeed");
+        [HideInInspector] public readonly int Spawn = Animator.StringToHash("Spawn");
+        [HideInInspector] public readonly int Horizontal = Animator.StringToHash("Horizontal");
+        [HideInInspector] public readonly int Vertical = Animator.StringToHash("Vertical");
+        [HideInInspector] public readonly int Dash = Animator.StringToHash("Dash");
+        [HideInInspector] public readonly int Dodge = Animator.StringToHash("Dodge");
+        [HideInInspector] public readonly int TurnLeft = Animator.StringToHash("TurnLeft");
+        [HideInInspector] public readonly int TurnRight = Animator.StringToHash("TurnRight");
+        [HideInInspector] public readonly int MoveAnimSpeed = Animator.StringToHash("MoveAnimSpeed");
 
-        [HideInInspector]public readonly int AttackClose01 = Animator.StringToHash("AttackClose01");
-        [HideInInspector]public readonly int AttackClose02 = Animator.StringToHash("AttackClose02");
-        [HideInInspector]public readonly int AttackCounter = Animator.StringToHash("AttackCounter");
+        [HideInInspector] public readonly int AttackClose01 = Animator.StringToHash("AttackClose01");
+        [HideInInspector] public readonly int AttackClose02 = Animator.StringToHash("AttackClose02");
+        [HideInInspector] public readonly int AttackCounter = Animator.StringToHash("AttackCounter");
 
         //회전 관련 변수
         public AnimationClip turnLeftClip;
@@ -72,15 +72,20 @@ namespace Monster
         //같은 공격에 여러번 히트하지 않게 하기 위한 인덱스
         public int attackIdx = 0; //-1일 경우 다단히트
         public LayerMask targetLayer;
-        [SerializeField]public Dictionary<(AttackType attackType, int index), AttackConfig> AttackConfigs = new(); //공격 판정이 담긴 리스트
-        
+
+        [SerializeField]
+        public Dictionary<(AttackType attackType, int index), AttackConfig> AttackConfigs = new(); //공격 판정이 담긴 리스트
+
         private float patternCooldown = 0f; //패턴이 발동된 이후 일정시간동안 다른 패턴이 발동되지 못하게 함
         private const float PatternThreshold = 0.2f; //다른 패턴이 발동되지 못하게 하는 시간
 
         private Coroutine moveCoroutine;
         private Coroutine rotateCoroutine;
-        private bool isRotating = false; 
+        private bool isRotating = false;
 
+        ///
+        /// 이동 중에도 일정시간? 거리에 따라? 스킬이 발동하도록 변경하는 게 좋을 듯.
+        /// 
         /// <summary>
         /// 스킬 추가 시 해야하는 것:
         /// InitializeAttackConfigs에 정보 추가
@@ -103,7 +108,7 @@ namespace Monster
             turnLeftAnimationDuration = turnLeftClip ? turnLeftClip.length : 1.0f;
             turnRightAnimationDuration = turnRightClip ? turnRightClip.length : 1.0f;
             lookAtIK = GetComponent<LookAtIK>();
-            
+
             //플레이어 캐릭터들의 시선을 가져옴
             foreach (var players in SpawnManager.Instance.SpawnedPlayers.Values)
             {
@@ -320,7 +325,7 @@ namespace Monster
                     elapsed += Time.deltaTime;
                     yield return null;
                 }
-                
+
                 // 정확히 타겟 방향을 바라보도록 설정
                 transform.rotation = targetRotation;
             }
@@ -348,7 +353,7 @@ namespace Monster
                     elapsedRotation += Time.deltaTime;
                     yield return null;
                 }
-                
+
                 // 정확히 타겟 방향을 바라보도록 설정
                 transform.rotation = targetRotation;
 
@@ -406,7 +411,7 @@ namespace Monster
             }
 
             //타겟을 향해 정확히 회전하는건 idle이나 move상태일 때만
-            if (currentState is not (MonsterState.MonsterStatusIdle or MonsterState.MonsterStatusMove) ) return;
+            if (currentState is not (MonsterState.MonsterStatusIdle or MonsterState.MonsterStatusMove)) return;
 
             // 타겟을 향한 방향
             Vector3 targetForward = (currentTarget.transform.position - transform.position).normalized;
@@ -634,7 +639,8 @@ namespace Monster
                     {
                         Vector3 boxCenterWorld = attackPosition + transform.TransformDirection(boxConfig.Center);
                         Quaternion worldRotation = transform.rotation * boxConfig.Rotation;
-                        hitColliders = Physics.OverlapBox(boxCenterWorld, boxConfig.Size * 0.5f, worldRotation, targetLayer);
+                        hitColliders = Physics.OverlapBox(boxCenterWorld, boxConfig.Size * 0.5f, worldRotation,
+                            targetLayer);
                     }
                     else
                     {
@@ -686,6 +692,7 @@ namespace Monster
                 Debug.LogError($"InitializeAttackConfigs에서 공격이 정의되지 않음: {currentAttack}, AttackIdx: {attackIdx}");
                 return;
             }
+
             // 파티클 이펙트가 설정되어 있는지 확인합니다.
             if (config.particleEffect)
             {
@@ -762,7 +769,7 @@ namespace Monster
                 moveCoroutine = null;
             }
         }
-        
+
         IEnumerator AttackMove(AttackConfig config)
         {
             Vector3 startPosition = transform.position;
@@ -796,7 +803,7 @@ namespace Monster
                 yield return null;
             }
         }
-        
+
         //공격 중에 회전을 하는 메소드, 애니메이션을 재생하지 않으며, AnimationEvent로 호출된다.
         public void RotateStart()
         {
@@ -840,17 +847,16 @@ namespace Monster
 
             Quaternion targetRotation = Quaternion.LookRotation(currentTarget.transform.position - transform.position);
             Quaternion startRotation = transform.rotation;
-            
+
             while (Quaternion.Angle(transform.rotation, targetRotation) > 1f)
             {
                 float step = rotateSpeed * Time.deltaTime; // rotateSpeed가 degrees per second임을 가정
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
                 yield return null;
             }
-            
+
             // 최종 정렬
             transform.rotation = targetRotation;
-            
         }
 
 #if UNITY_EDITOR

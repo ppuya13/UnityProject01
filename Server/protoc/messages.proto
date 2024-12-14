@@ -90,6 +90,7 @@ enum KnockBackType{
   KNOCKBACK_PUSH = 3;
   KNOCKBACK_PULL = 4;
   KNOCKBACK_BOUND = 5;
+  KNOCKBACK_DOWN = 6;
 }
 
 message MonsterPositionUpdate{

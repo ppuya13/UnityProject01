@@ -154,6 +154,10 @@ public abstract class PlayerController : SerializedMonoBehaviour
                 knockback = (attackDirection.normalized + Vector3.up).normalized * config.knockBackPower;
                 // Debug.Log($"넉백 방향: Bound, 넉백값: {knockback}");
                 break;
+            case KnockBackType.KnockbackDown:
+                //이동하지 않음, 그냥 넘어지는 모션만 재생
+                knockback = Vector3.zero;
+                break;
             default:
                 Debug.LogWarning($"알 수 없는 KnockBackType: {config.knockBackType}");
                 break;
@@ -197,7 +201,6 @@ public abstract class PlayerController : SerializedMonoBehaviour
             {
                 fb = -1f; // 뒤에서 공격
             }
-
             // 좌우는 고려하지 않음
             lr = 0f;
         }
@@ -213,7 +216,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
             }
             else
             {
-                fb = 0f; // 좌우 중립 (필요 시 다른 처리를 추가할 수 있음)
+                fb = 0f; // 좌우 중립
             }
 
             if (localAttackDir.x > 0.5f)
@@ -226,7 +229,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
             }
             else
             {
-                lr = 0f; // 좌우 중립 (필요 시 다른 처리를 추가할 수 있음)
+                lr = 0f; // 좌우 중립
             }
         }
         
