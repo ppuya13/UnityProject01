@@ -1,4 +1,6 @@
-﻿using RootMotion.FinalIK;
+﻿using Game;
+using Monster;
+using RootMotion.FinalIK;
 using UnityEngine;
 
 public class MyPlayer: PlayerController
@@ -27,11 +29,76 @@ public class MyPlayer: PlayerController
         base.Update();
         CursorControl();
         
-        if (IsStun) return; 
+        if (IsStun || IsDie) return; 
         HandleMoveInput();
         HandleMouseInput();
         Move();
         TiltSetting();
+    }
+
+    protected override void TakeDamage(AttackConfig config, Transform monsterTransform)
+    {
+        Debug.Log($"공격 히트(damage: {config.damageAmount})");
+        //일단 넉백만 적용하도록 로직을 짤 것.
+        Vector3 attackDirection = (transform.position - monsterTransform.position).normalized;
+        
+        Vector3 knockback = Vector3.zero;
+
+        switch (config.knockBackType)
+        {
+            case KnockBackType.KnockbackNone:
+                Debug.Log($"넉백 없음");
+                // 넉백 없음
+                break;
+            case KnockBackType.KnockbackUp:
+                // 위쪽으로 넉백
+                knockback = Vector3.up * config.knockBackPower;
+                // Debug.Log($"넉백 방향: Up, 넉백값: {knockback}");
+                break;
+            case KnockBackType.KnockbackPush:
+                // 몬스터 방향으로 넉백 (밀려남)
+                knockback = attackDirection.normalized * config.knockBackPower;
+                // Debug.Log($"넉백 방향: Push, 넉백값: {knockback}");
+                break;
+            case KnockBackType.KnockbackPull:
+                // 몬스터 반대 방향으로 넉백 (당겨옴)
+                knockback = (-attackDirection).normalized * config.knockBackPower;
+                // Debug.Log($"넉백 방향: Pull, 넉백값: {knockback}");
+                break;
+            case KnockBackType.KnockbackBound:
+                // 몬스터 방향과 약간의 위쪽 방향으로 넉백 (날아감)
+                knockback = (attackDirection.normalized + Vector3.up).normalized * config.knockBackPower;
+                // Debug.Log($"넉백 방향: Bound, 넉백값: {knockback}");
+                break;
+            case KnockBackType.KnockbackDown:
+                //이동하지 않음, 그냥 넘어지는 모션만 재생
+                knockback = Vector3.zero;
+                break;
+            default:
+                Debug.LogWarning($"알 수 없는 KnockBackType: {config.knockBackType}");
+                break;
+        }
+        
+        // 넉백 벡터를 현재 속도에 추가
+        Velocity += knockback;
+        
+        // 체력 감소
+        currentHp -= config.damageAmount;
+        if (currentHp <= 0) IsDie = true; // 사망 여부 플래그 처리
+        
+        // 애니메이터 파라미터 설정
+        (float lr, float fb, bool isBound, float motionIndex) = SetAnimatorParameters(attackDirection, config);
+
+        
+        // stunDuration 동안 대기 후 StunEnd 트리거 활성화
+        if (StunCoroutine != null)
+        {
+            StopCoroutine(StunCoroutine);
+            StunCoroutine = null;
+        }
+        StunCoroutine = StartCoroutine(HandleStun(config.stunDuration));
+        
+        TcpProtobufClient.Instance.SendPlayerTakeDamage(knockback, config.stunDuration, currentHp, IsDie, lr, fb, isBound, motionIndex);
     }
 
     //마우스를 없앴다 생겼다 함

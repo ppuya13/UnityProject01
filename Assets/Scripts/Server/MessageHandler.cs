@@ -47,6 +47,9 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
                 case GameMessage.PayloadOneofCase.MonsterAction:
                     HandleMonsterAction(msg.MonsterAction);
                     break;
+                case GameMessage.PayloadOneofCase.PlayerInput:
+                    HandlePlayerInput(msg.PlayerInput);
+                    break;
                 default:
                     Debug.LogError($"정의되지 않은 케이스 ({msg.PayloadCase})");
                     break;
@@ -146,6 +149,31 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
     }
 
     #endregion
+
+    #endregion
+
+    #region 플레이어 관련
+
+    private void HandlePlayerInput(PlayerInput msg)
+    {
+        if (SuperManager.Instance.PlayerId == msg.PlayerId) return;
+
+        if (SpawnManager.Instance.SpawnedPlayers.TryGetValue(msg.PlayerId, out PlayerController playerController))
+        {
+            if (playerController is OtherPlayer otherPlayer)
+            {
+                otherPlayer.OtherPlayerTakeDamage(msg);
+            }
+            else
+            {
+                Debug.LogError($"{playerController}가 otherPlayer가 아님.");
+            }
+        }
+        else
+        {
+            Debug.LogError($"{msg.PlayerId}가 SpawnManager.Instance.SpawnedPlayers에 없음.");
+        }
+    }
 
     #endregion
 }

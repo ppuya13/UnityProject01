@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Google.Protobuf;
 using Game;
+using Unity.Burst.Intrinsics;
 using UnityEngine.AI;
 
 // TcpProtobufClient 클래스: Unity에서 TCP 연결을 통해 Protobuf 메시지를 주고받는 클라이언트
@@ -217,13 +218,17 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
 
     #region 플레이어 액션
 
-    public void SendPlayerTakeDamage(Vector3 knockBack, float stunDuration)
+    public void SendPlayerTakeDamage(Vector3 knockBack, float stunDuration, float currentHp, bool isDie, float lr,
+        float fb, bool isBound, float motionIndex)
     {
-        GoVector3 _knockback = new GoVector3()
+        GoVector3 _knockback = ConvertToGoVector3(knockBack);
+
+        AnimatorParams @params = new AnimatorParams()
         {
-            X = knockBack.x,
-            Y = knockBack.y,
-            Z = knockBack.z
+            Lr = lr,
+            Fb = fb,
+            IsBound = isBound,
+            MotionIndex = motionIndex,
         };
 
         var message = new GameMessage()
@@ -234,6 +239,9 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
                 PlayerActionType = PlayerActionType.PlayerActionTakedamage,
                 Knockback = _knockback,
                 StunDuration = stunDuration,
+                CurrentHp = currentHp,
+                IsDie = isDie,
+                Params = @params
             }
         };
         SendMessage(message);
@@ -307,12 +315,7 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
     public void SendDestination(string monsterId, Vector3 destination)
     {
         Debug.Log("이동목표발신");
-        GoVector3 _destination = new GoVector3()
-        {
-            X = destination.x,
-            Y = destination.y,
-            Z = destination.z,
-        };
+        GoVector3 _destination = ConvertToGoVector3(destination);
         
         var message = new GameMessage()
         {
@@ -328,4 +331,22 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
 
     #endregion
 
+    #region GoVector3와 Vector3를 변환
+
+    public Vector3 ConvertToVector3(GoVector3 value)
+    {
+        return new Vector3(x: value.X, y: value.Y, z: value.Z);
+    }
+
+    public GoVector3 ConvertToGoVector3(Vector3 value)
+    {
+        return new GoVector3()
+        {
+            X = value.x,
+            Y = value.y,
+            Z = value.z,
+        };
+    }
+
+    #endregion
 }

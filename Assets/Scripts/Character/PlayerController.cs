@@ -20,6 +20,9 @@ public abstract class PlayerController : SerializedMonoBehaviour
     public string playerId;
     public CharacterType type;
 
+    public float maxHp;
+    public float currentHp;
+
     protected const float gravity = -9.81f; // 중력 값
     protected float CurrentSpeed; // 이동 속도
     protected float WalkSpeed = 2.0f; // 걷기 이동속도
@@ -39,7 +42,8 @@ public abstract class PlayerController : SerializedMonoBehaviour
     private Dictionary<(AttackType, int), bool> hitDict = new(); //이미 맞은 공격들
     protected bool IsStun = false;
     protected bool IsRun = false;
-    private Coroutine stunCoroutine;
+    protected bool IsDie = false;
+    protected Coroutine StunCoroutine;
     
     [HideInInspector]public readonly int Stun = Animator.StringToHash("Stun");
     [HideInInspector]public readonly int Horizontal = Animator.StringToHash("Horizontal");
@@ -50,6 +54,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     [HideInInspector]public readonly int FallDown = Animator.StringToHash("FallDown");
     [HideInInspector]public readonly int Damage = Animator.StringToHash("Damage"); //피격당했을때
     [HideInInspector]public readonly int StunEnd = Animator.StringToHash("StunEnd");
+    [HideInInspector]public readonly int Die = Animator.StringToHash("Die");
     
 
     protected virtual void Awake()
@@ -57,6 +62,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
         CharacterController = GetComponent<CharacterController>();
         Animator = GetComponent<Animator>();
         lookAtIK = GetComponent<LookAtIK>();
+        InitializeCharacter();
     }
 
     protected virtual void Update()
@@ -67,6 +73,12 @@ public abstract class PlayerController : SerializedMonoBehaviour
         // Velocity를 기반으로 플레이어 이동
         CharacterController.Move(Velocity * Time.deltaTime);
         Velocity = Vector3.Lerp(Velocity, Vector3.zero, Time.deltaTime * 5f);
+    }
+
+    private void InitializeCharacter()
+    {
+        maxHp = 100;
+        currentHp = maxHp;
     }
 
 
@@ -120,67 +132,11 @@ public abstract class PlayerController : SerializedMonoBehaviour
     }
 
     //실제 데미지를 적용하고, 다른 효과들을 적용하는 메소드
-    private void TakeDamage(AttackConfig config, Transform monsterTransform)
-    {
-        Debug.Log($"공격 히트(damage: {config.damageAmount})");
-        //일단 넉백만 적용하도록 로직을 짤 것.
-        Vector3 attackDirection = (transform.position - monsterTransform.position).normalized;
-        
-        Vector3 knockback = Vector3.zero;
+    protected abstract void TakeDamage(AttackConfig config, Transform monsterTransform);
 
-        switch (config.knockBackType)
-        {
-            case KnockBackType.KnockbackNone:
-                Debug.Log($"넉백 없음");
-                // 넉백 없음
-                break;
-            case KnockBackType.KnockbackUp:
-                // 위쪽으로 넉백
-                knockback = Vector3.up * config.knockBackPower;
-                // Debug.Log($"넉백 방향: Up, 넉백값: {knockback}");
-                break;
-            case KnockBackType.KnockbackPush:
-                // 몬스터 방향으로 넉백 (밀려남)
-                knockback = attackDirection.normalized * config.knockBackPower;
-                // Debug.Log($"넉백 방향: Push, 넉백값: {knockback}");
-                break;
-            case KnockBackType.KnockbackPull:
-                // 몬스터 반대 방향으로 넉백 (당겨옴)
-                knockback = (-attackDirection).normalized * config.knockBackPower;
-                // Debug.Log($"넉백 방향: Pull, 넉백값: {knockback}");
-                break;
-            case KnockBackType.KnockbackBound:
-                // 몬스터 방향과 약간의 위쪽 방향으로 넉백 (날아감)
-                knockback = (attackDirection.normalized + Vector3.up).normalized * config.knockBackPower;
-                // Debug.Log($"넉백 방향: Bound, 넉백값: {knockback}");
-                break;
-            case KnockBackType.KnockbackDown:
-                //이동하지 않음, 그냥 넘어지는 모션만 재생
-                knockback = Vector3.zero;
-                break;
-            default:
-                Debug.LogWarning($"알 수 없는 KnockBackType: {config.knockBackType}");
-                break;
-        }
-        
-        TcpProtobufClient.Instance.SendPlayerTakeDamage(knockback, config.stunDuration);
-        
-        // 넉백 벡터를 현재 속도에 추가
-        Velocity += knockback;
-        
-        // 애니메이터 파라미터 설정
-        SetAnimatorParameters(attackDirection, config);
-
-        // stunDuration 동안 대기 후 StunEnd 트리거 활성화
-        if (stunCoroutine != null)
-        {
-            StopCoroutine(stunCoroutine);
-            stunCoroutine = null;
-        }
-        stunCoroutine = StartCoroutine(HandleStun(config.stunDuration));
-    }
-
-    private void SetAnimatorParameters(Vector3 attackDirection, AttackConfig config)
+    //피격 애니메이션 재생
+    protected (float lr, float fb, bool isBound, float motionIndex) SetAnimatorParameters(Vector3 attackDirection,
+        AttackConfig config)
     {
         float lr = 0f;
         float fb = 0f;
@@ -206,30 +162,37 @@ public abstract class PlayerController : SerializedMonoBehaviour
         }
         else
         {
-            if (localAttackDir.z > 0.5f)
+            if (IsDie) //넘어지는 공격이 아니고 사망했을 시 사망 애니메이션을 재생
             {
-                fb = -1f; // 앞에서 공격
-            }
-            else if (localAttackDir.x < -0.5f)
-            {
-                fb = 1f; // 뒤에서 공격
+                Animator.SetTrigger(Die);
             }
             else
             {
-                fb = 0f; // 좌우 중립
-            }
+                if (localAttackDir.z > 0.5f)
+                {
+                    fb = -1f; // 앞에서 공격
+                }
+                else if (localAttackDir.x < -0.5f)
+                {
+                    fb = 1f; // 뒤에서 공격
+                }
+                else
+                {
+                    fb = 0f; // 좌우 중립
+                }
 
-            if (localAttackDir.x > 0.5f)
-            {
-                lr = -1f; // 오른쪽에서 공격
-            }
-            else if (localAttackDir.x < -0.5f)
-            {
-                lr = 1f; // 왼쪽에서 공격
-            }
-            else
-            {
-                lr = 0f; // 좌우 중립
+                if (localAttackDir.x > 0.5f)
+                {
+                    lr = -1f; // 오른쪽에서 공격
+                }
+                else if (localAttackDir.x < -0.5f)
+                {
+                    lr = 1f; // 왼쪽에서 공격
+                }
+                else
+                {
+                    lr = 0f; // 좌우 중립
+                }
             }
         }
         
@@ -240,14 +203,16 @@ public abstract class PlayerController : SerializedMonoBehaviour
         Animator.SetFloat(MotionIndex, motionIndex);
         
         Animator.SetTrigger(Damage);
+        
+        return (lr, fb, isBound, motionIndex);
     }
 
-    private IEnumerator HandleStun(float stunDuration)
+    protected IEnumerator HandleStun(float stunDuration)
     {
         IsStun = true;
         yield return new WaitForSeconds(stunDuration);
         IsStun = false;
-        Animator.SetTrigger(StunEnd);
+        if (!IsDie) Animator.SetTrigger(StunEnd); //죽지 않았을 경우에만 스턴이 풀림
     }
 
 }

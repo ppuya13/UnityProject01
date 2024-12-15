@@ -74,6 +74,17 @@ message PlayerInput{
   //KnockBackType knockback_type = 8;
   GoVector3 knockback = 9; //클라이언트에서 방향, 넉백 타입, 파워에 의해 계산된 넉백 방향
   float stun_duration = 10;
+  float current_hp = 11; //공격을 받은 후 남은 hp
+  bool is_die = 12; //공격을 받은 이후 사망여부
+  AnimatorParams params = 13; //애니메이터 파라미터를 변경하기 위한 값
+}
+
+message AnimatorParams{
+  float lr = 1;
+  float fb = 2;
+  bool is_bound = 3;
+  float motion_index = 4;
+
 }
 
 enum PlayerActionType{
