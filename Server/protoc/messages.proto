@@ -10,15 +10,21 @@ message GameMessage {
     LoginResponse login_response = 2;
     LogoutRequest logout_request = 3;
     LogoutResponse logout_response = 4;
+    GameStart game_start = 5;
+    ChatMessage chat_message = 6;
+
 
     //플레이어 관련은 11~30
     PlayerInput player_input = 11;
+    PlayerSpawn player_spawn = 12;
 
     //몬스터관련은 31-40
     MonsterSpawn monster_spawn = 31;
     MonsterPositionUpdate monster_position_update = 32;
     MonsterAnim monster_anim = 33;
     MonsterAction monster_action = 34;
+
+    ServerStarted server_started = 100;
     
   }
 }
@@ -28,6 +34,17 @@ message GoVector3 {
   float x = 1;
   float y = 2;
   float z = 3;
+}
+
+message Ping{
+  int64 timestamp = 1;
+}
+
+message Pong{
+  int64 timestamp = 1;
+}
+
+message ServerStarted{
 }
 
 // 로그인 요청 메시지
@@ -44,6 +61,29 @@ message LoginResponse {
   string username = 3;     // 사용자 닉네임
   string game_user_id = 4; // gameuserid
   string error_message = 5; // 오류 메시지 (실패 시)
+}
+
+message GameStart{
+}
+
+message ChatMessage{
+  string player_id = 1;
+  string nickname = 2;
+  string message = 3;
+  bool system = 4; //시스템메시지인지 표시
+}
+
+//플레이어 스폰을 위한 정보를 보내는 메시지
+message PlayerSpawn{
+  string player_id = 1; //지금 들어온 캐릭터의 id
+  string nickname = 2; //지금 들어온 캐릭터의 닉네임
+  repeated PlayerInfo players = 3; //이전에 접속해있던 플레이어들의 정보 목록
+}
+
+//개별 플레이어의 정보를 담음
+message PlayerInfo{
+  string id = 1;
+  string nickname = 2;
 }
 
 // 로그아웃 요청 메시지
@@ -65,6 +105,9 @@ message PlayerInput{
   GoVector3 position = 3;
   GoVector3 velocity = 4;
   GoVector3 rotation = 5;
+  float horizontal = 14;
+  float vertical = 15;
+  bool isRunning = 16;
 
   //공격에 사용할 변수들
   int32 anim_hash = 6; //공격 애니메이션 해시

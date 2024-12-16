@@ -8,8 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Google.Protobuf;
 using Game;
-using Unity.Burst.Intrinsics;
-using UnityEngine.AI;
 
 // TcpProtobufClient 클래스: Unity에서 TCP 연결을 통해 Protobuf 메시지를 주고받는 클라이언트
 public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
@@ -29,7 +27,7 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
     protected override void Awake()
     {
         base.Awake();
-        _ = ConnectToServerAsync("127.0.0.1", 8888);
+        // _ = ConnectToServerAsync("127.0.0.1", 8888);
     }
 
     #region 기본 구조
@@ -216,8 +214,62 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
 
     #endregion
 
+    #region 서버, 채팅 관련
+
+    public void SendGameStart()
+    {
+        var message = new GameMessage()
+        {
+            GameStart = new GameStart()
+        };
+        SendMessage(message);
+    }
+
+    public void SendChatMessage(string text)
+    {
+        Debug.Log("채팅 메시지 발신");
+        var message = new GameMessage()
+        {
+            ChatMessage = new ChatMessage()
+            {
+                PlayerId = SuperManager.Instance.playerId,
+                Nickname = SuperManager.Instance.playerNickname,
+                Message = text,
+                System = false,
+            }
+        };
+        
+        SendMessage(message);
+    }
+
+    #endregion
+
     #region 플레이어 액션
 
+    public void SendPlayerMovement(Vector3 position, Vector3 velocity, Vector3 rotation, float horizontal, float vertical, bool isCharacterRunning)
+    {
+        GoVector3 _position = ConvertToGoVector3(position);
+        GoVector3 _velocity = ConvertToGoVector3(velocity);
+        GoVector3 _rotation = ConvertToGoVector3(rotation);
+
+        var message = new GameMessage()
+        {
+            PlayerInput = new PlayerInput()
+            {
+                PlayerId = SuperManager.Instance.playerId,
+                PlayerActionType = PlayerActionType.PlayerActionMove,
+                Position = _position,
+                Velocity = _velocity,
+                Rotation = _rotation,
+                Horizontal = horizontal,
+                Vertical = vertical,
+                IsRunning = isCharacterRunning,
+            }
+        };
+        
+        SendMessage(message);
+    }
+    
     public void SendPlayerTakeDamage(Vector3 knockBack, float stunDuration, float currentHp, bool isDie, float lr,
         float fb, bool isBound, float motionIndex)
     {
@@ -235,7 +287,7 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
         {
             PlayerInput = new PlayerInput()
             {
-                PlayerId = SuperManager.Instance.PlayerId,
+                PlayerId = SuperManager.Instance.playerId,
                 PlayerActionType = PlayerActionType.PlayerActionTakedamage,
                 Knockback = _knockback,
                 StunDuration = stunDuration,
@@ -254,7 +306,7 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
     
     public void SendMonsterChangeState(string monsterId, MonsterState state, AttackType attackType)
     {
-        Debug.Log($"몬스터 상태 변경 메시지 발신: {state}");
+        // Debug.Log($"몬스터 상태 변경 메시지 발신: {state}");
         var message = new GameMessage()
         {
             MonsterAction = new MonsterAction()
@@ -281,7 +333,6 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
 
     public void SendMonsterAnimMessage(string monsterId, int hash, ParameterType type, int intValue = 0,
         float floatValue = 0, bool boolValue = false)
-
     {
         var message = new GameMessage()
         {

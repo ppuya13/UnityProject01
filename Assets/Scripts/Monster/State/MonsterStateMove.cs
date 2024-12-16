@@ -17,7 +17,7 @@ namespace Monster
         public override void UpdateState()
         {
             if (!Monster.agent.pathPending && Monster.agent.remainingDistance <= Monster.agent.stoppingDistance &&
-                SuperManager.Instance.IsHost && Monster.moveStart) 
+                SuperManager.Instance.isHost && Monster.moveStart) 
             {
                 if (!Monster.agent.hasPath || Monster.agent.velocity.sqrMagnitude == 0f)
                 {

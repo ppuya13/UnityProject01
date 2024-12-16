@@ -4,6 +4,7 @@ package manager
 //플레이어 인증 및 권한 관리
 
 import (
+	pb "Server/messages"
 	"errors"
 	"net"
 	"sync"
@@ -20,6 +21,13 @@ type Account struct {
 	GameUserID string
 	Password   string //해시해야한다.
 	Conn       net.Conn
+
+	Position       *pb.GoVector3
+	Velocity       *pb.GoVector3
+	Rotation       *pb.GoVector3
+	CurrentHP      float32
+	IsDie          bool
+	AnimatorParams *pb.AnimatorParams
 }
 
 type AccountManager struct {

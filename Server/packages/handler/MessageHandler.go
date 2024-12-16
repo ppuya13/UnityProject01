@@ -3,6 +3,7 @@ package handler
 import (
 	pb "Server/messages"
 	"Server/packages/manager"
+	"fmt"
 	"log"
 	"net"
 
@@ -26,6 +27,12 @@ func (mh *MessageHandler) ProcessMessage(message *pb.GameMessage, conn net.Conn,
 		mh.handleLoginRequest(payload.LoginRequest, conn, playerId)
 	case *pb.GameMessage_LogoutRequest:
 		mh.handleLogoutRequest(conn, playerId)
+	case *pb.GameMessage_GameStart:
+		mh.handleGameStart()
+	case *pb.GameMessage_ChatMessage:
+		mh.handleChatMessage(message)
+	case *pb.GameMessage_PlayerInput:
+		mh.handlePlayerInput(payload.PlayerInput)
 	case *pb.GameMessage_MonsterSpawn:
 		mh.handleMonsterSpawn(payload.MonsterSpawn)
 	case *pb.GameMessage_MonsterAnim:
@@ -41,26 +48,55 @@ func (mh *MessageHandler) handleLoginRequest(request *pb.LoginRequest, conn net.
 	log.Printf("로그인 요청 수신 (ID: %s, nickname: %s, gameUserID: %s)", request.Id, request.Nickname, request.GameUserId)
 	nm := mh.mcx.NetManager()
 	am := mh.mcx.AccountManager()
-	message := &pb.GameMessage{
+
+	// 계정 생성 시도
+	account, err := am.CreateAccount(request.Id, request.Nickname, request.GameUserId, conn)
+	if err != nil {
+		log.Printf("handleLoginRequest: 계정 생성 실패 (%v)", err)
+		message := &pb.GameMessage{
+			Payload: &pb.GameMessage_LoginResponse{
+				LoginResponse: &pb.LoginResponse{
+					Success:      false,
+					ErrorMessage: err.Error(),
+				},
+			},
+		}
+		nm.SendMessage(message, conn)
+		return
+	}
+
+	// 계정을 온라인 상태로 설정
+	am.SetPlayerOnline(account.ID, conn)
+
+	// 로그인 성공 응답 메시지 생성
+	response := &pb.GameMessage{
 		Payload: &pb.GameMessage_LoginResponse{
 			LoginResponse: &pb.LoginResponse{
-				Success:  true,
-				PlayerId: request.Id,
-				Username: request.Nickname,
+				Success:    true,
+				PlayerId:   account.ID,
+				Username:   account.Name,
+				GameUserId: account.GameUserID,
 			},
 		},
 	}
 
-	account, err := am.CreateAccount(request.Id, request.Nickname, request.GameUserId, conn)
-	if err != nil {
-		log.Printf("handleLoginRequest: 계정 생성 실패 (%v)", err)
-		message.GetLoginResponse().Success = false
-		message.GetLoginResponse().ErrorMessage = err.Error()
-	}
-	nm.SendMessage(message, conn)
+	// 로그인 성공 응답 전송
+	nm.SendMessage(response, conn)
 
+	// 플레이어 ID 업데이트
 	*playerId = account.ID
+
+	systemMessage := &pb.GameMessage{
+		Payload: &pb.GameMessage_ChatMessage{
+			ChatMessage: &pb.ChatMessage{
+				System:  true,
+				Message: fmt.Sprintf("%s 님이 게임에 참여했습니다.", account.Name),
+			},
+		},
+	}
+	nm.SendMessageToAll(systemMessage)
 }
+
 func (mh *MessageHandler) handleLogoutRequest(conn net.Conn, playerId *string) {
 	if *playerId == "" {
 		log.Printf("handleLogoutRequest: PlayerId is empty")
@@ -85,6 +121,50 @@ func (mh *MessageHandler) handleLogoutRequest(conn net.Conn, playerId *string) {
 
 	// nm.SendMessage(message, conn)
 
+}
+
+func (mh *MessageHandler) handleGameStart() {
+	am := mh.mcx.AccountManager()
+	nm := mh.mcx.NetManager()
+	// 기존 온라인 플레이어들의 정보 수집
+	onlineAccounts := am.GetOnlineAccounts()
+	existingPlayers := []*pb.PlayerInfo{}
+	for _, acc := range onlineAccounts {
+		existingPlayers = append(existingPlayers, &pb.PlayerInfo{
+			Id:       acc.ID,
+			Nickname: acc.Name,
+		})
+	}
+
+	// 플레이어 정보 전송
+	spawnMessageForNewPlayer := &pb.GameMessage{
+		Payload: &pb.GameMessage_PlayerSpawn{
+			PlayerSpawn: &pb.PlayerSpawn{
+				// PlayerId: account.ID,
+				// Nickname: account.Name,
+				Players: existingPlayers,
+			},
+		},
+	}
+	nm.SendMessageToAll(spawnMessageForNewPlayer)
+}
+
+func (mh *MessageHandler) handleChatMessage(msg *pb.GameMessage) {
+	nm := mh.mcx.NetManager()
+
+	nm.SendMessageToAll(msg)
+}
+
+func (mh *MessageHandler) handlePlayerInput(msg *pb.PlayerInput) {
+	nm := mh.mcx.NetManager()
+
+	inputMessage := &pb.GameMessage{
+		Payload: &pb.GameMessage_PlayerInput{
+			PlayerInput: msg,
+		},
+	}
+
+	nm.SendMessageToAllExcept(inputMessage, msg.PlayerId)
 }
 
 func (mh *MessageHandler) handleMonsterAnim(request *pb.MonsterAnim) {
