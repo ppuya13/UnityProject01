@@ -5,6 +5,26 @@ using UnityEngine;
 
 public class OtherPlayer: PlayerController
 {
+    public Vector3 CurrentPosition { get; set; }
+    public Vector3 TargetPosition { get; set; }
+    public Vector3 Rotation { get; set; }
+    public float InterpolationFactor { get; set; } = 0.1f; // 보간 속도
+    
+    private Vector3 lastPosition; // 이전 프레임의 위치
+
+    protected override void Awake()
+    {
+        base.Awake();
+        lastPosition = transform.position;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        InterpolatePosition();
+        InterpolateRotation();
+    }
+
     protected override void TakeDamage(AttackConfig config, Transform monsterTransform)
     {
         Debug.Log($"공격 히트(damage: {config.damageAmount})");
@@ -104,4 +124,44 @@ public class OtherPlayer: PlayerController
         Animator.SetFloat(MotionIndex, motionIndex);
         Animator.SetTrigger(Damage);
     }
+
+    public void UpdatePosition(Vector3 newPosition, float horizontal, float vertical, bool isRunning)
+    {
+        TargetPosition = newPosition;
+        UpdateAnimationState(horizontal, vertical, isRunning);
+    }
+    
+    public void UpdateVelocity(Vector3 newVelocity)
+    {
+        Velocity = newVelocity;
+    }
+
+    public void UpdateRotation(Vector3 newRotation)
+    {
+        Rotation = newRotation;
+        transform.rotation = Quaternion.Euler(Rotation);
+    }
+
+    public void InterpolatePosition()
+    {
+        // 위치 보간
+        CurrentPosition = Vector3.Lerp(CurrentPosition, TargetPosition, InterpolationFactor);
+    }
+    
+    private void UpdateAnimationState(float horizontal, float vertical, bool isRunning)
+    {
+        if (Animator)
+        {
+            Animator.SetFloat(Horizontal, horizontal);
+            Animator.SetFloat(Vertical, vertical);
+        }
+    }
+    
+    public void InterpolateRotation()
+    {
+        Quaternion currentRotation = transform.rotation;
+        Quaternion targetRotation = Quaternion.Euler(Rotation);
+        transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, InterpolationFactor);
+    }
+    
 }

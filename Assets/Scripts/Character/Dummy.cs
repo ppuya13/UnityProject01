@@ -22,7 +22,7 @@ public class Dummy: PlayerController
     protected override void TakeDamage(AttackConfig config, Transform monsterTransform)
     {
         
-        Debug.Log($"공격 히트(damage: {config.damageAmount})");
+        // Debug.Log($"공격 히트(damage: {config.damageAmount})");
         //일단 넉백만 적용하도록 로직을 짤 것.
         Vector3 attackDirection = (transform.position - monsterTransform.position).normalized;
         

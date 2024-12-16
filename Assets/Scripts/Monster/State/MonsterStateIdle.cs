@@ -7,7 +7,7 @@ namespace Monster
     {
         public override void EnterState()
         {
-            if(SuperManager.Instance.IsHost)
+            if(SuperManager.Instance.isHost)
             {
                 Monster.SendTarget(Monster.SelectRandomTarget());
                 Monster.ReadyToAction += Monster.ChoicePattern;

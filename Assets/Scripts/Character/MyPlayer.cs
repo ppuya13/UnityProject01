@@ -14,24 +14,36 @@ public class MyPlayer: PlayerController
     public float mouseSensitivity = 100f; // 마우스 민감도
     public Camera characterCamera;
     public BodyTilt bodyTilt;
+
+    
+    private Vector3 lastPosition;
+    private Vector3 lastRotation;
+    private float lastSendTime;
+
+    private bool inGame = false;
     
     protected override void Awake()
     {
         base.Awake();
         CurrentSpeed = WalkSpeed;
+
+        lastPosition = transform.position;
+        lastSendTime = Time.time;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         
-        // Cursor.visible = false;
-        // Cursor.lockState = CursorLockMode.Locked;
     }
 
     protected override void Update()
     {
         base.Update();
         CursorControl();
+        SendPosition();
         
-        if (IsStun || IsDie) return; 
-        HandleMoveInput();
+        if (IsStun || IsDie || disableKeyboard) return; 
         HandleMouseInput();
+        HandleMoveInput();
         Move();
         TiltSetting();
     }
@@ -120,6 +132,30 @@ public class MyPlayer: PlayerController
                 Cursor.lockState = CursorLockMode.Locked;
             }
         }
+    }
+
+    //서버에 캐릭터의 현재 위치를 전송하는 메소드
+    private void SendPosition()
+    {
+        Vector3 currentPosition = transform.position;
+        Vector3 deltaPosition = currentPosition - lastPosition;
+        float deltaTime = Time.time - lastSendTime;
+        
+        if (deltaTime <= 0)
+        {
+            deltaTime = 0.016f; // 기본값 (약 60 FPS)
+        }
+        
+        Vector3 velocity = deltaPosition / deltaTime;
+        Vector3 rotation = transform.rotation.eulerAngles;
+        float horizontal = moveX;
+        float vertical = moveZ;
+        bool isRunning = IsRun;
+
+        TcpProtobufClient.Instance.SendPlayerMovement(currentPosition, velocity, rotation, horizontal, vertical, isRunning);
+        
+        lastPosition = currentPosition;
+        lastSendTime = Time.time;
     }
     
     private void HandleMoveInput()

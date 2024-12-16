@@ -127,13 +127,13 @@ namespace Monster
 
         public void SendChangeState(MonsterState state)
         {
-            if (!SuperManager.Instance.IsHost) return;
+            if (!SuperManager.Instance.isHost) return;
             TcpProtobufClient.Instance.SendMonsterChangeState(monsterId, state, AttackType.MonsterAttackUnknown);
         }
 
         public void SendChangeState(MonsterState state, AttackType attackType)
         {
-            if (!SuperManager.Instance.IsHost) return;
+            if (!SuperManager.Instance.isHost) return;
             TcpProtobufClient.Instance.SendMonsterChangeState(monsterId, state, attackType);
         }
 
@@ -152,7 +152,7 @@ namespace Monster
         public void SendMonsterAnim(int hash, ParameterType type, int intValue = 0, float floatValue = 0,
             bool boolValue = false)
         {
-            if (!SuperManager.Instance.IsHost) return;
+            if (!SuperManager.Instance.isHost) return;
             TcpProtobufClient.Instance.SendMonsterAnimMessage(monsterId, hash, type, intValue, floatValue, boolValue);
         }
 
@@ -337,7 +337,7 @@ namespace Monster
                 Quaternion startRotation = transform.rotation;
 
                 // 애니메이션 트리거 설정
-                if (SuperManager.Instance.IsHost)
+                if (SuperManager.Instance.isHost)
                     SendMonsterAnim(turnDirection == "Left" ? TurnLeft : TurnRight, ParameterType.ParameterTrigger);
 
                 // 애니메이션 클립의 지속 시간에 맞춰 회전 시간 설정
@@ -387,7 +387,7 @@ namespace Monster
         //찾은 목적지를 서버에 보내는 메소드 
         public void SendDestination(Vector3 destination)
         {
-            if (!SuperManager.Instance.IsHost) return;
+            if (!SuperManager.Instance.isHost) return;
             TcpProtobufClient.Instance.SendDestination(monsterId, destination);
         }
 
@@ -447,10 +447,10 @@ namespace Monster
         //타겟과의 거리에 따라서 패턴을 선택한다. 호스트만 사용함.
         public void ChoicePattern()
         {
-            if (!SuperManager.Instance.IsHost || patternCooldown < PatternThreshold) return;
+            if (!SuperManager.Instance.isHost || patternCooldown < PatternThreshold) return;
             patternCooldown = 0;
 
-            Debug.Log("패턴고를래");
+            // Debug.Log("패턴고를래");
             if (!currentTarget)
             {
                 //타겟이 없으면 그냥 걸어다님
@@ -508,11 +508,11 @@ namespace Monster
                     switch (selectedPattern.Value.Category)
                     {
                         case "Move":
-                            Debug.Log("이동할래");
+                            // Debug.Log("이동할래");
                             SendChangeState(MonsterState.MonsterStatusMove);
                             break;
                         case "Attack":
-                            Debug.Log("공격할래");
+                            // Debug.Log("공격할래");
                             switch (selectedPattern.Value.attackType)
                             {
                                 case AttackType.MonsterAttackClose01:
@@ -590,7 +590,7 @@ namespace Monster
         {
             currentAttack = AttackType.MonsterAttackUnknown;
             attackIdx = 0;
-            if (SuperManager.Instance.IsHost) SendChangeState(MonsterState.MonsterStatusIdle);
+            if (SuperManager.Instance.isHost) SendChangeState(MonsterState.MonsterStatusIdle);
         }
 
         //어택 인덱스를 설정(애니메이션에서 함)
@@ -670,8 +670,8 @@ namespace Monster
                     break;
             }
 
-            Debug.Log(
-                $"HitCheck - AttackType: {currentAttack}, AttackIdx: {attackIdx}, Distance: {distance}, ColliderType: {config.ColliderConfig.ColliderType}, Hits: {hitColliders.Length}");
+            // Debug.Log(
+            //     $"HitCheck - AttackType: {currentAttack}, AttackIdx: {attackIdx}, Distance: {distance}, ColliderType: {config.ColliderConfig.ColliderType}, Hits: {hitColliders.Length}");
             foreach (var hitCollider in hitColliders)
             {
                 PlayerController player = hitCollider.GetComponent<PlayerController>();
@@ -807,7 +807,7 @@ namespace Monster
         //공격 중에 회전을 하는 메소드, 애니메이션을 재생하지 않으며, AnimationEvent로 호출된다.
         public void RotateStart()
         {
-            Debug.Log("로테이트 시작");
+            // Debug.Log("로테이트 시작");
             if (rotateCoroutine != null)
             {
                 StopCoroutine(rotateCoroutine);
@@ -827,7 +827,7 @@ namespace Monster
         //공격 중에 회전을 하는 메소드, 애니메이션을 재생하지 않으며, AnimationEvent로 호출된다.
         public void RotateStop()
         {
-            Debug.Log("로테이트 종료");
+            // Debug.Log("로테이트 종료");
             if (rotateCoroutine != null)
             {
                 StopCoroutine(rotateCoroutine);

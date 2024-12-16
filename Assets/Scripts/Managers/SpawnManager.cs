@@ -2,13 +2,16 @@
 using Game;
 using Monster;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public class SpawnManager: DDSingletonManager<SpawnManager>
 {
     public GameObject monsterPrefab;
     public Transform monsterSpawner;
-    public GameObject characterPrefab;
+    public GameObject myPlayerPrefab;
+    public GameObject otherPlayerPrefab;
+    public Transform characterSpawner;
 
     public Dictionary<string, MonsterController> SpawnedMonsters = new();
     public Dictionary<string, PlayerController> SpawnedPlayers = new();
@@ -23,22 +26,31 @@ public class SpawnManager: DDSingletonManager<SpawnManager>
         characters = GameObject.Find("Characters");
     }
 
-    //연재는 이미 있는 플레이어 캐릭터에 id를 부여하는 기능이지만, 앞으로 플레이어를 스폰하는 기능으로 바뀔 여지가 있음.
-    public void SpawnPlayer(string playerId)
+    //플레이어를 스폰하는 기능
+    public void SpawnPlayer(string playerId, string nickname)
     {
-        foreach (Transform obj in characters.transform)
+
+        GameObject go;
+        PlayerController pc;
+        
+        if (playerId == SuperManager.Instance.playerId)
         {
-            PlayerController playerController = obj.GetComponent<PlayerController>();
-            if (playerController)
-            {
-                if (playerController.type is PlayerController.CharacterType.MyPlayer)
-                {
-                    playerController.playerId = playerId;
-                    SpawnedPlayers.TryAdd(playerId, playerController);
-                    MyCharacter = playerController;
-                }
-            }
+            go = Instantiate(myPlayerPrefab, characterSpawner.position, Quaternion.identity);
+            pc = go.GetComponent<PlayerController>();
+            pc.type = PlayerController.CharacterType.MyPlayer;
+            MyCharacter = pc;
         }
+        else
+        {
+            go = Instantiate(otherPlayerPrefab, characterSpawner.position, Quaternion.identity);
+            pc = go.GetComponent<PlayerController>();
+            pc.type = PlayerController.CharacterType.OtherPlayer;
+        }
+        
+        go.transform.SetParent(characters.transform);
+        pc.playerId = playerId;
+        pc.nickname = nickname;
+        SpawnedPlayers.TryAdd(playerId, pc);
     }
         
     public void ScanPlayer()

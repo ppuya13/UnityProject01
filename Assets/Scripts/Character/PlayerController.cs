@@ -18,6 +18,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     }
 
     public string playerId;
+    public string nickname;
     public CharacterType type;
 
     public float maxHp;
@@ -34,6 +35,8 @@ public abstract class PlayerController : SerializedMonoBehaviour
     protected CharacterController CharacterController;
     protected Animator Animator;
     public LookAtIK lookAtIK;
+    public bool disableKeyboard = false; //채팅할때 키보드 입력으로 움직이지 않도록 함.
+    
 
     private AttackType hitAttack;
     private int hitIndex;
@@ -110,7 +113,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
             if (hitDict.TryGetValue((attackType, attackIdx), out bool value))
             {
                 //value값은 의미없고, 일단 true면 같은 공격에 맞았다는 뜻
-                Debug.Log($"이미 맞은 공격임(AttackType: {attackType}, index: {attackIdx})");
+                // Debug.Log($"이미 맞은 공격임(AttackType: {attackType}, index: {attackIdx})");
                 return;
             }
 
