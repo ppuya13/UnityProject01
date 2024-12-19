@@ -843,7 +843,7 @@ namespace Monster
 
             float rotateSpeed = config.rotateSpeed;
 
-            Debug.Log($"AttackRotate started with rotateSpeed: {rotateSpeed}");
+            // Debug.Log($"AttackRotate started with rotateSpeed: {rotateSpeed}");
 
             Quaternion targetRotation = Quaternion.LookRotation(currentTarget.transform.position - transform.position);
             Quaternion startRotation = transform.rotation;

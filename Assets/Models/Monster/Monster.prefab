@@ -24823,7 +24823,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   animator: {fileID: 0}
   lookAtIK: {fileID: 0}
-  dummyMode: 1
+  dummyMode: 0
   targetList: []
   currentTarget: {fileID: 0}
   turnLeftClip: {fileID: 7400000, guid: 8dd2048633c6ab14d9f8957bd430364a, type: 2}
