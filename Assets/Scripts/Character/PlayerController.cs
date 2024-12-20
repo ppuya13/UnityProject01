@@ -113,7 +113,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
             if (hitDict.TryGetValue((attackType, attackIdx), out bool value))
             {
                 //value값은 의미없고, 일단 true면 같은 공격에 맞았다는 뜻
-                // Debug.Log($"이미 맞은 공격임(AttackType: {attackType}, index: {attackIdx})");
+                Debug.Log($"이미 맞은 공격임(AttackType: {attackType}, index: {attackIdx})");
                 return;
             }
 

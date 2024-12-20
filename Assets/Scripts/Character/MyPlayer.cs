@@ -3,7 +3,8 @@ using Monster;
 using RootMotion.FinalIK;
 using UnityEngine;
 
-public class MyPlayer: PlayerController
+public class 
+    MyPlayer: PlayerController
 {
     public float axisSpeed = 5f; // 축 값이 변화하는 속도
     private float moveX = 0f;

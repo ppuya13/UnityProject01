@@ -670,6 +670,8 @@ namespace Monster
                     break;
             }
 
+            Debug.Log($"공격, {hitColliders.Length}");
+
             // Debug.Log(
             //     $"HitCheck - AttackType: {currentAttack}, AttackIdx: {attackIdx}, Distance: {distance}, ColliderType: {config.ColliderConfig.ColliderType}, Hits: {hitColliders.Length}");
             foreach (var hitCollider in hitColliders)

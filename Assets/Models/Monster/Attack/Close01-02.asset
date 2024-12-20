@@ -85,7 +85,7 @@ MonoBehaviour:
   attackPositionOffset: {x: 0, y: 0.6, z: 0}
   knockBackType: 3
   knockBackPower: 2.5
-  stunDuration: 0.5
+  stunDuration: 0.8
   knockBackForceMode: 0
   particleEffect: {fileID: 1872147318604286, guid: 3fd0e4ff64fe4a441a08416e525e8a8a, type: 3}
   effectPosition: {x: 0, y: 0.1, z: -0.7}
