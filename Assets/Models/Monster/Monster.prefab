@@ -24667,6 +24667,10 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 3caa5c605a5026247a88fc959f24ae40, type: 2}
     - {fileID: 11400000, guid: 91840a3e1ba499142817e9876e35405d, type: 2}
     - {fileID: 11400000, guid: c31d58fcf1a621442803fcd55ead02f1, type: 2}
+    - {fileID: 11400000, guid: 0fee21a32ec517241a53a6a7b4d0cced, type: 2}
+    - {fileID: 11400000, guid: 9b9f9f5dd9a52e14b9206bc0742f1ad6, type: 2}
+    - {fileID: 11400000, guid: 8d42a19462eccdc40bfa9281ca55806a, type: 2}
+    - {fileID: 11400000, guid: a45eeb11df705884d995a5e253073a88, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -24687,6 +24691,9 @@ MonoBehaviour:
     - Name: Dodge
       Entry: 3
       Data: 1353639306
+    - Name: LR
+      Entry: 3
+      Data: -1737481682
     - Name: TurnLeft
       Entry: 3
       Data: -1847120011
@@ -24702,6 +24709,9 @@ MonoBehaviour:
     - Name: AttackClose02
       Entry: 3
       Data: -517809657
+    - Name: AttackClose03
+      Entry: 3
+      Data: -1775900015
     - Name: AttackCounter
       Entry: 3
       Data: 1130465550
@@ -24722,7 +24732,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 4
+      Data: 8
     - Name: 
       Entry: 7
       Data: 
@@ -24812,6 +24822,94 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 2
+    - Name: Item2
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 2
+    - Name: Item2
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 3
+    - Name: Item2
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 3
+    - Name: Item2
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -24819,6 +24917,7 @@ MonoBehaviour:
       Data: 
   monsterId: 
   lookAtThis: {fileID: 772563401325919270}
+  currentState: 0
   currentAttack: 0
   agent: {fileID: 0}
   animator: {fileID: 0}

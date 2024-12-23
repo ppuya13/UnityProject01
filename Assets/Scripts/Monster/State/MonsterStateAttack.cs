@@ -8,6 +8,8 @@ namespace Monster
         
         public override void EnterState()
         {
+            Monster.agent.ResetPath();
+            // Debug.Log("공격상태진입");
             switch (Monster.currentAttack)
             {
                 case AttackType.MonsterAttackClose01:
@@ -15,6 +17,9 @@ namespace Monster
                     break;
                 case AttackType.MonsterAttackClose02:
                     AttackClose02();
+                    break;
+                case AttackType.MonsterAttackClose03:
+                    AttackClose03();
                     break;
                 case AttackType.MonsterAttackCloseCounter:
                     AttackCounter();
@@ -35,15 +40,19 @@ namespace Monster
 
         private void AttackClose01()
         {
-            Monster.animator.SetTrigger(Monster.AttackClose01);
+            Monster.animator.SetTrigger(Monster.AttackClose02);
         }
         private void AttackClose02()
         {
-            Monster.animator.SetTrigger(Monster.AttackClose01);
+            Monster.animator.SetTrigger(Monster.AttackClose02);
+        }
+        private void AttackClose03()
+        {
+            Monster.animator.SetTrigger(Monster.AttackClose03);
         }
         private void AttackCounter()
         {
-            Monster.animator.SetTrigger(Monster.AttackClose01);
+            Monster.animator.SetTrigger(Monster.AttackClose02);
         }
 
     }

@@ -15,7 +15,8 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 1872147318604286, guid: 3fd0e4ff64fe4a441a08416e525e8a8a, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -75,6 +76,75 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: EffectConfigs
+      Entry: 7
+      Data: 1|Monster.EffectConfig[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: Monster.EffectConfig, Assembly-CSharp
+    - Name: ParticleEffect
+      Entry: 10
+      Data: 0
+    - Name: EffectPosition
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: -0.7
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectRotation
+      Entry: 7
+      Data: UnityEngine.Quaternion, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0.9848077
+    - Name: 
+      Entry: 4
+      Data: -0.1736482
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectScale
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0.6
+    - Name: 
+      Entry: 4
+      Data: 0.6
+    - Name: 
+      Entry: 4
+      Data: 0.8
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   damageAmount: 10
   moveSpeed: 1.5
   moveTime: 5
@@ -87,8 +157,4 @@ MonoBehaviour:
   knockBackPower: 2.5
   stunDuration: 0.5
   knockBackForceMode: 0
-  particleEffect: {fileID: 1872147318604286, guid: 3fd0e4ff64fe4a441a08416e525e8a8a, type: 3}
-  effectPosition: {x: 0, y: 0, z: -0.7}
-  effectRotation: {x: 0, y: 0, z: 0.9848077, w: -0.1736482}
-  effectScale: {x: 0.6, y: 0.6, z: 0.8}
   soundEffects: []

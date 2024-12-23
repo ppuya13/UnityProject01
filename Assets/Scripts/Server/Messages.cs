@@ -24,83 +24,86 @@ namespace Game {
     static MessagesReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg5tZXNzYWdlcy5wcm90bxIEZ2FtZSLyBAoLR2FtZU1lc3NhZ2USKwoNbG9n",
+            "Cg5tZXNzYWdlcy5wcm90bxIEZ2FtZSKqBQoLR2FtZU1lc3NhZ2USKwoNbG9n",
             "aW5fcmVxdWVzdBgBIAEoCzISLmdhbWUuTG9naW5SZXF1ZXN0SAASLQoObG9n",
             "aW5fcmVzcG9uc2UYAiABKAsyEy5nYW1lLkxvZ2luUmVzcG9uc2VIABItCg5s",
             "b2dvdXRfcmVxdWVzdBgDIAEoCzITLmdhbWUuTG9nb3V0UmVxdWVzdEgAEi8K",
             "D2xvZ291dF9yZXNwb25zZRgEIAEoCzIULmdhbWUuTG9nb3V0UmVzcG9uc2VI",
             "ABIlCgpnYW1lX3N0YXJ0GAUgASgLMg8uZ2FtZS5HYW1lU3RhcnRIABIpCgxj",
-            "aGF0X21lc3NhZ2UYBiABKAsyES5nYW1lLkNoYXRNZXNzYWdlSAASKQoMcGxh",
-            "eWVyX2lucHV0GAsgASgLMhEuZ2FtZS5QbGF5ZXJJbnB1dEgAEikKDHBsYXll",
-            "cl9zcGF3bhgMIAEoCzIRLmdhbWUuUGxheWVyU3Bhd25IABIrCg1tb25zdGVy",
-            "X3NwYXduGB8gASgLMhIuZ2FtZS5Nb25zdGVyU3Bhd25IABI+Chdtb25zdGVy",
-            "X3Bvc2l0aW9uX3VwZGF0ZRggIAEoCzIbLmdhbWUuTW9uc3RlclBvc2l0aW9u",
-            "VXBkYXRlSAASKQoMbW9uc3Rlcl9hbmltGCEgASgLMhEuZ2FtZS5Nb25zdGVy",
-            "QW5pbUgAEi0KDm1vbnN0ZXJfYWN0aW9uGCIgASgLMhMuZ2FtZS5Nb25zdGVy",
-            "QWN0aW9uSAASLQoOc2VydmVyX3N0YXJ0ZWQYZCABKAsyEy5nYW1lLlNlcnZl",
-            "clN0YXJ0ZWRIAEIJCgdwYXlsb2FkIiwKCUdvVmVjdG9yMxIJCgF4GAEgASgC",
-            "EgkKAXkYAiABKAISCQoBehgDIAEoAiIZCgRQaW5nEhEKCXRpbWVzdGFtcBgB",
-            "IAEoAyIZCgRQb25nEhEKCXRpbWVzdGFtcBgBIAEoAyIPCg1TZXJ2ZXJTdGFy",
-            "dGVkIkIKDExvZ2luUmVxdWVzdBIKCgJpZBgBIAEoCRIQCghuaWNrbmFtZRgC",
-            "IAEoCRIUCgxnYW1lX3VzZXJfaWQYAyABKAkicgoNTG9naW5SZXNwb25zZRIP",
-            "CgdzdWNjZXNzGAEgASgIEhEKCXBsYXllcl9pZBgCIAEoCRIQCgh1c2VybmFt",
-            "ZRgDIAEoCRIUCgxnYW1lX3VzZXJfaWQYBCABKAkSFQoNZXJyb3JfbWVzc2Fn",
-            "ZRgFIAEoCSILCglHYW1lU3RhcnQiUwoLQ2hhdE1lc3NhZ2USEQoJcGxheWVy",
-            "X2lkGAEgASgJEhAKCG5pY2tuYW1lGAIgASgJEg8KB21lc3NhZ2UYAyABKAkS",
-            "DgoGc3lzdGVtGAQgASgIIlUKC1BsYXllclNwYXduEhEKCXBsYXllcl9pZBgB",
-            "IAEoCRIQCghuaWNrbmFtZRgCIAEoCRIhCgdwbGF5ZXJzGAMgAygLMhAuZ2Ft",
-            "ZS5QbGF5ZXJJbmZvIioKClBsYXllckluZm8SCgoCaWQYASABKAkSEAoIbmlj",
-            "a25hbWUYAiABKAkiIgoNTG9nb3V0UmVxdWVzdBIRCglwbGF5ZXJfaWQYASAB",
-            "KAkiOAoOTG9nb3V0UmVzcG9uc2USDwoHc3VjY2VzcxgBIAEoCBIVCg1lcnJv",
-            "cl9tZXNzYWdlGAIgASgJIo4DCgtQbGF5ZXJJbnB1dBIRCglwbGF5ZXJfaWQY",
-            "ASABKAkSMgoScGxheWVyX2FjdGlvbl90eXBlGAIgASgOMhYuZ2FtZS5QbGF5",
-            "ZXJBY3Rpb25UeXBlEiEKCHBvc2l0aW9uGAMgASgLMg8uZ2FtZS5Hb1ZlY3Rv",
-            "cjMSIQoIdmVsb2NpdHkYBCABKAsyDy5nYW1lLkdvVmVjdG9yMxIhCghyb3Rh",
-            "dGlvbhgFIAEoCzIPLmdhbWUuR29WZWN0b3IzEhIKCmhvcml6b250YWwYDiAB",
-            "KAISEAoIdmVydGljYWwYDyABKAISEQoJaXNSdW5uaW5nGBAgASgIEhEKCWFu",
-            "aW1faGFzaBgGIAEoBRIiCglrbm9ja2JhY2sYCSABKAsyDy5nYW1lLkdvVmVj",
-            "dG9yMxIVCg1zdHVuX2R1cmF0aW9uGAogASgCEhIKCmN1cnJlbnRfaHAYCyAB",
-            "KAISDgoGaXNfZGllGAwgASgIEiQKBnBhcmFtcxgNIAEoCzIULmdhbWUuQW5p",
-            "bWF0b3JQYXJhbXMiUAoOQW5pbWF0b3JQYXJhbXMSCgoCbHIYASABKAISCgoC",
-            "ZmIYAiABKAISEAoIaXNfYm91bmQYAyABKAgSFAoMbW90aW9uX2luZGV4GAQg",
-            "ASgCIjoKFU1vbnN0ZXJQb3NpdGlvblVwZGF0ZRIhCghwb3NpdGlvbhgBIAEo",
-            "CzIPLmdhbWUuR29WZWN0b3IzIiIKDE1vbnN0ZXJTcGF3bhISCgptb25zdGVy",
-            "X2lkGAEgASgJIp0BCgtNb25zdGVyQW5pbRISCgptb25zdGVyX2lkGAEgASgJ",
-            "EhEKCWFuaW1faGFzaBgCIAEoBRIrCg5wYXJhbWV0ZXJfdHlwZRgDIAEoDjIT",
-            "LmdhbWUuUGFyYW1ldGVyVHlwZRIRCglpbnRfdmFsdWUYBCABKAUSEwoLZmxv",
-            "YXRfdmFsdWUYBSABKAISEgoKYm9vbF92YWx1ZRgGIAEoCCLUAQoNTW9uc3Rl",
-            "ckFjdGlvbhISCgptb25zdGVyX2lkGAEgASgJEiUKC2FjdGlvbl90eXBlGAIg",
-            "ASgOMhAuZ2FtZS5BY3Rpb25UeXBlEikKDW1vbnN0ZXJfc3RhdGUYAyABKA4y",
-            "Ei5nYW1lLk1vbnN0ZXJTdGF0ZRIlCgthdHRhY2tfdHlwZRgEIAEoDjIQLmdh",
-            "bWUuQXR0YWNrVHlwZRIQCgh0YXJnZXRJZBgFIAEoCRIkCgtkZXN0aW5hdGlv",
-            "bhgGIAEoCzIPLmdhbWUuR29WZWN0b3IzKn0KEFBsYXllckFjdGlvblR5cGUS",
-            "GQoVUExBWUVSX0FDVElPTl9VTktOT1dOEAASFgoSUExBWUVSX0FDVElPTl9N",
-            "T1ZFEAESGAoUUExBWUVSX0FDVElPTl9BVFRBQ0sQAhIcChhQTEFZRVJfQUNU",
-            "SU9OX1RBS0VEQU1BR0UQAyqdAQoNS25vY2tCYWNrVHlwZRIVChFLTk9DS0JB",
-            "Q0tfVU5LTk9XThAAEhIKDktOT0NLQkFDS19OT05FEAESEAoMS05PQ0tCQUNL",
-            "X1VQEAISEgoOS05PQ0tCQUNLX1BVU0gQAxISCg5LTk9DS0JBQ0tfUFVMTBAE",
-            "EhMKD0tOT0NLQkFDS19CT1VORBAFEhIKDktOT0NLQkFDS19ET1dOEAYqeQoN",
-            "UGFyYW1ldGVyVHlwZRIVChFQQVJBTUVURVJfVU5LTk9XThAAEhEKDVBBUkFN",
-            "RVRFUl9JTlQQARITCg9QQVJBTUVURVJfRkxPQVQQAhISCg5QQVJBTUVURVJf",
-            "Qk9PTBADEhUKEVBBUkFNRVRFUl9UUklHR0VSEAQqigEKCkFjdGlvblR5cGUS",
-            "GgoWTU9OU1RFUl9BQ1RJT05fVU5LTk9XThAAEh0KGU1PTlNURVJfQUNUSU9O",
-            "X1NFVF9TVEFUVVMQARIdChlNT05TVEVSX0FDVElPTl9TRVRfVEFSR0VUEAIS",
-            "IgoeTU9OU1RFUl9BQ1RJT05fU0VUX0RFU1RJTkFUSU9OEAMqxAEKDE1vbnN0",
-            "ZXJTdGF0ZRIaChZNT05TVEVSX1NUQVRVU19VTktOT1dOEAASGAoUTU9OU1RF",
-            "Ul9TVEFUVVNfU1BBV04QARIXChNNT05TVEVSX1NUQVRVU19JRExFEAISFwoT",
-            "TU9OU1RFUl9TVEFUVVNfTU9WRRADEhcKE01PTlNURVJfU1RBVFVTX0RBU0gQ",
-            "BBIYChRNT05TVEVSX1NUQVRVU19ET0RHRRAFEhkKFU1PTlNURVJfU1RBVFVT",
-            "X0FUVEFDSxAGKokCCgpBdHRhY2tUeXBlEhoKFk1PTlNURVJfQVRUQUNLX1VO",
-            "S05PV04QABIbChdNT05TVEVSX0FUVEFDS19DTE9TRV8wMRABEhsKF01PTlNU",
-            "RVJfQVRUQUNLX0NMT1NFXzAyEAISIAocTU9OU1RFUl9BVFRBQ0tfQ0xPU0Vf",
-            "Q09VTlRFUhADEiAKHE1PTlNURVJfQVRUQUNLX1NIT1JUUkFOR0VfMDEQCxIe",
-            "ChpNT05TVEVSX0FUVEFDS19NSURSQU5HRV8wMRAVEh8KG01PTlNURVJfQVRU",
-            "QUNLX0xPTkdSQU5HRV8wMRAfEiAKHE1PTlNURVJfQVRUQUNLX0VYVFJBUkFO",
-            "R0VfMDEQKUIRWg9TZXJ2ZXIvbWVzc2FnZXNiBnByb3RvMw=="));
+            "aGF0X21lc3NhZ2UYBiABKAsyES5nYW1lLkNoYXRNZXNzYWdlSAASGgoEcGlu",
+            "ZxgHIAEoCzIKLmdhbWUuUGluZ0gAEhoKBHBvbmcYCCABKAsyCi5nYW1lLlBv",
+            "bmdIABIpCgxwbGF5ZXJfaW5wdXQYCyABKAsyES5nYW1lLlBsYXllcklucHV0",
+            "SAASKQoMcGxheWVyX3NwYXduGAwgASgLMhEuZ2FtZS5QbGF5ZXJTcGF3bkgA",
+            "EisKDW1vbnN0ZXJfc3Bhd24YHyABKAsyEi5nYW1lLk1vbnN0ZXJTcGF3bkgA",
+            "Ej4KF21vbnN0ZXJfcG9zaXRpb25fdXBkYXRlGCAgASgLMhsuZ2FtZS5Nb25z",
+            "dGVyUG9zaXRpb25VcGRhdGVIABIpCgxtb25zdGVyX2FuaW0YISABKAsyES5n",
+            "YW1lLk1vbnN0ZXJBbmltSAASLQoObW9uc3Rlcl9hY3Rpb24YIiABKAsyEy5n",
+            "YW1lLk1vbnN0ZXJBY3Rpb25IABItCg5zZXJ2ZXJfc3RhcnRlZBhkIAEoCzIT",
+            "LmdhbWUuU2VydmVyU3RhcnRlZEgAQgkKB3BheWxvYWQiLAoJR29WZWN0b3Iz",
+            "EgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIhkKBFBpbmcSEQoJ",
+            "dGltZXN0YW1wGAEgASgDIhkKBFBvbmcSEQoJdGltZXN0YW1wGAEgASgDIg8K",
+            "DVNlcnZlclN0YXJ0ZWQiQgoMTG9naW5SZXF1ZXN0EgoKAmlkGAEgASgJEhAK",
+            "CG5pY2tuYW1lGAIgASgJEhQKDGdhbWVfdXNlcl9pZBgDIAEoCSJyCg1Mb2dp",
+            "blJlc3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgSEQoJcGxheWVyX2lkGAIgASgJ",
+            "EhAKCHVzZXJuYW1lGAMgASgJEhQKDGdhbWVfdXNlcl9pZBgEIAEoCRIVCg1l",
+            "cnJvcl9tZXNzYWdlGAUgASgJIgsKCUdhbWVTdGFydCJTCgtDaGF0TWVzc2Fn",
+            "ZRIRCglwbGF5ZXJfaWQYASABKAkSEAoIbmlja25hbWUYAiABKAkSDwoHbWVz",
+            "c2FnZRgDIAEoCRIOCgZzeXN0ZW0YBCABKAgiVQoLUGxheWVyU3Bhd24SEQoJ",
+            "cGxheWVyX2lkGAEgASgJEhAKCG5pY2tuYW1lGAIgASgJEiEKB3BsYXllcnMY",
+            "AyADKAsyEC5nYW1lLlBsYXllckluZm8iKgoKUGxheWVySW5mbxIKCgJpZBgB",
+            "IAEoCRIQCghuaWNrbmFtZRgCIAEoCSIiCg1Mb2dvdXRSZXF1ZXN0EhEKCXBs",
+            "YXllcl9pZBgBIAEoCSI4Cg5Mb2dvdXRSZXNwb25zZRIPCgdzdWNjZXNzGAEg",
+            "ASgIEhUKDWVycm9yX21lc3NhZ2UYAiABKAkijgMKC1BsYXllcklucHV0EhEK",
+            "CXBsYXllcl9pZBgBIAEoCRIyChJwbGF5ZXJfYWN0aW9uX3R5cGUYAiABKA4y",
+            "Fi5nYW1lLlBsYXllckFjdGlvblR5cGUSIQoIcG9zaXRpb24YAyABKAsyDy5n",
+            "YW1lLkdvVmVjdG9yMxIhCgh2ZWxvY2l0eRgEIAEoCzIPLmdhbWUuR29WZWN0",
+            "b3IzEiEKCHJvdGF0aW9uGAUgASgLMg8uZ2FtZS5Hb1ZlY3RvcjMSEgoKaG9y",
+            "aXpvbnRhbBgOIAEoAhIQCgh2ZXJ0aWNhbBgPIAEoAhIRCglpc1J1bm5pbmcY",
+            "ECABKAgSEQoJYW5pbV9oYXNoGAYgASgFEiIKCWtub2NrYmFjaxgJIAEoCzIP",
+            "LmdhbWUuR29WZWN0b3IzEhUKDXN0dW5fZHVyYXRpb24YCiABKAISEgoKY3Vy",
+            "cmVudF9ocBgLIAEoAhIOCgZpc19kaWUYDCABKAgSJAoGcGFyYW1zGA0gASgL",
+            "MhQuZ2FtZS5BbmltYXRvclBhcmFtcyJhCg5BbmltYXRvclBhcmFtcxIKCgJs",
+            "chgBIAEoAhIKCgJmYhgCIAEoAhIQCghpc19ib3VuZBgDIAEoCBIPCgdpc19k",
+            "b3duGAQgASgIEhQKDG1vdGlvbl9pbmRleBgFIAEoAiI6ChVNb25zdGVyUG9z",
+            "aXRpb25VcGRhdGUSIQoIcG9zaXRpb24YASABKAsyDy5nYW1lLkdvVmVjdG9y",
+            "MyIiCgxNb25zdGVyU3Bhd24SEgoKbW9uc3Rlcl9pZBgBIAEoCSKdAQoLTW9u",
+            "c3RlckFuaW0SEgoKbW9uc3Rlcl9pZBgBIAEoCRIRCglhbmltX2hhc2gYAiAB",
+            "KAUSKwoOcGFyYW1ldGVyX3R5cGUYAyABKA4yEy5nYW1lLlBhcmFtZXRlclR5",
+            "cGUSEQoJaW50X3ZhbHVlGAQgASgFEhMKC2Zsb2F0X3ZhbHVlGAUgASgCEhIK",
+            "CmJvb2xfdmFsdWUYBiABKAgi6gEKDU1vbnN0ZXJBY3Rpb24SEgoKbW9uc3Rl",
+            "cl9pZBgBIAEoCRIlCgthY3Rpb25fdHlwZRgCIAEoDjIQLmdhbWUuQWN0aW9u",
+            "VHlwZRIpCg1tb25zdGVyX3N0YXRlGAMgASgOMhIuZ2FtZS5Nb25zdGVyU3Rh",
+            "dGUSJQoLYXR0YWNrX3R5cGUYBCABKA4yEC5nYW1lLkF0dGFja1R5cGUSEAoI",
+            "dGFyZ2V0SWQYBSABKAkSJAoLZGVzdGluYXRpb24YBiABKAsyDy5nYW1lLkdv",
+            "VmVjdG9yMxIUCgxkb2RnZV9vcHRpb24YByABKAIqfQoQUGxheWVyQWN0aW9u",
+            "VHlwZRIZChVQTEFZRVJfQUNUSU9OX1VOS05PV04QABIWChJQTEFZRVJfQUNU",
+            "SU9OX01PVkUQARIYChRQTEFZRVJfQUNUSU9OX0FUVEFDSxACEhwKGFBMQVlF",
+            "Ul9BQ1RJT05fVEFLRURBTUFHRRADKp0BCg1Lbm9ja0JhY2tUeXBlEhUKEUtO",
+            "T0NLQkFDS19VTktOT1dOEAASEgoOS05PQ0tCQUNLX05PTkUQARIQCgxLTk9D",
+            "S0JBQ0tfVVAQAhISCg5LTk9DS0JBQ0tfUFVTSBADEhIKDktOT0NLQkFDS19Q",
+            "VUxMEAQSEwoPS05PQ0tCQUNLX0JPVU5EEAUSEgoOS05PQ0tCQUNLX0RPV04Q",
+            "Bip5Cg1QYXJhbWV0ZXJUeXBlEhUKEVBBUkFNRVRFUl9VTktOT1dOEAASEQoN",
+            "UEFSQU1FVEVSX0lOVBABEhMKD1BBUkFNRVRFUl9GTE9BVBACEhIKDlBBUkFN",
+            "RVRFUl9CT09MEAMSFQoRUEFSQU1FVEVSX1RSSUdHRVIQBCqKAQoKQWN0aW9u",
+            "VHlwZRIaChZNT05TVEVSX0FDVElPTl9VTktOT1dOEAASHQoZTU9OU1RFUl9B",
+            "Q1RJT05fU0VUX1NUQVRVUxABEh0KGU1PTlNURVJfQUNUSU9OX1NFVF9UQVJH",
+            "RVQQAhIiCh5NT05TVEVSX0FDVElPTl9TRVRfREVTVElOQVRJT04QAyrEAQoM",
+            "TW9uc3RlclN0YXRlEhoKFk1PTlNURVJfU1RBVFVTX1VOS05PV04QABIYChRN",
+            "T05TVEVSX1NUQVRVU19TUEFXThABEhcKE01PTlNURVJfU1RBVFVTX0lETEUQ",
+            "AhIXChNNT05TVEVSX1NUQVRVU19NT1ZFEAMSFwoTTU9OU1RFUl9TVEFUVVNf",
+            "REFTSBAEEhgKFE1PTlNURVJfU1RBVFVTX0RPREdFEAUSGQoVTU9OU1RFUl9T",
+            "VEFUVVNfQVRUQUNLEAYqpgIKCkF0dGFja1R5cGUSGgoWTU9OU1RFUl9BVFRB",
+            "Q0tfVU5LTk9XThAAEhsKF01PTlNURVJfQVRUQUNLX0NMT1NFXzAxEAESGwoX",
+            "TU9OU1RFUl9BVFRBQ0tfQ0xPU0VfMDIQAhIbChdNT05TVEVSX0FUVEFDS19D",
+            "TE9TRV8wMxADEiAKHE1PTlNURVJfQVRUQUNLX0NMT1NFX0NPVU5URVIQBBIg",
+            "ChxNT05TVEVSX0FUVEFDS19TSE9SVFJBTkdFXzAxEAsSHgoaTU9OU1RFUl9B",
+            "VFRBQ0tfTUlEUkFOR0VfMDEQFRIfChtNT05TVEVSX0FUVEFDS19MT05HUkFO",
+            "R0VfMDEQHxIgChxNT05TVEVSX0FUVEFDS19FWFRSQVJBTkdFXzAxEClCEVoP",
+            "U2VydmVyL21lc3NhZ2VzYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Game.PlayerActionType), typeof(global::Game.KnockBackType), typeof(global::Game.ParameterType), typeof(global::Game.ActionType), typeof(global::Game.MonsterState), typeof(global::Game.AttackType), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.GameMessage), global::Game.GameMessage.Parser, new[]{ "LoginRequest", "LoginResponse", "LogoutRequest", "LogoutResponse", "GameStart", "ChatMessage", "PlayerInput", "PlayerSpawn", "MonsterSpawn", "MonsterPositionUpdate", "MonsterAnim", "MonsterAction", "ServerStarted" }, new[]{ "Payload" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.GameMessage), global::Game.GameMessage.Parser, new[]{ "LoginRequest", "LoginResponse", "LogoutRequest", "LogoutResponse", "GameStart", "ChatMessage", "Ping", "Pong", "PlayerInput", "PlayerSpawn", "MonsterSpawn", "MonsterPositionUpdate", "MonsterAnim", "MonsterAction", "ServerStarted" }, new[]{ "Payload" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.GoVector3), global::Game.GoVector3.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.Ping), global::Game.Ping.Parser, new[]{ "Timestamp" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.Pong), global::Game.Pong.Parser, new[]{ "Timestamp" }, null, null, null, null),
@@ -114,11 +117,11 @@ namespace Game {
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.LogoutRequest), global::Game.LogoutRequest.Parser, new[]{ "PlayerId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.LogoutResponse), global::Game.LogoutResponse.Parser, new[]{ "Success", "ErrorMessage" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.PlayerInput), global::Game.PlayerInput.Parser, new[]{ "PlayerId", "PlayerActionType", "Position", "Velocity", "Rotation", "Horizontal", "Vertical", "IsRunning", "AnimHash", "Knockback", "StunDuration", "CurrentHp", "IsDie", "Params" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.AnimatorParams), global::Game.AnimatorParams.Parser, new[]{ "Lr", "Fb", "IsBound", "MotionIndex" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.AnimatorParams), global::Game.AnimatorParams.Parser, new[]{ "Lr", "Fb", "IsBound", "IsDown", "MotionIndex" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterPositionUpdate), global::Game.MonsterPositionUpdate.Parser, new[]{ "Position" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterSpawn), global::Game.MonsterSpawn.Parser, new[]{ "MonsterId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterAnim), global::Game.MonsterAnim.Parser, new[]{ "MonsterId", "AnimHash", "ParameterType", "IntValue", "FloatValue", "BoolValue" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterAction), global::Game.MonsterAction.Parser, new[]{ "MonsterId", "ActionType", "MonsterState", "AttackType", "TargetId", "Destination" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterAction), global::Game.MonsterAction.Parser, new[]{ "MonsterId", "ActionType", "MonsterState", "AttackType", "TargetId", "Destination", "DodgeOption" }, null, null, null, null)
           }));
     }
     #endregion
@@ -184,9 +187,13 @@ namespace Game {
     /// </summary>
     [pbr::OriginalName("MONSTER_ATTACK_CLOSE_02")] MonsterAttackClose02 = 2,
     /// <summary>
+    ///뒤로구르고 베기
+    /// </summary>
+    [pbr::OriginalName("MONSTER_ATTACK_CLOSE_03")] MonsterAttackClose03 = 3,
+    /// <summary>
     ///반격기
     /// </summary>
-    [pbr::OriginalName("MONSTER_ATTACK_CLOSE_COUNTER")] MonsterAttackCloseCounter = 3,
+    [pbr::OriginalName("MONSTER_ATTACK_CLOSE_COUNTER")] MonsterAttackCloseCounter = 4,
     /// <summary>
     ///11~20 근거리 공격    
     /// </summary>
@@ -261,6 +268,12 @@ namespace Game {
           break;
         case PayloadOneofCase.ChatMessage:
           ChatMessage = other.ChatMessage.Clone();
+          break;
+        case PayloadOneofCase.Ping:
+          Ping = other.Ping.Clone();
+          break;
+        case PayloadOneofCase.Pong:
+          Pong = other.Pong.Clone();
           break;
         case PayloadOneofCase.PlayerInput:
           PlayerInput = other.PlayerInput.Clone();
@@ -366,6 +379,30 @@ namespace Game {
       }
     }
 
+    /// <summary>Field number for the "ping" field.</summary>
+    public const int PingFieldNumber = 7;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Game.Ping Ping {
+      get { return payloadCase_ == PayloadOneofCase.Ping ? (global::Game.Ping) payload_ : null; }
+      set {
+        payload_ = value;
+        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.Ping;
+      }
+    }
+
+    /// <summary>Field number for the "pong" field.</summary>
+    public const int PongFieldNumber = 8;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Game.Pong Pong {
+      get { return payloadCase_ == PayloadOneofCase.Pong ? (global::Game.Pong) payload_ : null; }
+      set {
+        payload_ = value;
+        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.Pong;
+      }
+    }
+
     /// <summary>Field number for the "player_input" field.</summary>
     public const int PlayerInputFieldNumber = 11;
     /// <summary>
@@ -466,6 +503,8 @@ namespace Game {
       LogoutResponse = 4,
       GameStart = 5,
       ChatMessage = 6,
+      Ping = 7,
+      Pong = 8,
       PlayerInput = 11,
       PlayerSpawn = 12,
       MonsterSpawn = 31,
@@ -509,6 +548,8 @@ namespace Game {
       if (!object.Equals(LogoutResponse, other.LogoutResponse)) return false;
       if (!object.Equals(GameStart, other.GameStart)) return false;
       if (!object.Equals(ChatMessage, other.ChatMessage)) return false;
+      if (!object.Equals(Ping, other.Ping)) return false;
+      if (!object.Equals(Pong, other.Pong)) return false;
       if (!object.Equals(PlayerInput, other.PlayerInput)) return false;
       if (!object.Equals(PlayerSpawn, other.PlayerSpawn)) return false;
       if (!object.Equals(MonsterSpawn, other.MonsterSpawn)) return false;
@@ -530,6 +571,8 @@ namespace Game {
       if (payloadCase_ == PayloadOneofCase.LogoutResponse) hash ^= LogoutResponse.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.GameStart) hash ^= GameStart.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.ChatMessage) hash ^= ChatMessage.GetHashCode();
+      if (payloadCase_ == PayloadOneofCase.Ping) hash ^= Ping.GetHashCode();
+      if (payloadCase_ == PayloadOneofCase.Pong) hash ^= Pong.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.PlayerInput) hash ^= PlayerInput.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.PlayerSpawn) hash ^= PlayerSpawn.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.MonsterSpawn) hash ^= MonsterSpawn.GetHashCode();
@@ -579,6 +622,14 @@ namespace Game {
       if (payloadCase_ == PayloadOneofCase.ChatMessage) {
         output.WriteRawTag(50);
         output.WriteMessage(ChatMessage);
+      }
+      if (payloadCase_ == PayloadOneofCase.Ping) {
+        output.WriteRawTag(58);
+        output.WriteMessage(Ping);
+      }
+      if (payloadCase_ == PayloadOneofCase.Pong) {
+        output.WriteRawTag(66);
+        output.WriteMessage(Pong);
       }
       if (payloadCase_ == PayloadOneofCase.PlayerInput) {
         output.WriteRawTag(90);
@@ -642,6 +693,14 @@ namespace Game {
         output.WriteRawTag(50);
         output.WriteMessage(ChatMessage);
       }
+      if (payloadCase_ == PayloadOneofCase.Ping) {
+        output.WriteRawTag(58);
+        output.WriteMessage(Ping);
+      }
+      if (payloadCase_ == PayloadOneofCase.Pong) {
+        output.WriteRawTag(66);
+        output.WriteMessage(Pong);
+      }
       if (payloadCase_ == PayloadOneofCase.PlayerInput) {
         output.WriteRawTag(90);
         output.WriteMessage(PlayerInput);
@@ -697,6 +756,12 @@ namespace Game {
       }
       if (payloadCase_ == PayloadOneofCase.ChatMessage) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(ChatMessage);
+      }
+      if (payloadCase_ == PayloadOneofCase.Ping) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Ping);
+      }
+      if (payloadCase_ == PayloadOneofCase.Pong) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Pong);
       }
       if (payloadCase_ == PayloadOneofCase.PlayerInput) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerInput);
@@ -767,6 +832,18 @@ namespace Game {
             ChatMessage = new global::Game.ChatMessage();
           }
           ChatMessage.MergeFrom(other.ChatMessage);
+          break;
+        case PayloadOneofCase.Ping:
+          if (Ping == null) {
+            Ping = new global::Game.Ping();
+          }
+          Ping.MergeFrom(other.Ping);
+          break;
+        case PayloadOneofCase.Pong:
+          if (Pong == null) {
+            Pong = new global::Game.Pong();
+          }
+          Pong.MergeFrom(other.Pong);
           break;
         case PayloadOneofCase.PlayerInput:
           if (PlayerInput == null) {
@@ -883,6 +960,24 @@ namespace Game {
             }
             input.ReadMessage(subBuilder);
             ChatMessage = subBuilder;
+            break;
+          }
+          case 58: {
+            global::Game.Ping subBuilder = new global::Game.Ping();
+            if (payloadCase_ == PayloadOneofCase.Ping) {
+              subBuilder.MergeFrom(Ping);
+            }
+            input.ReadMessage(subBuilder);
+            Ping = subBuilder;
+            break;
+          }
+          case 66: {
+            global::Game.Pong subBuilder = new global::Game.Pong();
+            if (payloadCase_ == PayloadOneofCase.Pong) {
+              subBuilder.MergeFrom(Pong);
+            }
+            input.ReadMessage(subBuilder);
+            Pong = subBuilder;
             break;
           }
           case 90: {
@@ -1019,6 +1114,24 @@ namespace Game {
             }
             input.ReadMessage(subBuilder);
             ChatMessage = subBuilder;
+            break;
+          }
+          case 58: {
+            global::Game.Ping subBuilder = new global::Game.Ping();
+            if (payloadCase_ == PayloadOneofCase.Ping) {
+              subBuilder.MergeFrom(Ping);
+            }
+            input.ReadMessage(subBuilder);
+            Ping = subBuilder;
+            break;
+          }
+          case 66: {
+            global::Game.Pong subBuilder = new global::Game.Pong();
+            if (payloadCase_ == PayloadOneofCase.Pong) {
+              subBuilder.MergeFrom(Pong);
+            }
+            input.ReadMessage(subBuilder);
+            Pong = subBuilder;
             break;
           }
           case 90: {
@@ -4779,6 +4892,7 @@ namespace Game {
       lr_ = other.lr_;
       fb_ = other.fb_;
       isBound_ = other.isBound_;
+      isDown_ = other.isDown_;
       motionIndex_ = other.motionIndex_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -4825,8 +4939,20 @@ namespace Game {
       }
     }
 
+    /// <summary>Field number for the "is_down" field.</summary>
+    public const int IsDownFieldNumber = 4;
+    private bool isDown_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool IsDown {
+      get { return isDown_; }
+      set {
+        isDown_ = value;
+      }
+    }
+
     /// <summary>Field number for the "motion_index" field.</summary>
-    public const int MotionIndexFieldNumber = 4;
+    public const int MotionIndexFieldNumber = 5;
     private float motionIndex_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -4855,6 +4981,7 @@ namespace Game {
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Lr, other.Lr)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Fb, other.Fb)) return false;
       if (IsBound != other.IsBound) return false;
+      if (IsDown != other.IsDown) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(MotionIndex, other.MotionIndex)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -4866,6 +4993,7 @@ namespace Game {
       if (Lr != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Lr);
       if (Fb != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Fb);
       if (IsBound != false) hash ^= IsBound.GetHashCode();
+      if (IsDown != false) hash ^= IsDown.GetHashCode();
       if (MotionIndex != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(MotionIndex);
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -4897,8 +5025,12 @@ namespace Game {
         output.WriteRawTag(24);
         output.WriteBool(IsBound);
       }
+      if (IsDown != false) {
+        output.WriteRawTag(32);
+        output.WriteBool(IsDown);
+      }
       if (MotionIndex != 0F) {
-        output.WriteRawTag(37);
+        output.WriteRawTag(45);
         output.WriteFloat(MotionIndex);
       }
       if (_unknownFields != null) {
@@ -4923,8 +5055,12 @@ namespace Game {
         output.WriteRawTag(24);
         output.WriteBool(IsBound);
       }
+      if (IsDown != false) {
+        output.WriteRawTag(32);
+        output.WriteBool(IsDown);
+      }
       if (MotionIndex != 0F) {
-        output.WriteRawTag(37);
+        output.WriteRawTag(45);
         output.WriteFloat(MotionIndex);
       }
       if (_unknownFields != null) {
@@ -4944,6 +5080,9 @@ namespace Game {
         size += 1 + 4;
       }
       if (IsBound != false) {
+        size += 1 + 1;
+      }
+      if (IsDown != false) {
         size += 1 + 1;
       }
       if (MotionIndex != 0F) {
@@ -4969,6 +5108,9 @@ namespace Game {
       }
       if (other.IsBound != false) {
         IsBound = other.IsBound;
+      }
+      if (other.IsDown != false) {
+        IsDown = other.IsDown;
       }
       if (other.MotionIndex != 0F) {
         MotionIndex = other.MotionIndex;
@@ -5004,7 +5146,11 @@ namespace Game {
             IsBound = input.ReadBool();
             break;
           }
-          case 37: {
+          case 32: {
+            IsDown = input.ReadBool();
+            break;
+          }
+          case 45: {
             MotionIndex = input.ReadFloat();
             break;
           }
@@ -5039,7 +5185,11 @@ namespace Game {
             IsBound = input.ReadBool();
             break;
           }
-          case 37: {
+          case 32: {
+            IsDown = input.ReadBool();
+            break;
+          }
+          case 45: {
             MotionIndex = input.ReadFloat();
             break;
           }
@@ -5882,6 +6032,7 @@ namespace Game {
       attackType_ = other.attackType_;
       targetId_ = other.targetId_;
       destination_ = other.destination_ != null ? other.destination_.Clone() : null;
+      dodgeOption_ = other.dodgeOption_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -5963,6 +6114,18 @@ namespace Game {
       }
     }
 
+    /// <summary>Field number for the "dodge_option" field.</summary>
+    public const int DodgeOptionFieldNumber = 7;
+    private float dodgeOption_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float DodgeOption {
+      get { return dodgeOption_; }
+      set {
+        dodgeOption_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -5984,6 +6147,7 @@ namespace Game {
       if (AttackType != other.AttackType) return false;
       if (TargetId != other.TargetId) return false;
       if (!object.Equals(Destination, other.Destination)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(DodgeOption, other.DodgeOption)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -5997,6 +6161,7 @@ namespace Game {
       if (AttackType != global::Game.AttackType.MonsterAttackUnknown) hash ^= AttackType.GetHashCode();
       if (TargetId.Length != 0) hash ^= TargetId.GetHashCode();
       if (destination_ != null) hash ^= Destination.GetHashCode();
+      if (DodgeOption != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(DodgeOption);
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -6039,6 +6204,10 @@ namespace Game {
         output.WriteRawTag(50);
         output.WriteMessage(Destination);
       }
+      if (DodgeOption != 0F) {
+        output.WriteRawTag(61);
+        output.WriteFloat(DodgeOption);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -6073,6 +6242,10 @@ namespace Game {
         output.WriteRawTag(50);
         output.WriteMessage(Destination);
       }
+      if (DodgeOption != 0F) {
+        output.WriteRawTag(61);
+        output.WriteFloat(DodgeOption);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -6100,6 +6273,9 @@ namespace Game {
       }
       if (destination_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Destination);
+      }
+      if (DodgeOption != 0F) {
+        size += 1 + 4;
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -6133,6 +6309,9 @@ namespace Game {
           Destination = new global::Game.GoVector3();
         }
         Destination.MergeFrom(other.Destination);
+      }
+      if (other.DodgeOption != 0F) {
+        DodgeOption = other.DodgeOption;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -6180,6 +6359,10 @@ namespace Game {
             input.ReadMessage(Destination);
             break;
           }
+          case 61: {
+            DodgeOption = input.ReadFloat();
+            break;
+          }
         }
       }
     #endif
@@ -6224,6 +6407,10 @@ namespace Game {
               Destination = new global::Game.GoVector3();
             }
             input.ReadMessage(Destination);
+            break;
+          }
+          case 61: {
+            DodgeOption = input.ReadFloat();
             break;
           }
         }

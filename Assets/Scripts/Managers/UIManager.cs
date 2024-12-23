@@ -240,7 +240,8 @@ public class UIManager : DDSingletonManager<UIManager>
 
     public void OnJoinBtnClick()
     {
-        SuperManager.Instance.isHost = false;
+        // SuperManager.Instance.isHost = false;
+        SuperManager.Instance.isHost = true; //실험용
         DisableButton();
         
         string ipAddress = "127.0.0.1"; // 기본 IP 주소

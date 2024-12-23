@@ -1582,44 +1582,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3510318787515941896, guid: 22173fa182fd5fa49a8e624e92168909, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4558082962590924383, guid: 22173fa182fd5fa49a8e624e92168909, type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 4558082962590924383, guid: 22173fa182fd5fa49a8e624e92168909, type: 3}
-    - target: {fileID: 4558082962590924383, guid: 22173fa182fd5fa49a8e624e92168909, type: 3}
-      propertyPath: asdf._serializedList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4558082962590924383, guid: 22173fa182fd5fa49a8e624e92168909, type: 3}
-      propertyPath: asdfg._serializedList.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4558082962590924383, guid: 22173fa182fd5fa49a8e624e92168909, type: 3}
-      propertyPath: Configs._serializedList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4558082962590924383, guid: 22173fa182fd5fa49a8e624e92168909, type: 3}
-      propertyPath: AttackConfigs._serializedList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4558082962590924383, guid: 22173fa182fd5fa49a8e624e92168909, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4558082962590924383, guid: 22173fa182fd5fa49a8e624e92168909, type: 3}
-      propertyPath: 'serializationData.PrefabModifications.Array.data[0]'
-      value: '"path":"AttackConfigs2","value":{"$id":0,"$type":"System.Collections.Generic.Dictionary`2[[System.Int32,
-        mscorlib],[Monster.AttackConfig, Assembly-CSharp]], mscorlib","comparer":{"$id":1,"$type":"System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
-        mscorlib]], mscorlib"},"$rlength":0,"$rcontent":[]}'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4558082962590924383, guid: 22173fa182fd5fa49a8e624e92168909, type: 3}
-      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5102316047752364240, guid: 22173fa182fd5fa49a8e624e92168909, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.061399914
@@ -1630,7 +1596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5102316047752364240, guid: 22173fa182fd5fa49a8e624e92168909, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.083136
+      value: 10.43
       objectReference: {fileID: 0}
     - target: {fileID: 5102316047752364240, guid: 22173fa182fd5fa49a8e624e92168909, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1666,7 +1632,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5102316048502176271, guid: 22173fa182fd5fa49a8e624e92168909, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

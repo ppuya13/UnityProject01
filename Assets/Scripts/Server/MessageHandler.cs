@@ -29,6 +29,9 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
 
             switch (msg.PayloadCase)
             {
+                case GameMessage.PayloadOneofCase.Pong:
+                    Debug.Log("퐁");
+                    break;
                 case GameMessage.PayloadOneofCase.LoginResponse:
                     Debug.Log("로그인 리스폰스 수신");
                     HandleLoginResponse(msg.LoginResponse);
@@ -154,7 +157,7 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
         switch (msg.ActionType)
         {
             case ActionType.MonsterActionSetStatus:
-                // Debug.Log("몬스터 셋스테이터스 메시지 수신");
+                Debug.Log("몬스터 셋스테이터스 메시지 수신");
             {
                 if (SpawnManager.Instance.SpawnedMonsters.TryGetValue(msg.MonsterId, out MonsterController mc))
                 {
@@ -211,7 +214,6 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
             case PlayerActionType.PlayerActionTakedamage:
                 Debug.Log("플레이어 테이크 데미지 메시지 수신");
                 if (SuperManager.Instance.playerId == msg.PlayerId) return;
-
             {
                 if (SpawnManager.Instance.SpawnedPlayers.TryGetValue(msg.PlayerId,
                         out PlayerController playerController))

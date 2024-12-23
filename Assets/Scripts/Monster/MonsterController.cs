@@ -17,7 +17,7 @@ namespace Monster
 
         protected StateMachine Sm;
 
-        private MonsterState currentState;
+        public MonsterState currentState;
 
         public MonsterState CurrentState
         {
@@ -46,12 +46,14 @@ namespace Monster
         [HideInInspector] public readonly int Vertical = Animator.StringToHash("Vertical");
         [HideInInspector] public readonly int Dash = Animator.StringToHash("Dash");
         [HideInInspector] public readonly int Dodge = Animator.StringToHash("Dodge");
+        [HideInInspector] public readonly int LR = Animator.StringToHash("LR");
         [HideInInspector] public readonly int TurnLeft = Animator.StringToHash("TurnLeft");
         [HideInInspector] public readonly int TurnRight = Animator.StringToHash("TurnRight");
         [HideInInspector] public readonly int MoveAnimSpeed = Animator.StringToHash("MoveAnimSpeed");
 
         [HideInInspector] public readonly int AttackClose01 = Animator.StringToHash("AttackClose01");
         [HideInInspector] public readonly int AttackClose02 = Animator.StringToHash("AttackClose02");
+        [HideInInspector] public readonly int AttackClose03 = Animator.StringToHash("AttackClose03");
         [HideInInspector] public readonly int AttackCounter = Animator.StringToHash("AttackCounter");
 
         //회전 관련 변수
@@ -88,8 +90,34 @@ namespace Monster
         /// 
         /// <summary>
         /// 스킬 추가 시 해야하는 것:
-        /// InitializeAttackConfigs에 정보 추가
+        ///
+        /// 애니메이터 등록:
+        /// 1.애니메이션 해시 변수를 등록하고 애니메이터에 파라미터를 등록
+        /// 2.스킬에 사용할 서브스테이트머신을 애니메이터에 생성 후 애니메이션 클립 등록
+        /// 3.Move에 트랜지션을 연결
+        ///
+        /// 변수 생성:
+        /// 1.proto파일 enum AttackType에 해당 공격 추가
+        /// 
+        /// 애니메이션 조정:
+        /// 1.공격의 시작에 SetAttackIdx 할당 후 해당 공격의 idx를 설정(1~)
+        /// 2.공격 전 이동 시작 부분에 MoveStart 할당
+        /// 3.공격 전 이동 끝 부분에 MoveStop 할당
+        /// 4.회전도 동일하게 RotateStart, RotateStop 할당
+        /// 5.파티클 생성 부분에 CreateAttackParticle 할당
+        /// 6.타격판정 부분에 HitCheck 할당
+        /// 7.콤보 공격의 마지막 애니메이션의 마지막에 AttackEnd 할당
+        ///
+        /// 패턴 등록:
+        /// 1.AttackConfig 생성
+        /// 2.몬스터의 인스펙터에 생성한 AttackConfig 등록
+        /// 3.ChoicePattern() 메소드에 공격 패턴과 가중치 등록
+        /// 4.ChoicePattern() 메소드의 SendChangeState부분도 정의
+        /// 5.MonsterStateAttack의 EnterState에 애니메이션 트리거 등록
+        /// 
         /// </summary>
+        ///
+        /// 
         private void Awake()
         {
             //상태머신 초기화
@@ -136,6 +164,13 @@ namespace Monster
             if (!SuperManager.Instance.isHost) return;
             TcpProtobufClient.Instance.SendMonsterChangeState(monsterId, state, attackType);
         }
+        
+        public void SendChangeState(MonsterState state, float dodgeOption)
+        {
+            Debug.Log("닷지발신");
+            if (!SuperManager.Instance.isHost) return;
+            TcpProtobufClient.Instance.SendMonsterChangeState(monsterId, state, AttackType.MonsterAttackUnknown, dodgeOption);
+        }
 
         public void ChangeState(MonsterAction msg)
         {
@@ -143,6 +178,12 @@ namespace Monster
             {
                 //어택스테이트일 경우 어떤 공격인지도 받아온다.
                 currentAttack = msg.AttackType;
+            }
+            else if (msg.MonsterState is MonsterState.MonsterStatusDodge)
+            {
+                //닷지일경우 방향을 받아온다.
+                animator.SetFloat(LR, msg.DodgeOption);
+                // Debug.Log($"닷지수신, {msg.DodgeOption}");
             }
 
             CurrentState = msg.MonsterState;
@@ -369,7 +410,7 @@ namespace Monster
         public Vector3 FindMoveDestination()
         {
             NavMeshHit navHit;
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
             {
                 Vector3 randomDirection = Random.insideUnitSphere * moveDistance;
                 randomDirection += currentTarget ? currentTarget.transform.position : transform.position;
@@ -394,7 +435,7 @@ namespace Monster
         //서버에서 받은 목적지로 실제로 이동하는 메소드
         public void SetDestination(MonsterAction msg)
         {
-            Vector3 destination = new Vector3(msg.Destination.X, msg.Destination.Y, msg.Destination.Z);
+            Vector3 destination = TcpProtobufClient.Instance.ConvertToVector3(msg.Destination);
             agent.SetDestination(destination);
             moveStart = true;
         }
@@ -470,34 +511,44 @@ namespace Monster
                 //20이상: 초장거리
 
                 List<(string, AttackType, int)> patternList = new();
-                if (distance < 3.0f)
+                if (distance < 3.0f) //타겟과의 거리에 따라 패턴리스트에 패턴을 추가한다.
                 {
                     // patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
                     // patternList.Add(("Attack", AttackType.MonsterAttackCloseCounter, 20));
-                    patternList.Add(("Attack", AttackType.MonsterAttackClose01, 50));
+                    // patternList.Add(("Attack", AttackType.MonsterAttackClose01, 50));
                     // patternList.Add(("Attack", AttackType.MonsterAttackClose02, 50));
+                    patternList.Add(("Attack", AttackType.MonsterAttackClose03, 50));
+
+                    // patternList.Add(("DodgeBack", AttackType.MonsterAttackUnknown, 14));
+                    // patternList.Add(("DodgeLeft", AttackType.MonsterAttackUnknown, 7));
+                    // patternList.Add(("DodgeRight", AttackType.MonsterAttackUnknown, 7));
                 }
                 else if (distance < 5.0f)
                 {
                     //전진성 있는 근접패턴
                     //옆으로 꽤 멀리 점프한 뒤 타겟을 향해 일섬
-                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
+                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 20));
+                    // patternList.Add(("DodgeBack", AttackType.MonsterAttackUnknown, 14));
+                    // patternList.Add(("DodgeLeft", AttackType.MonsterAttackUnknown, 7));
+                    // patternList.Add(("DodgeRight", AttackType.MonsterAttackUnknown, 7));
                 }
                 else if (distance < 10.0f)
                 {
                     //중거리 패턴
-                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
+                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 20));
+                    // patternList.Add(("DodgeLeft", AttackType.MonsterAttackUnknown, 7));
+                    // patternList.Add(("DodgeRight", AttackType.MonsterAttackUnknown, 7));
                 }
                 else if (distance < 20.0f)
                 {
                     //장거리 패턴
-                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
+                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 20));
                 }
                 else
                 {
                     //초장거리 패턴
                     //사라진 뒤 잠시 후에 타겟 옆에서 나타나서 공격
-                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
+                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 20));
                 }
 
                 // 가중치 기반 패턴 선택
@@ -508,11 +559,11 @@ namespace Monster
                     switch (selectedPattern.Value.Category)
                     {
                         case "Move":
-                            // Debug.Log("이동할래");
+                            Debug.Log("이동할래");
                             SendChangeState(MonsterState.MonsterStatusMove);
                             break;
                         case "Attack":
-                            // Debug.Log("공격할래");
+                            Debug.Log("공격할래");
                             switch (selectedPattern.Value.attackType)
                             {
                                 case AttackType.MonsterAttackClose01:
@@ -520,6 +571,9 @@ namespace Monster
                                     break;
                                 case AttackType.MonsterAttackClose02:
                                     SendChangeState(MonsterState.MonsterStatusAttack, AttackType.MonsterAttackClose02);
+                                    break;
+                                case AttackType.MonsterAttackClose03:
+                                    SendChangeState(MonsterState.MonsterStatusAttack, AttackType.MonsterAttackClose03);
                                     break;
                                 case AttackType.MonsterAttackCloseCounter:
                                     SendChangeState(MonsterState.MonsterStatusAttack,
@@ -530,6 +584,18 @@ namespace Monster
                                     break;
                             }
 
+                            break;
+                        case "DodgeBack":
+                            Debug.Log("구를래");
+                            SendChangeState(MonsterState.MonsterStatusDodge, 0f);
+                            break;
+                        case "DodgeLeft":
+                            Debug.Log("구를래");
+                            SendChangeState(MonsterState.MonsterStatusDodge, -1);
+                            break;
+                        case "DodgeRight":
+                            Debug.Log("구를래");
+                            SendChangeState(MonsterState.MonsterStatusDodge, 1);
                             break;
                         default:
                             Debug.LogError($"정의되지 않은 카테고리: {selectedPattern.Value.Category}");
@@ -588,6 +654,7 @@ namespace Monster
 
         public void AttackEnd()
         {
+            Debug.Log("어택엔드");
             currentAttack = AttackType.MonsterAttackUnknown;
             attackIdx = 0;
             if (SuperManager.Instance.isHost) SendChangeState(MonsterState.MonsterStatusIdle);
@@ -609,7 +676,6 @@ namespace Monster
             }
 
             //데미지를 설정
-            float damageAmount = config.damageAmount;
             float distance = config.distance;
             Vector3 attackPositionOffset = config.attackPositionOffset;
 
@@ -686,7 +752,7 @@ namespace Monster
         }
 
         //HitCheck처럼 현재 공격에 따라서 해당하는 AttackConfig의 이펙트 파티클을 소환한다. 애니메이션 이벤트로 호출.
-        public void CreateAttackParticle()
+        public void CreateAttackParticle(int idx)
         {
             // 현재 공격 타입과 인덱스에 해당하는 AttackConfig를 가져옵니다.
             if (!AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig config))
@@ -696,36 +762,44 @@ namespace Monster
             }
 
             // 파티클 이펙트가 설정되어 있는지 확인합니다.
-            if (config.particleEffect)
+            if (config.EffectConfigs != null && config.EffectConfigs.Length > idx)
             {
-                // 공격 위치 계산 (HitCheck와 유사하게)
-                Vector3 attackPosition = transform.position + transform.forward * config.distance +
-                                         transform.TransformDirection(config.attackPositionOffset);
-
-                // 이펙트의 위치, 회전, 크기를 설정합니다.
-                Vector3 effectPosition = attackPosition + transform.TransformDirection(config.effectPosition);
-                Quaternion effectRotation = transform.rotation * config.effectRotation;
-                Vector3 effectScale = config.effectScale != Vector3.zero ? config.effectScale : Vector3.one;
-
-                // 파티클 이펙트를 인스턴스화합니다.
-                GameObject effect = Instantiate(config.particleEffect, effectPosition, effectRotation, transform);
-                effect.transform.localScale = effectScale;
-
-                // 이펙트가 일정 시간 후에 자동으로 파괴되도록 설정 (선택 사항)
-                ParticleSystem ps = effect.GetComponent<ParticleSystem>();
-                if (ps)
+                EffectConfig effect = config.EffectConfigs[idx];
+                if (config.EffectConfigs[idx].ParticleEffect)
                 {
-                    Destroy(effect, ps.main.duration + ps.main.startLifetime.constantMax);
+                    // 공격 위치 계산 (HitCheck와 유사하게)
+                    Vector3 attackPosition = transform.position + transform.forward * config.distance +
+                                             transform.TransformDirection(config.attackPositionOffset);
+
+                    // 이펙트의 위치, 회전, 크기를 설정합니다.
+                    Vector3 effectPosition = attackPosition + transform.TransformDirection(effect.EffectPosition);
+                    Quaternion effectRotation = transform.rotation * effect.EffectRotation;
+                    Vector3 effectScale = effect.EffectScale != Vector3.zero ? effect.EffectScale : Vector3.one;
+
+                    // 파티클 이펙트를 인스턴스화합니다.
+                    GameObject particle = Instantiate(effect.ParticleEffect, effectPosition, effectRotation, transform);
+                    particle.transform.localScale = effectScale;
+
+                    // 이펙트가 일정 시간 후에 자동으로 파괴되도록 설정 (선택 사항)
+                    ParticleSystem ps = particle.GetComponent<ParticleSystem>();
+                    if (ps)
+                    {
+                        Destroy(particle, ps.main.duration + ps.main.startLifetime.constantMax);
+                    }
+                    else
+                    {
+                        // ParticleSystem이 없을 경우 기본적으로 5초 후 파괴
+                        Destroy(particle, 5f);
+                    }
                 }
                 else
                 {
-                    // ParticleSystem이 없을 경우 기본적으로 5초 후 파괴
-                    Destroy(effect, 5f);
+                    Debug.LogWarning($"AttackConfig에 파티클 이펙트가 설정되어 있지 않습니다: {currentAttack}, AttackIdx: {attackIdx}");
                 }
             }
             else
             {
-                Debug.LogWarning($"AttackConfig에 파티클 이펙트가 설정되어 있지 않습니다: {currentAttack}, AttackIdx: {attackIdx}");
+                Debug.LogWarning("AttackConfig의 EffectConfigs가 null이거나 idx가 배열을 초과합니다.");
             }
 
             // 사운드 이펙트가 설정되어 있는지 확인하고 재생합니다.
@@ -787,9 +861,15 @@ namespace Monster
             }
 
             float elapsed = 0f;
+            AttackType type = currentAttack; //에러 출력을 위한 지역변수
 
             while (elapsed < config.moveTime)
             {
+                if (type != currentAttack)
+                {
+                    Debug.LogWarning($"AttackMove 코루틴이 끝나지 않은 채로 공격이 바뀌었음. {type} -> {currentAttack}");
+                    type = currentAttack;
+                }
                 // 이동 방향이 타겟을 향하도록 설정
                 if (config.moveDirection == Vector3.zero && currentTarget)
                 {
@@ -804,6 +884,8 @@ namespace Monster
                 elapsed += Time.deltaTime;
                 yield return null;
             }
+            
+            Debug.LogWarning($"{type} 애니메이션에 MoveStop 이벤트가 설정되지 않음.");
         }
 
         //공격 중에 회전을 하는 메소드, 애니메이션을 재생하지 않으며, AnimationEvent로 호출된다.
@@ -844,21 +926,59 @@ namespace Monster
 
 
             float rotateSpeed = config.rotateSpeed;
+            float elapsed = 0f; // 코루틴 실행 시간 누적 변수
+            float rotateTime = config.rotateTime; // 설정된 최대 회전 시간
+
+            AttackType type = currentAttack; //에러 출력을 위한 지역변수
 
             // Debug.Log($"AttackRotate started with rotateSpeed: {rotateSpeed}");
-
-            Quaternion targetRotation = Quaternion.LookRotation(currentTarget.transform.position - transform.position);
-            Quaternion startRotation = transform.rotation;
-
-            while (Quaternion.Angle(transform.rotation, targetRotation) > 1f)
+            
+            while (elapsed < rotateTime) // 코루틴이 종료될 때까지 반복
             {
-                float step = rotateSpeed * Time.deltaTime; // rotateSpeed가 degrees per second임을 가정
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
-                yield return null;
-            }
+                
+                if (type != currentAttack)
+                {
+                    Debug.LogWarning($"AttackRotate 코루틴이 끝나지 않은 채로 공격이 바뀌었음. {type} -> {currentAttack}");
+                    type = currentAttack;
+                }
+                
+                // 타겟을 향한 방향 계산
+                Vector3 directionToTarget = (currentTarget.transform.position - transform.position).normalized;
+                directionToTarget.y = 0; // 수평 방향만 고려
 
-            // 최종 정렬
-            transform.rotation = targetRotation;
+                // 현재 몬스터가 타겟을 향해 있는지 확인
+                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+                float angle = Quaternion.Angle(transform.rotation, targetRotation);
+
+                if (angle > 1f) // 타겟을 바라보지 않을 때
+                {
+                    // 타겟을 향해 회전
+                    float step = rotateSpeed * Time.deltaTime; // 회전 속도
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
+                }
+                else
+                {
+                    // 타겟을 바라보고 있다면 회전을 멈춤
+                    yield return null;
+                }
+
+                elapsed += Time.deltaTime; // 경과 시간 업데이트
+                yield return null; // 다음 프레임까지 대기
+            }
+            
+            Debug.LogWarning($"{type} 애니메이션에 RotateStop 이벤트가 설정되지 않음.");
+        }
+
+        //dodge 패턴 시 애니메이션 이벤트로 루트모션을 on/off한다. 
+        public void DodgeStart()
+        {
+            animator.applyRootMotion = true;
+        }
+
+        public void DodgeEnd()
+        {
+            animator.applyRootMotion = false;
+            if (SuperManager.Instance.isHost) SendChangeState(MonsterState.MonsterStatusIdle);
         }
 
 #if UNITY_EDITOR

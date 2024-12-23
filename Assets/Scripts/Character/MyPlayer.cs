@@ -2,6 +2,7 @@
 using Monster;
 using RootMotion.FinalIK;
 using UnityEngine;
+using Ping = UnityEngine.Ping;
 
 public class 
     MyPlayer: PlayerController
@@ -39,14 +40,23 @@ public class
     protected override void Update()
     {
         base.Update();
+        SendPing();
         CursorControl();
         SendPosition();
         
-        if (IsStun || IsDie || disableKeyboard) return; 
+        if (IsStun || IsDie || disableKeyboard || IsDown) return; 
         HandleMouseInput();
         HandleMoveInput();
         Move();
         TiltSetting();
+    }
+
+    private void SendPing()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            TcpProtobufClient.Instance.SendPing();
+        }
     }
 
     protected override void TakeDamage(AttackConfig config, Transform monsterTransform)
@@ -100,7 +110,7 @@ public class
         if (currentHp <= 0) IsDie = true; // 사망 여부 플래그 처리
         
         // 애니메이터 파라미터 설정
-        (float lr, float fb, bool isBound, float motionIndex) = SetAnimatorParameters(attackDirection, config);
+        (float lr, float fb, bool isBound, bool isDown, float motionIndex) = SetAnimatorParameters(attackDirection, config);
 
         
         // stunDuration 동안 대기 후 StunEnd 트리거 활성화
@@ -111,7 +121,7 @@ public class
         }
         StunCoroutine = StartCoroutine(HandleStun(config.stunDuration));
         
-        TcpProtobufClient.Instance.SendPlayerTakeDamage(knockback, config.stunDuration, currentHp, IsDie, lr, fb, isBound, motionIndex);
+        TcpProtobufClient.Instance.SendPlayerTakeDamage(knockback, config.stunDuration, currentHp, IsDie, lr, fb, isBound, isDown, motionIndex);
     }
 
     //마우스를 없앴다 생겼다 함
@@ -205,6 +215,11 @@ public class
             Animator.SetFloat(Horizontal, moveX);
             Animator.SetFloat(Vertical, moveZ);
         }
+    }
+
+    private void StandUp()
+    {
+        IsDown = false;
     }
 
     private void TiltSetting()

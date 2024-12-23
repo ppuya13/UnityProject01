@@ -71,7 +71,7 @@ public class Dummy: PlayerController
         if (currentHp <= 0) IsDie = true; // 사망 여부 플래그 처리
         
         // 애니메이터 파라미터 설정
-        (float lr, float fb, bool isBound, float motionIndex) = SetAnimatorParameters(attackDirection, config);
+        (float lr, float fb, bool isBound, bool isDown, float motionIndex) = SetAnimatorParameters(attackDirection, config);
 
         
         // stunDuration 동안 대기 후 StunEnd 트리거 활성화

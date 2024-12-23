@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Google.Protobuf;
 using Game;
+using Ping = Game.Ping;
 
 // TcpProtobufClient 클래스: Unity에서 TCP 연결을 통해 Protobuf 메시지를 주고받는 클라이언트
 public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
@@ -135,7 +136,7 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
     // SendMessage: 실제로 메시지를 서버로 전송하는 private 메서드
     private void SendMessage(GameMessage message)
     {
-        if (tcpClient != null && tcpClient.Connected)
+        if (tcpClient is { Connected: true })
         {
             try
             {
@@ -216,6 +217,15 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
 
     #region 서버, 채팅 관련
 
+    public void SendPing()
+    {
+        Debug.Log("핑");
+        var message = new GameMessage()
+        {
+            Ping = new Ping()
+        };
+        SendMessage(message);
+    }
     public void SendGameStart()
     {
         var message = new GameMessage()
@@ -271,7 +281,7 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
     }
     
     public void SendPlayerTakeDamage(Vector3 knockBack, float stunDuration, float currentHp, bool isDie, float lr,
-        float fb, bool isBound, float motionIndex)
+        float fb, bool isBound, bool isDown, float motionIndex)
     {
         GoVector3 _knockback = ConvertToGoVector3(knockBack);
 
@@ -280,6 +290,7 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
             Lr = lr,
             Fb = fb,
             IsBound = isBound,
+            IsDown = isDown,
             MotionIndex = motionIndex,
         };
 
@@ -303,8 +314,9 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
 
     #region 몬스터 관련
 
-    
-    public void SendMonsterChangeState(string monsterId, MonsterState state, AttackType attackType)
+
+    public void SendMonsterChangeState(string monsterId, MonsterState state, AttackType attackType,
+        float dodgeOption = 0)
     {
         // Debug.Log($"몬스터 상태 변경 메시지 발신: {state}");
         var message = new GameMessage()
@@ -315,6 +327,7 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
                 MonsterId = monsterId,
                 MonsterState = state,
                 AttackType = attackType,
+                DodgeOption = dodgeOption,
             }
         };
         

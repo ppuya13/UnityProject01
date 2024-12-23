@@ -23,6 +23,8 @@ func NewMessageHandler(ctx *manager.ManagerContext) *MessageHandler {
 // processMessage 함수: 받은 메시지의 타입에 따라 적절한 처리를 수행
 func (mh *MessageHandler) ProcessMessage(message *pb.GameMessage, conn net.Conn, playerId *string) {
 	switch payload := message.Payload.(type) {
+	case *pb.GameMessage_Ping:
+		mh.handlePing(conn)
 	case *pb.GameMessage_LoginRequest:
 		mh.handleLoginRequest(payload.LoginRequest, conn, playerId)
 	case *pb.GameMessage_LogoutRequest:
@@ -42,6 +44,17 @@ func (mh *MessageHandler) ProcessMessage(message *pb.GameMessage, conn net.Conn,
 	default:
 		//log.Printf("Unexpected message type received: %T", payload)
 	}
+}
+func (mh *MessageHandler) handlePing(conn net.Conn) {
+	log.Printf("핑 수신")
+	nm := mh.mcx.NetManager()
+	response := &pb.GameMessage{
+		Payload: &pb.GameMessage_Pong{
+			Pong: &pb.Pong{},
+		},
+	}
+	nm.SendMessage(response, conn)
+	log.Printf("퐁 발신")
 }
 
 func (mh *MessageHandler) handleLoginRequest(request *pb.LoginRequest, conn net.Conn, playerId *string) {
@@ -203,24 +216,26 @@ func (mh *MessageHandler) handleMonsterSpawn(request *pb.MonsterSpawn) {
 }
 
 func (mh *MessageHandler) handleMonsterAction(request *pb.MonsterAction) {
-	log.Printf("몬스터 액션 수신")
 	nm := mh.mcx.NetManager()
 	var message *pb.GameMessage
 
 	switch request.ActionType {
 	case pb.ActionType_MONSTER_ACTION_SET_STATUS:
+		log.Printf("몬스터 스테이터스 변경 수신")
 		message = &pb.GameMessage{
 			Payload: &pb.GameMessage_MonsterAction{
 				MonsterAction: request,
 			},
 		}
 	case pb.ActionType_MONSTER_ACTION_SET_TARGET:
+		log.Printf("몬스터 타겟 변경 수신")
 		message = &pb.GameMessage{
 			Payload: &pb.GameMessage_MonsterAction{
 				MonsterAction: request,
 			},
 		}
 	case pb.ActionType_MONSTER_ACTION_SET_DESTINATION:
+		log.Printf("몬스터 목적지 변경 수신")
 		message = &pb.GameMessage{
 			Payload: &pb.GameMessage_MonsterAction{
 				MonsterAction: request,

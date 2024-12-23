@@ -30,10 +30,11 @@ namespace Monster
                     break;
                 // case MonsterState.MonsterStatusDash:
                 //     break;
-                // case MonsterState.MonsterStatusDodge:
-                //     break;
                 case MonsterState.MonsterStatusAttack:
                     newState = new MonsterStateAttack();
+                    break;
+                case MonsterState.MonsterStatusDodge:
+                    newState = new MonsterStateDodge();
                     break;
                 default:
                     Debug.LogError($"정의되지 않은 State: {newMonsterState}");

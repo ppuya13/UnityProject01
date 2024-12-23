@@ -43,9 +43,11 @@ public abstract class PlayerController : SerializedMonoBehaviour
     private float hitInterval; //같은 속성의 공격을 더 이상 받지 않는 쿨타임
     private const float HitThreshold = 0.5f; //쿨타임이 임계점에 도달하면 같은 공격을 받을 수 있음
     private Dictionary<(AttackType, int), bool> hitDict = new(); //이미 맞은 공격들
-    protected bool IsStun = false;
+    protected bool IsStun = false; //공격의 스턴시간 (시간은 공격에서 설정되며 해당 시간동안 입력을 받지 않음)
+    protected bool IsDown = false; //다운상태 (시간은 따로 설정되지 않으며 일어나는 애니메이션이 끝날 때 false됨)
     protected bool IsRun = false;
     protected bool IsDie = false;
+    protected bool IsDodge = false; //회피무적상태
     protected Coroutine StunCoroutine;
     
     [HideInInspector]public readonly int Stun = Animator.StringToHash("Stun");
@@ -55,6 +57,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     [HideInInspector]public readonly int FB = Animator.StringToHash("FB");
     [HideInInspector]public readonly int MotionIndex = Animator.StringToHash("MotionIndex");
     [HideInInspector]public readonly int FallDown = Animator.StringToHash("FallDown");
+    [HideInInspector]public readonly int Down = Animator.StringToHash("Down");
     [HideInInspector]public readonly int Damage = Animator.StringToHash("Damage"); //피격당했을때
     [HideInInspector]public readonly int StunEnd = Animator.StringToHash("StunEnd");
     [HideInInspector]public readonly int Die = Animator.StringToHash("Die");
@@ -104,6 +107,8 @@ public abstract class PlayerController : SerializedMonoBehaviour
     //닿은 공격이 유효한지 체크
     public void HitCheck(AttackConfig config, AttackType attackType, int attackIdx, Transform monsterTransform)
     {
+        if (IsDodge) return; //회피중이면 리턴
+        
         if (attackIdx < 0) //0미만이면 다단히트라서 조건 계산 할 필요 없음 
         {
             TakeDamage(config, monsterTransform);
@@ -138,7 +143,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     protected abstract void TakeDamage(AttackConfig config, Transform monsterTransform);
 
     //피격 애니메이션 재생
-    protected (float lr, float fb, bool isBound, float motionIndex) SetAnimatorParameters(Vector3 attackDirection,
+    protected (float lr, float fb, bool isBound, bool isDown, float motionIndex) SetAnimatorParameters(Vector3 attackDirection,
         AttackConfig config)
     {
         float lr = 0f;
@@ -147,21 +152,28 @@ public abstract class PlayerController : SerializedMonoBehaviour
         Vector3 localAttackDir = transform.InverseTransformDirection(attackDirection);
 
         bool isBound = config.knockBackType == KnockBackType.KnockbackBound;
+        bool isDown = config.knockBackType == KnockBackType.KnockbackDown;
         Animator.SetBool(FallDown, isBound);
+        Animator.SetBool(Down, isDown);
         
         if (isBound)
         {
             // isBound가 true일 때: 앞과 뒤만 고려하여 FB 설정
             if (localAttackDir.z > 0.5f)
             {
-                fb = 1f; // 앞에서 공격
+                fb = -1f; // 앞에서 공격
             }
             else
             {
-                fb = -1f; // 뒤에서 공격
+                fb = 1f; // 뒤에서 공격
             }
             // 좌우는 고려하지 않음
             lr = 0f;
+            IsDown = true;
+        }
+        else if (isDown)
+        {
+            IsDown = true;
         }
         else
         {
@@ -207,7 +219,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
         
         Animator.SetTrigger(Damage);
         
-        return (lr, fb, isBound, motionIndex);
+        return (lr, fb, isBound, isDown, motionIndex);
     }
 
     protected IEnumerator HandleStun(float stunDuration)

@@ -33,13 +33,11 @@ namespace Monster
         public float knockBackPower; // 넉백으로 밀려나거나 날아가는 거리
         public float stunDuration; //경직에 걸리는 시간
         public ForceMode knockBackForceMode; // 넉백에 사용할 물리적 힘의 타입
+
+        [Header("이펙트 설정")]
+        public EffectConfig[] EffectConfigs;
         
-        [Header("이펙트/사운드 설정")]
-        //이펙트 설정
-        public GameObject particleEffect; //이펙트 오브젝트
-        public Vector3 effectPosition; //이펙트 생성 위치 (기본: Distance에서 생성됨)
-        public Quaternion effectRotation; //이펙트의 회전값
-        public Vector3 effectScale; // 이펙트의 크기
+        [Header("사운드 설정")]
         public AudioClip[] soundEffects; // 공격 시 재생할 소리 클립
         
         //이동 방향을 설정하는데 쓸 드롭다운 아이템
@@ -53,6 +51,14 @@ namespace Monster
             yield return new ValueDropdownItem<Vector3>("Forward", Vector3.forward);
             yield return new ValueDropdownItem<Vector3>("Back", Vector3.back);
         }
+    }
+
+    public struct EffectConfig
+    {
+        public GameObject ParticleEffect; //이미지 오브젝트
+        public Vector3 EffectPosition; //이펙트 생성 위치 (기본: Distance에서 생성됨)
+        public Quaternion EffectRotation; //이펙트의 회전값
+        public Vector3 EffectScale; // 이펙트의 크기
     }
 
     public interface IColliderConfig
