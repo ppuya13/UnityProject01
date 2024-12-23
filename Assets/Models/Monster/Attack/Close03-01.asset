@@ -88,7 +88,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   damageAmount: 0
-  moveSpeed: 3
+  moveSpeed: 6
   moveTime: 5
   moveDirection: {x: 0, y: 0, z: -1}
   rotateSpeed: 0
