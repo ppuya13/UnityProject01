@@ -86,6 +86,11 @@ public class Dummy: PlayerController
         // TcpProtobufClient.Instance.SendPlayerTakeDamage(knockback, config.stunDuration, currentHp, IsDie, lr, fb, isBound, motionIndex);
     }
 
+    public override void HitCheck()
+    {
+        throw new System.NotImplementedException();
+    }
+
     //현재 위치가 initialPosition에서 threshold만큼 떨어지면 포지션을 initialPosition으로 변경
     private void FixPosition()
     {

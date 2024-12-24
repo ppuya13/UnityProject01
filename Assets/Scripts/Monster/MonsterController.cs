@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Character;
 using Game;
 using RootMotion.FinalIK;
 using Sirenix.OdinInspector;
@@ -13,12 +14,23 @@ namespace Monster
     public class MonsterController : SerializedMonoBehaviour
     {
         public string monsterId;
+
+        public float maxHp = 1000;
+        private float currentHp = 1000;
+        public float CurrentHp
+        {
+            get => currentHp;
+            set
+            {
+                currentHp = value;
+                //UI 변경하기
+            }
+        }
+        
         public Transform lookAtThis;
-
         protected StateMachine Sm;
-
+        
         public MonsterState currentState;
-
         public MonsterState CurrentState
         {
             get => currentState;
@@ -37,6 +49,7 @@ namespace Monster
         [HideInInspector] public LookAtIK lookAtIK;
 
         public bool dummyMode = true; //true로 바꿀 경우 더미를 타겟으로 한다.
+        public bool scarecrowMode = false; //true로 바꿀 경우 움직이지 않는다.
 
         public List<PlayerController> targetList = new();
         public PlayerController currentTarget;
@@ -84,6 +97,9 @@ namespace Monster
         private Coroutine moveCoroutine;
         private Coroutine rotateCoroutine;
         private bool isRotating = false;
+
+        private const float TakeDamageThreshold = 0.2f; // 같은 공격에 다시 맞지 않는 시간
+        private Dictionary<(PlayerAttackConfig, Transform), bool> hitDict;
 
         ///
         /// 이동 중에도 일정시간? 거리에 따라? 스킬이 발동하도록 변경하는 게 좋을 듯.
@@ -133,6 +149,7 @@ namespace Monster
             animator = GetComponent<Animator>();
 
             //기타 스테이터스 초기화
+            ReadyToAction += ChoicePattern;
             turnLeftAnimationDuration = turnLeftClip ? turnLeftClip.length : 1.0f;
             turnRightAnimationDuration = turnRightClip ? turnRightClip.length : 1.0f;
             lookAtIK = GetComponent<LookAtIK>();
@@ -164,12 +181,13 @@ namespace Monster
             if (!SuperManager.Instance.isHost) return;
             TcpProtobufClient.Instance.SendMonsterChangeState(monsterId, state, attackType);
         }
-        
+
         public void SendChangeState(MonsterState state, float dodgeOption)
         {
             Debug.Log("닷지발신");
             if (!SuperManager.Instance.isHost) return;
-            TcpProtobufClient.Instance.SendMonsterChangeState(monsterId, state, AttackType.MonsterAttackUnknown, dodgeOption);
+            TcpProtobufClient.Instance.SendMonsterChangeState(monsterId, state, AttackType.MonsterAttackUnknown,
+                dodgeOption);
         }
 
         public void ChangeState(MonsterAction msg)
@@ -403,7 +421,11 @@ namespace Monster
             }
 
             isRotating = false;
-            ReadyToAction?.Invoke();
+
+            if (!scarecrowMode)
+            {
+                ReadyToAction?.Invoke();
+            }
         }
 
         //랜덤한 이동 목적지를 찾는 메소드
@@ -488,10 +510,10 @@ namespace Monster
         //타겟과의 거리에 따라서 패턴을 선택한다. 호스트만 사용함.
         public void ChoicePattern()
         {
+            Debug.Log("패턴고를래");
             if (!SuperManager.Instance.isHost || patternCooldown < PatternThreshold) return;
             patternCooldown = 0;
 
-            // Debug.Log("패턴고를래");
             if (!currentTarget)
             {
                 //타겟이 없으면 그냥 걸어다님
@@ -746,7 +768,7 @@ namespace Monster
                 if (player)
                 {
                     // 데미지 적용
-                    player.HitCheck(config, currentAttack, attackIdx, transform);
+                    player.AttackValidation(config, currentAttack, attackIdx, transform);
                 }
             }
         }
@@ -870,6 +892,7 @@ namespace Monster
                     Debug.LogWarning($"AttackMove 코루틴이 끝나지 않은 채로 공격이 바뀌었음. {type} -> {currentAttack}");
                     type = currentAttack;
                 }
+
                 // 이동 방향이 타겟을 향하도록 설정
                 if (config.moveDirection == Vector3.zero && currentTarget)
                 {
@@ -884,7 +907,7 @@ namespace Monster
                 elapsed += Time.deltaTime;
                 yield return null;
             }
-            
+
             Debug.LogWarning($"{type} 애니메이션에 MoveStop 이벤트가 설정되지 않음.");
         }
 
@@ -932,16 +955,15 @@ namespace Monster
             AttackType type = currentAttack; //에러 출력을 위한 지역변수
 
             // Debug.Log($"AttackRotate started with rotateSpeed: {rotateSpeed}");
-            
+
             while (elapsed < rotateTime) // 코루틴이 종료될 때까지 반복
             {
-                
                 if (type != currentAttack)
                 {
                     Debug.LogWarning($"AttackRotate 코루틴이 끝나지 않은 채로 공격이 바뀌었음. {type} -> {currentAttack}");
                     type = currentAttack;
                 }
-                
+
                 // 타겟을 향한 방향 계산
                 Vector3 directionToTarget = (currentTarget.transform.position - transform.position).normalized;
                 directionToTarget.y = 0; // 수평 방향만 고려
@@ -965,7 +987,7 @@ namespace Monster
                 elapsed += Time.deltaTime; // 경과 시간 업데이트
                 yield return null; // 다음 프레임까지 대기
             }
-            
+
             Debug.LogWarning($"{type} 애니메이션에 RotateStop 이벤트가 설정되지 않음.");
         }
 
@@ -979,6 +1001,47 @@ namespace Monster
         {
             animator.applyRootMotion = false;
             if (SuperManager.Instance.isHost) SendChangeState(MonsterState.MonsterStatusIdle);
+        }
+
+        //플레이어의 공격은 서버를 통한다.
+        public void AttackValidation(PlayerAttackConfig attackConfig, Transform player)
+        {
+            if (hitDict.TryGetValue((attackConfig, player), out bool value))
+            {
+                //value값은 의미없고, 일단 true면 같은 공격에 맞았다는 뜻
+                Debug.Log($"이미 맞은 공격임(AttackType: {attackConfig}, {player})");
+                return;
+            }
+
+            StartCoroutine(HitIntervalTimer(attackConfig, player));
+            
+            //서버 통신
+            TcpProtobufClient.Instance.SendMonsterTakeDamage(monsterId, attackConfig.damageAmount);
+            
+            //피격 이펙트 발생
+        }
+
+        //OtherPlayer의 공격은 피격이펙트만 생성한다.
+        public void OtherPlayerAttackValidation(PlayerAttackConfig attackConfig, Transform player)
+        {
+            if (hitDict.TryGetValue((attackConfig, player), out bool value))
+            {
+                //value값은 의미없고, 일단 true면 같은 공격에 맞았다는 뜻
+                Debug.Log($"이미 맞은 공격임(AttackType: {attackConfig}, {player})");
+                return;
+            }
+
+            StartCoroutine(HitIntervalTimer(attackConfig, player));
+            
+            //피격 이펙트 발생
+            
+        }
+        
+        IEnumerator HitIntervalTimer(PlayerAttackConfig attackConfig, Transform player)
+        {
+            hitDict.Add((attackConfig, player), true);
+            yield return new WaitForSeconds(TakeDamageThreshold);
+            hitDict.Remove((attackConfig, player));
         }
 
 #if UNITY_EDITOR

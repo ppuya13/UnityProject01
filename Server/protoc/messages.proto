@@ -19,12 +19,14 @@ message GameMessage {
     //플레이어 관련은 11~30
     PlayerInput player_input = 11;
     PlayerSpawn player_spawn = 12;
+    PlayerAttackAnim player_attack_anim = 13;
 
     //몬스터관련은 31-40
     MonsterSpawn monster_spawn = 31;
     MonsterPositionUpdate monster_position_update = 32;
     MonsterAnim monster_anim = 33;
     MonsterAction monster_action = 34;
+    MonsterTakeDamage monster_take_damage = 35;
 
     ServerStarted server_started = 100;
     
@@ -80,6 +82,13 @@ message PlayerSpawn{
   string player_id = 1; //지금 들어온 캐릭터의 id
   string nickname = 2; //지금 들어온 캐릭터의 닉네임
   repeated PlayerInfo players = 3; //이전에 접속해있던 플레이어들의 정보 목록
+}
+
+//공격 애니메이션 동기화를 위한 메시지
+message PlayerAttackAnim{
+  string player_id = 1;
+  int32 hash = 2;
+  int32 layer = 3;
 }
 
 //개별 플레이어의 정보를 담음
@@ -190,6 +199,12 @@ enum ActionType{
   MONSTER_ACTION_SET_STATUS = 1;
   MONSTER_ACTION_SET_TARGET = 2; //바라볼 타겟을 설정
   MONSTER_ACTION_SET_DESTINATION = 3; //이동할 목적지를 설정
+}
+
+message MonsterTakeDamage{
+  string monster_id = 1;
+  float damage = 2;
+  float current_hp = 3; //맞은 이후의 체력
 }
 
 enum MonsterState{

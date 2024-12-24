@@ -14,7 +14,6 @@ namespace Monster
             if(SuperManager.Instance.isHost)
             {
                 Monster.SendTarget(Monster.SelectRandomTarget());
-                Monster.ReadyToAction += Monster.ChoicePattern;
             }
         }
 
@@ -27,8 +26,10 @@ namespace Monster
             if (Time.time - stateEnterTime > TimeThreshold && SuperManager.Instance.isHost)
             {
                 // Debug.Log($"{TimeThreshold}초 대기로 readyToAction Invoke");
-                // Idle 상태로 전환
-                Monster.ReadyToAction.Invoke();
+                if (!Monster.scarecrowMode)
+                {
+                    Monster.ReadyToAction.Invoke();
+                }
             }
         }
     }

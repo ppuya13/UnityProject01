@@ -35,6 +35,8 @@ func (mh *MessageHandler) ProcessMessage(message *pb.GameMessage, conn net.Conn,
 		mh.handleChatMessage(message)
 	case *pb.GameMessage_PlayerInput:
 		mh.handlePlayerInput(payload.PlayerInput)
+	case *pb.GameMessage_PlayerAttackAnim:
+		mh.handlePlayerAttackAnim(message)
 	case *pb.GameMessage_MonsterSpawn:
 		mh.handleMonsterSpawn(payload.MonsterSpawn)
 	case *pb.GameMessage_MonsterAnim:
@@ -178,6 +180,12 @@ func (mh *MessageHandler) handlePlayerInput(msg *pb.PlayerInput) {
 	}
 
 	nm.SendMessageToAllExcept(inputMessage, msg.PlayerId)
+}
+
+func (mh *MessageHandler) handlePlayerAttackAnim(msg *pb.GameMessage) {
+	nm := mh.mcx.NetManager()
+
+	nm.SendMessageToAll(msg)
 }
 
 func (mh *MessageHandler) handleMonsterAnim(request *pb.MonsterAnim) {

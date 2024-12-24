@@ -61,6 +61,9 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
                 case GameMessage.PayloadOneofCase.PlayerInput:
                     HandlePlayerInput(msg.PlayerInput);
                     break;
+                case GameMessage.PayloadOneofCase.PlayerAttackAnim:
+                    HandlePlayerAttackAnim(msg.PlayerAttackAnim);
+                    break;
                 default:
                     Debug.LogError($"정의되지 않은 케이스 ({msg.PayloadCase})");
                     break;
@@ -256,6 +259,18 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
                 }
             }
                 break;
+        }
+    }
+
+    private void HandlePlayerAttackAnim(PlayerAttackAnim msg)
+    {
+        Debug.Log("플레이어 어택 애니메이션 재생 메시지 수신");
+        if (SpawnManager.Instance.SpawnedPlayers.TryGetValue(msg.PlayerId, out PlayerController player))
+        {
+            if (player is OtherPlayer otherPlayer)
+            {
+                otherPlayer.PlayAttackAnimation(msg.Hash, msg.Layer);
+            }
         }
     }
 

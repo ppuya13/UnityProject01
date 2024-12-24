@@ -2287,6 +2287,9 @@ MonoBehaviour:
     - Name: FallDown
       Entry: 3
       Data: 426567206
+    - Name: Down
+      Entry: 3
+      Data: -1127399675
     - Name: Damage
       Entry: 3
       Data: 375673178
@@ -2296,6 +2299,9 @@ MonoBehaviour:
     - Name: Die
       Entry: 3
       Data: 20298039
+    - Name: attackDict
+      Entry: 6
+      Data: 
   playerId: 
   nickname: 
   type: 1
@@ -2307,6 +2313,11 @@ MonoBehaviour:
   mouseSensitivity: 100
   characterCamera: {fileID: 1196573070657777092}
   bodyTilt: {fileID: 4769285727220807651}
+  attackConfigs:
+  - {fileID: 11400000, guid: 5972edf5184c735479c2d2dba5092b79, type: 2}
+  - {fileID: 11400000, guid: d673c06d9843da34cbd0346d8320e24b, type: 2}
+  - {fileID: 11400000, guid: d1dd31c96ea0afb44b05f21f2d5a99af, type: 2}
+  - {fileID: 11400000, guid: 2659f216a170c6f4d8ed4c99ff1803a2, type: 2}
 --- !u!114 &4254783032390875711
 MonoBehaviour:
   m_ObjectHideFlags: 0

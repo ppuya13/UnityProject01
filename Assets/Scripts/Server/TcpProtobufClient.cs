@@ -310,6 +310,21 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
         SendMessage(message);
     }
 
+    public void SendAttackState(int hash, int layer)
+    {
+        var message = new GameMessage()
+        {
+            PlayerAttackAnim = new PlayerAttackAnim()
+            {
+                PlayerId = SuperManager.Instance.playerId,
+                Hash = hash,
+                Layer = layer,
+            }
+        };
+        
+        SendMessage(message);
+    }
+
     #endregion
 
     #region 몬스터 관련
@@ -388,6 +403,19 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
                 MonsterId = monsterId,
                 ActionType = ActionType.MonsterActionSetDestination,
                 Destination = _destination
+            }
+        };
+        SendMessage(message);
+    }
+    
+    public void SendMonsterTakeDamage(string monsterId, float damage)
+    {
+        var message = new GameMessage()
+        {
+            MonsterTakeDamage = new MonsterTakeDamage()
+            {
+                MonsterId = monsterId,
+                Damage = damage
             }
         };
         SendMessage(message);

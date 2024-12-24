@@ -34,6 +34,8 @@ public class UIManager : DDSingletonManager<UIManager>
     public TMP_InputField chatInput;
     public Button sendBtn;
     
+    public GameObject invincibleMode;
+    
     private volatile bool serverReady = false;
 
     protected override void Awake()

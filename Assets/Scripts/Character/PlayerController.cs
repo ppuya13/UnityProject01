@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Character;
 using Game;
 using Monster;
 using RootMotion.FinalIK;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public abstract class PlayerController : SerializedMonoBehaviour
 {
@@ -29,6 +32,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     protected float WalkSpeed = 2.0f; // 걷기 이동속도
     protected float RunSpeed = 3.0f; // 달리기 이동속도
     protected float SpeedChangeRate = 10f; //이동속도 변경 속도
+    protected float AttackMoveSpeed = 10f;
     protected float JumpHeight = 2.0f; // 점프 높이 (추가적으로 점프를 적용할 경우)
     protected Vector3 Velocity;
 
@@ -36,7 +40,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     protected Animator Animator;
     public LookAtIK lookAtIK;
     public bool disableKeyboard = false; //채팅할때 키보드 입력으로 움직이지 않도록 함.
-    
+
 
     private AttackType hitAttack;
     private int hitIndex;
@@ -49,19 +53,22 @@ public abstract class PlayerController : SerializedMonoBehaviour
     protected bool IsDie = false;
     protected bool IsDodge = false; //회피무적상태
     protected Coroutine StunCoroutine;
+
+    [HideInInspector] public readonly int Stun = Animator.StringToHash("Stun");
+    [HideInInspector] public readonly int Horizontal = Animator.StringToHash("Horizontal");
+    [HideInInspector] public readonly int Vertical = Animator.StringToHash("Vertical");
+    [HideInInspector] public readonly int LR = Animator.StringToHash("LR");
+    [HideInInspector] public readonly int FB = Animator.StringToHash("FB");
+    [HideInInspector] public readonly int MotionIndex = Animator.StringToHash("MotionIndex");
+    [HideInInspector] public readonly int FallDown = Animator.StringToHash("FallDown");
+    [HideInInspector] public readonly int Down = Animator.StringToHash("Down");
+    [HideInInspector] public readonly int Damage = Animator.StringToHash("Damage"); //피격당했을때
+    [HideInInspector] public readonly int StunEnd = Animator.StringToHash("StunEnd");
+    [HideInInspector] public readonly int Die = Animator.StringToHash("Die");
     
-    [HideInInspector]public readonly int Stun = Animator.StringToHash("Stun");
-    [HideInInspector]public readonly int Horizontal = Animator.StringToHash("Horizontal");
-    [HideInInspector]public readonly int Vertical = Animator.StringToHash("Vertical");
-    [HideInInspector]public readonly int LR = Animator.StringToHash("LR");
-    [HideInInspector]public readonly int FB = Animator.StringToHash("FB");
-    [HideInInspector]public readonly int MotionIndex = Animator.StringToHash("MotionIndex");
-    [HideInInspector]public readonly int FallDown = Animator.StringToHash("FallDown");
-    [HideInInspector]public readonly int Down = Animator.StringToHash("Down");
-    [HideInInspector]public readonly int Damage = Animator.StringToHash("Damage"); //피격당했을때
-    [HideInInspector]public readonly int StunEnd = Animator.StringToHash("StunEnd");
-    [HideInInspector]public readonly int Die = Animator.StringToHash("Die");
-    
+    public LayerMask targetLayer;
+    public PlayerAttackConfig currentAttack;
+
 
     protected virtual void Awake()
     {
@@ -75,7 +82,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     {
         // if (type == CharacterType.Dummy) return;
         Gravity();
-        
+
         // Velocity를 기반으로 플레이어 이동
         CharacterController.Move(Velocity * Time.deltaTime);
         Velocity = Vector3.Lerp(Velocity, Vector3.zero, Time.deltaTime * 5f);
@@ -103,12 +110,12 @@ public abstract class PlayerController : SerializedMonoBehaviour
             Velocity.y += gravity * Time.deltaTime; // 중력 적용
         }
     }
-    
+
     //닿은 공격이 유효한지 체크
-    public void HitCheck(AttackConfig config, AttackType attackType, int attackIdx, Transform monsterTransform)
+    public void AttackValidation(AttackConfig config, AttackType attackType, int attackIdx, Transform monsterTransform)
     {
         if (IsDodge) return; //회피중이면 리턴
-        
+
         if (attackIdx < 0) //0미만이면 다단히트라서 조건 계산 할 필요 없음 
         {
             TakeDamage(config, monsterTransform);
@@ -143,7 +150,8 @@ public abstract class PlayerController : SerializedMonoBehaviour
     protected abstract void TakeDamage(AttackConfig config, Transform monsterTransform);
 
     //피격 애니메이션 재생
-    protected (float lr, float fb, bool isBound, bool isDown, float motionIndex) SetAnimatorParameters(Vector3 attackDirection,
+    protected (float lr, float fb, bool isBound, bool isDown, float motionIndex) SetAnimatorParameters(
+        Vector3 attackDirection,
         AttackConfig config)
     {
         float lr = 0f;
@@ -155,7 +163,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
         bool isDown = config.knockBackType == KnockBackType.KnockbackDown;
         Animator.SetBool(FallDown, isBound);
         Animator.SetBool(Down, isDown);
-        
+
         if (isBound)
         {
             // isBound가 true일 때: 앞과 뒤만 고려하여 FB 설정
@@ -167,6 +175,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
             {
                 fb = 1f; // 뒤에서 공격
             }
+
             // 좌우는 고려하지 않음
             lr = 0f;
             IsDown = true;
@@ -210,15 +219,15 @@ public abstract class PlayerController : SerializedMonoBehaviour
                 }
             }
         }
-        
+
         Animator.SetFloat(LR, lr);
         Animator.SetFloat(FB, fb);
 
         float motionIndex = Random.value;
         Animator.SetFloat(MotionIndex, motionIndex);
-        
+
         Animator.SetTrigger(Damage);
-        
+
         return (lr, fb, isBound, isDown, motionIndex);
     }
 
@@ -230,4 +239,6 @@ public abstract class PlayerController : SerializedMonoBehaviour
         if (!IsDie) Animator.SetTrigger(StunEnd); //죽지 않았을 경우에만 스턴이 풀림
     }
 
+    //가한 공격의 피격체크
+    public abstract void HitCheck();
 }
