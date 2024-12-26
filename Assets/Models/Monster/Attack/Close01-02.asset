@@ -25,10 +25,10 @@ MonoBehaviour:
     - Name: RangeType
       Entry: 7
       Data: 0|Monster.MeleeAttack, Assembly-CSharp
-    - Name: distance
+    - Name: Distance
       Entry: 4
       Data: 1
-    - Name: attackPositionOffset
+    - Name: AttackPositionOffset
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
@@ -112,75 +112,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: ColliderConfigs
-      Entry: 7
-      Data: 3|Monster.IColliderConfig[], Assembly-CSharp
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 4|Monster.BoxColliderConfig, Assembly-CSharp
-    - Name: Size
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 2.5
-    - Name: 
-      Entry: 4
-      Data: 0.5
-    - Name: 
-      Entry: 4
-      Data: 2.5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Center
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Rotation
-      Entry: 7
-      Data: UnityEngine.Quaternion, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0.342020124
-    - Name: 
-      Entry: 4
-      Data: 0.9396926
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: EffectConfigs
       Entry: 7
-      Data: 5|Monster.EffectConfig[], Assembly-CSharp
+      Data: 3|Monster.EffectConfig[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 1
@@ -198,10 +132,10 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0.1
+      Data: 0.7
     - Name: 
       Entry: 4
-      Data: -0.7
+      Data: 0.3
     - Name: 
       Entry: 8
       Data: 
@@ -254,8 +188,6 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0, z: 1}
   rotateSpeed: 90
   rotateTime: 5
-  distance: 1
-  attackPositionOffset: {x: 0, y: 0.6, z: 0}
   knockBackType: 3
   knockBackPower: 2.5
   stunDuration: 0.8

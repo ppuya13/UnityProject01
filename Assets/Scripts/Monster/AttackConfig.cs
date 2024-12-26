@@ -25,12 +25,6 @@ namespace Monster
         public float rotateSpeed;
         public float rotateTime = 5.0f; //moveTime과 동일
         
-        [Header("공격 판정")]
-        // 공격 판정
-        public float distance; //몬스터의 앞쪽 얼마나 앞에 판정을 생성할지 (positionOffset의 Z값과 동일)
-        public Vector3 attackPositionOffset; //Distance를 기준으로 추가적으로 세부적인 위치를 x, y, z 로 설정
-        public IColliderConfig[] ColliderConfigs;
-        
         [Header("넉백/경직 설정")]
         //넉백 설정
         public KnockBackType knockBackType;
@@ -108,8 +102,8 @@ namespace Monster
     public class MeleeAttack : IAttackRangeType
     {
         public RangeType RangeType => RangeType.Melee;
-        public float distance; //몬스터의 앞쪽 얼마나 앞에 판정을 생성할지 (positionOffset의 Z값과 동일)
-        public Vector3 attackPositionOffset; //Distance를 기준으로 추가적으로 세부적인 위치를 x, y, z 로 설정
+        public float Distance; //몬스터의 앞쪽 얼마나 앞에 판정을 생성할지 (positionOffset의 Z값과 동일)
+        public Vector3 AttackPositionOffset; //Distance를 기준으로 추가적으로 세부적인 위치를 x, y, z 로 설정
         public IColliderConfig[] ColliderConfigs;
     }
 
@@ -127,7 +121,7 @@ namespace Monster
         public Vector3 Direction; //나아갈 방향
         public float Duration; //투사체의 지속시간
         public float Speed; //투사체의 속도
-        public GameObject Particle; //투사체의 모습
+        public GameObject Particle; //투사체 오브젝트(이펙트가 아닌 이펙트를 적용한 프리팹을 등록)
     }
     
     public class AoEAttack : IAttackRangeType

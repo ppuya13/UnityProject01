@@ -34,7 +34,7 @@ public class MyPlayer : PlayerController
     private static readonly int Attack = Animator.StringToHash("Attack");
 
     public PlayerAttackConfig[] attackConfigs;
-    public Dictionary<PlayerAttackName, PlayerAttackConfig> AttackDict;
+    public Dictionary<PlayerAttackName, PlayerAttackConfig> AttackDict = new();
 
     protected override void Awake()
     {

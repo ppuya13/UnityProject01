@@ -24,6 +24,9 @@ namespace Monster
                 case AttackType.MonsterAttackCloseCounter:
                     AttackCounter();
                     break;
+                case AttackType.MonsterAttackShortrange01:
+                    AttackShortRange01();
+                    break;
                 default:
                     Debug.LogError($"정의되지 않은 공격 타입: {Monster.currentAttack}");
                     break;
@@ -53,6 +56,11 @@ namespace Monster
         private void AttackCounter()
         {
             Monster.animator.SetTrigger(Monster.AttackCounter);
+        }
+
+        private void AttackShortRange01()
+        {
+            Monster.animator.SetTrigger(Monster.AttackShortRange01);
         }
 
     }

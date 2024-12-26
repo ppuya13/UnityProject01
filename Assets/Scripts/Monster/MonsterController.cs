@@ -72,6 +72,8 @@ namespace Monster
         [HideInInspector] public readonly int AttackClose03 = Animator.StringToHash("AttackClose03");
         [HideInInspector] public readonly int AttackCounter = Animator.StringToHash("AttackCounter");
 
+        [HideInInspector] public readonly int AttackShortRange01 = Animator.StringToHash("AttackShortRange01");
+
         //회전 관련 변수
         public AnimationClip turnLeftClip;
         public AnimationClip turnRightClip;
@@ -135,7 +137,7 @@ namespace Monster
         /// 2.몬스터의 인스펙터에 생성한 AttackConfig 등록
         /// 3.ChoicePattern() 메소드에 공격 패턴과 가중치 등록
         /// 4.ChoicePattern() 메소드의 SendChangeState부분도 정의
-        /// 5.MonsterStateAttack의 EnterState에 애니메이션 트리거 등록
+        /// 5.MonsterStateAttack의 EnterState에 애니메이션 트리거 정의
         /// 
         /// </summary>
         ///
@@ -539,10 +541,9 @@ namespace Monster
                 //20이상: 초장거리
 
                 List<(string, AttackType, int)> patternList = new();
-                bool v;
+                bool v; //TryGetValue를 사용하기 위한 임시 변수. 실제로 사용되진 않음.
                 if (distance < 3.0f) //타겟과의 거리에 따라 패턴리스트에 패턴을 추가한다.
                 {
-                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
                     // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackCloseCounter, out v))
                     //     patternList.Add(("Attack", AttackType.MonsterAttackCloseCounter, 20));
                     // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackClose01, out v))
@@ -552,14 +553,20 @@ namespace Monster
                     // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackClose03, out v))
                     //     patternList.Add(("Attack", AttackType.MonsterAttackClose03, 50));
 
-                    // patternList.Add(("DodgeBack", AttackType.MonsterAttackUnknown, 14));
-                    // patternList.Add(("DodgeLeft", AttackType.MonsterAttackUnknown, 7));
-                    // patternList.Add(("DodgeRight", AttackType.MonsterAttackUnknown, 7));
+                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
+                    patternList.Add(("DodgeBack", AttackType.MonsterAttackUnknown, 14));
+                    patternList.Add(("DodgeLeft", AttackType.MonsterAttackUnknown, 7));
+                    patternList.Add(("DodgeRight", AttackType.MonsterAttackUnknown, 7));
                 }
                 else if (distance < 5.0f)
                 {
                     //전진성 있는 근접패턴
                     //옆으로 꽤 멀리 점프한 뒤 타겟을 향해 일섬
+                    // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackCloseCounter, out v))
+                    //     patternList.Add(("Attack", AttackType.MonsterAttackCloseCounter, 20));
+                    if (!attackCooldown.TryGetValue(AttackType.MonsterAttackShortrange01, out v))
+                        patternList.Add(("Attack", AttackType.MonsterAttackShortrange01, 20));
+                    
                     patternList.Add(("Move", AttackType.MonsterAttackUnknown, 20));
                     // patternList.Add(("DodgeBack", AttackType.MonsterAttackUnknown, 14));
                     // patternList.Add(("DodgeLeft", AttackType.MonsterAttackUnknown, 7));
@@ -716,12 +723,6 @@ namespace Monster
                 Debug.LogError($"InitializeAttackConfigs에서 공격이 정의되지 않음: {currentAttack}, AttackIdx: {attackIdx}");
                 return;
             }
-            
-            if (attackConfig.ColliderConfigs == null || attackConfig.ColliderConfigs.Length == 0)
-            {
-                Debug.LogError($"Inspector에서 공격의 Collider가 정의되지 않음: {currentAttack}, AttackIdx: {attackIdx}");
-                return;
-            }
 
             if (attackConfig.RangeType is RangeAttack rangeAttack)
             {
@@ -730,47 +731,135 @@ namespace Monster
                     GameObject go = Instantiate(projectile.Particle, transform.position + projectile.Position,
                         projectile.Rotation);
                     DamageField df = go.AddComponent<DamageField>();
-                    df.SetDamageField(currentAttack, attackIdx, attackConfig);
+                    df.SetDamageField(currentAttack, attackIdx, attackConfig, projectile);
                 }
             }
             else
             {
-                Debug.LogError($"공격이 RangeAttack이 아닌데 CreateProjectile가 불렸음!!! ({currentAttack}, {attackIdx}, {attackConfig.RangeType})");
+                Debug.LogError(
+                    $"공격이 RangeAttack이 아닌데 CreateProjectile가 불렸음!!! ({currentAttack}, {attackIdx}, {attackConfig.RangeType})");
             }
         }
 
         //애니메이션의 히트판정에서 이벤트로 호출
         public void HitCheck()
         {
-            if (!AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig config))
+            if (!AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig attackConfig))
             {
                 Debug.LogError($"InitializeAttackConfigs에서 공격이 정의되지 않음: {currentAttack}, AttackIdx: {attackIdx}");
                 return;
             }
 
-            if (config.ColliderConfigs == null || config.ColliderConfigs.Length == 0)
+
+            if (attackConfig.RangeType is MeleeAttack config)
             {
-                Debug.LogError($"Inspector에서 공격의 Collider가 정의되지 않음: {currentAttack}, AttackIdx: {attackIdx}");
+                if (config.ColliderConfigs == null || config.ColliderConfigs.Length == 0)
+                {
+                    Debug.LogError($"Inspector에서 공격의 Collider가 정의되지 않음: {currentAttack}, AttackIdx: {attackIdx}");
+                    return;
+                }
+
+                // 공격 위치 계산
+                Vector3 basePosition = transform.position + transform.forward * config.Distance +
+                                       transform.TransformDirection(config.AttackPositionOffset);
+
+                List<Collider> allHitColliders = new List<Collider>();
+
+                foreach (var colliderConfig in config.ColliderConfigs)
+                {
+                    Collider[] hitColliders = Array.Empty<Collider>();
+
+                    switch (colliderConfig.ColliderType)
+                    {
+                        case ColliderType.Sphere:
+                            if (colliderConfig is SphereColliderConfig sphereConfig)
+                            {
+                                hitColliders = Physics.OverlapSphere(basePosition, sphereConfig.Radius, targetLayer);
+                            }
+
+                            break;
+
+                        case ColliderType.Box:
+                            if (colliderConfig is BoxColliderConfig boxConfig)
+                            {
+                                Vector3 boxCenterWorld = basePosition + transform.TransformDirection(boxConfig.Center);
+                                Quaternion worldRotation = transform.rotation * boxConfig.Rotation;
+                                hitColliders = Physics.OverlapBox(boxCenterWorld, boxConfig.Size * 0.5f, worldRotation,
+                                    targetLayer);
+                            }
+
+                            break;
+
+                        case ColliderType.Capsule:
+                            if (colliderConfig is CapsuleColliderConfig capsuleConfig)
+                            {
+                                Vector3 point1 = basePosition + capsuleConfig.Direction *
+                                    (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+                                Vector3 point2 = basePosition - capsuleConfig.Direction *
+                                    (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+                                hitColliders =
+                                    Physics.OverlapCapsule(point1, point2, capsuleConfig.Radius, targetLayer);
+                            }
+
+                            break;
+
+                        default:
+                            Debug.LogWarning($"Unknown ColliderType: {colliderConfig.ColliderType}.");
+                            break;
+                    }
+
+                    allHitColliders.AddRange(hitColliders);
+                }
+
+                foreach (var hitCollider in allHitColliders)
+                {
+                    PlayerController player = hitCollider.GetComponent<PlayerController>();
+                    if (player)
+                    {
+                        // 데미지 적용
+                        player.AttackValidation(attackConfig, currentAttack, attackIdx, transform);
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError(
+                    $"공격이 MeleeAttack이 아닌데 HitCheck가 불렸음!!! ({currentAttack}, {attackIdx}, {attackConfig.RangeType})");
+            }
+        }
+
+        public void HitCheck(int idx)
+        {
+            if (!AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig attackConfig))
+            {
+                Debug.LogError($"InitializeAttackConfigs에서 공격이 정의되지 않음: {currentAttack}, AttackIdx: {attackIdx}");
                 return;
             }
 
-
-            // 공격 위치 계산
-            Vector3 basePosition = transform.position + transform.forward * config.distance +
-                                   transform.TransformDirection(config.attackPositionOffset);
-
-            List<Collider> allHitColliders = new List<Collider>();
-
-            foreach (var colliderConfig in config.ColliderConfigs)
+            if (attackConfig.RangeType is MeleeAttack config)
             {
-                Collider[] hitColliders = Array.Empty<Collider>();
+                if (idx < 0 || idx >= config.ColliderConfigs.Length)
+                {
+                    Debug.LogError($"HitCheck 호출 시 유효하지 않은 인덱스: {idx}. ColliderConfigs 배열의 범위를 벗어났음.");
+                    return;
+                }
 
+                var colliderConfig = config.ColliderConfigs[idx];
+
+                // 공격 위치 계산
+                Vector3 basePosition = transform.position + transform.forward * config.Distance +
+                                       transform.TransformDirection(config.AttackPositionOffset);
+
+                List<Collider> hitColliders = new List<Collider>();
+
+                // 콜라이더 타입에 따른 처리
                 switch (colliderConfig.ColliderType)
                 {
                     case ColliderType.Sphere:
                         if (colliderConfig is SphereColliderConfig sphereConfig)
                         {
-                            hitColliders = Physics.OverlapSphere(basePosition, sphereConfig.Radius, targetLayer);
+                            hitColliders.AddRange(Physics.OverlapSphere(basePosition, sphereConfig.Radius,
+                                targetLayer));
                         }
 
                         break;
@@ -780,8 +869,9 @@ namespace Monster
                         {
                             Vector3 boxCenterWorld = basePosition + transform.TransformDirection(boxConfig.Center);
                             Quaternion worldRotation = transform.rotation * boxConfig.Rotation;
-                            hitColliders = Physics.OverlapBox(boxCenterWorld, boxConfig.Size * 0.5f, worldRotation,
-                                targetLayer);
+                            hitColliders.AddRange(Physics.OverlapBox(boxCenterWorld, boxConfig.Size * 0.5f,
+                                worldRotation,
+                                targetLayer));
                         }
 
                         break;
@@ -789,104 +879,37 @@ namespace Monster
                     case ColliderType.Capsule:
                         if (colliderConfig is CapsuleColliderConfig capsuleConfig)
                         {
-                            Vector3 point1 = basePosition + capsuleConfig.Direction *
-                                (capsuleConfig.Height / 2 - capsuleConfig.Radius);
-                            Vector3 point2 = basePosition - capsuleConfig.Direction *
-                                (capsuleConfig.Height / 2 - capsuleConfig.Radius);
-                            hitColliders = Physics.OverlapCapsule(point1, point2, capsuleConfig.Radius, targetLayer);
+                            Vector3 point1 = basePosition +
+                                             capsuleConfig.Direction *
+                                             (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+                            Vector3 point2 = basePosition -
+                                             capsuleConfig.Direction *
+                                             (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+                            hitColliders.AddRange(Physics.OverlapCapsule(point1, point2, capsuleConfig.Radius,
+                                targetLayer));
                         }
 
                         break;
 
                     default:
-                        Debug.LogWarning($"Unknown ColliderType: {colliderConfig.ColliderType}.");
+                        Debug.LogWarning($"알 수 없는 ColliderType: {colliderConfig.ColliderType}");
                         break;
                 }
 
-                allHitColliders.AddRange(hitColliders);
-            }
-
-            foreach (var hitCollider in allHitColliders)
-            {
-                PlayerController player = hitCollider.GetComponent<PlayerController>();
-                if (player)
+                // 피격된 플레이어 처리
+                foreach (var hitCollider in hitColliders)
                 {
-                    // 데미지 적용
-                    player.AttackValidation(config, currentAttack, attackIdx, transform);
+                    PlayerController player = hitCollider.GetComponent<PlayerController>();
+                    if (player)
+                    {
+                        player.AttackValidation(attackConfig, currentAttack, attackIdx, transform);
+                    }
                 }
             }
-        }
-
-        public void HitCheck(int idx)
-        {
-            if (!AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig config))
+            else
             {
-                Debug.LogError($"InitializeAttackConfigs에서 공격이 정의되지 않음: {currentAttack}, AttackIdx: {attackIdx}");
-                return;
-            }
-            
-            if (idx < 0 || idx >= config.ColliderConfigs.Length)
-            {
-                Debug.LogError($"HitCheck 호출 시 유효하지 않은 인덱스: {idx}. ColliderConfigs 배열의 범위를 벗어났음.");
-                return;
-            }
-
-            var colliderConfig = config.ColliderConfigs[idx];
-
-            // 공격 위치 계산
-            Vector3 basePosition = transform.position + transform.forward * config.distance +
-                                   transform.TransformDirection(config.attackPositionOffset);
-
-            List<Collider> hitColliders = new List<Collider>();
-
-            // 콜라이더 타입에 따른 처리
-            switch (colliderConfig.ColliderType)
-            {
-                case ColliderType.Sphere:
-                    if (colliderConfig is SphereColliderConfig sphereConfig)
-                    {
-                        hitColliders.AddRange(Physics.OverlapSphere(basePosition, sphereConfig.Radius, targetLayer));
-                    }
-
-                    break;
-
-                case ColliderType.Box:
-                    if (colliderConfig is BoxColliderConfig boxConfig)
-                    {
-                        Vector3 boxCenterWorld = basePosition + transform.TransformDirection(boxConfig.Center);
-                        Quaternion worldRotation = transform.rotation * boxConfig.Rotation;
-                        hitColliders.AddRange(Physics.OverlapBox(boxCenterWorld, boxConfig.Size * 0.5f, worldRotation,
-                            targetLayer));
-                    }
-
-                    break;
-
-                case ColliderType.Capsule:
-                    if (colliderConfig is CapsuleColliderConfig capsuleConfig)
-                    {
-                        Vector3 point1 = basePosition +
-                                         capsuleConfig.Direction * (capsuleConfig.Height / 2 - capsuleConfig.Radius);
-                        Vector3 point2 = basePosition -
-                                         capsuleConfig.Direction * (capsuleConfig.Height / 2 - capsuleConfig.Radius);
-                        hitColliders.AddRange(Physics.OverlapCapsule(point1, point2, capsuleConfig.Radius,
-                            targetLayer));
-                    }
-
-                    break;
-
-                default:
-                    Debug.LogWarning($"알 수 없는 ColliderType: {colliderConfig.ColliderType}");
-                    break;
-            }
-
-            // 피격된 플레이어 처리
-            foreach (var hitCollider in hitColliders)
-            {
-                PlayerController player = hitCollider.GetComponent<PlayerController>();
-                if (player)
-                {
-                    player.AttackValidation(config, currentAttack, attackIdx, transform);
-                }
+                Debug.LogError(
+                    $"공격이 MeleeAttack이 아닌데 HitCheck가 불렸음!!! ({currentAttack}, {attackIdx}, {attackConfig.RangeType})");
             }
         }
 
@@ -906,12 +929,12 @@ namespace Monster
                 EffectConfig effect = config.EffectConfigs[idx];
                 if (config.EffectConfigs[idx].ParticleEffect)
                 {
-                    // 공격 위치 계산 (HitCheck와 유사하게)
-                    Vector3 attackPosition = transform.position + transform.forward * config.distance +
-                                             transform.TransformDirection(config.attackPositionOffset);
+                    // // 공격 위치 계산 (HitCheck와 유사하게)
+                    // Vector3 attackPosition = transform.position + transform.forward * config.distance +
+                    //                          transform.TransformDirection(config.attackPositionOffset);
 
                     // 이펙트의 위치, 회전, 크기를 설정합니다.
-                    Vector3 effectPosition = attackPosition + transform.TransformDirection(effect.EffectPosition);
+                    Vector3 effectPosition = transform.position + transform.TransformDirection(effect.EffectPosition);
                     Quaternion effectRotation = transform.rotation * effect.EffectRotation;
                     Vector3 effectScale = effect.EffectScale != Vector3.zero ? effect.EffectScale : Vector3.one;
 
@@ -1120,6 +1143,11 @@ namespace Monster
             if (SuperManager.Instance.isHost) SendChangeState(MonsterState.MonsterStatusIdle);
         }
 
+        public void SetAnimatorSpeed(float value)
+        {
+            animator.speed = value;
+        }
+
         //플레이어의 공격은 서버를 통한다.
         public void AttackValidation(PlayerAttackConfig attackConfig, Transform player)
         {
@@ -1163,65 +1191,68 @@ namespace Monster
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
-            if (!AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig config))
+            if (!AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig attackConfig))
             {
                 return;
             }
 
-            if (config.ColliderConfigs == null || config.ColliderConfigs.Length == 0)
+            if (attackConfig.RangeType is MeleeAttack config)
             {
-                //메시지는 이미 HitCheck에서 출력했으므로 메시지는 넘어감
-                return;
-            }
-
-            Vector3 basePosition = transform.position + transform.forward * config.distance +
-                                   transform.TransformDirection(config.attackPositionOffset);
-
-            Gizmos.color = Color.red;
-
-            foreach (var colliderConfig in config.ColliderConfigs)
-            {
-                switch (colliderConfig.ColliderType)
+                if (config.ColliderConfigs == null || config.ColliderConfigs.Length == 0)
                 {
-                    case ColliderType.Sphere:
-                        if (colliderConfig is SphereColliderConfig sphereConfig)
-                        {
-                            Gizmos.DrawWireSphere(basePosition, sphereConfig.Radius);
-                        }
+                    //메시지는 이미 HitCheck에서 출력했으므로 메시지는 넘어감
+                    return;
+                }
 
-                        break;
+                Vector3 basePosition = transform.position + transform.forward * config.Distance +
+                                       transform.TransformDirection(config.AttackPositionOffset);
 
-                    case ColliderType.Box:
-                        if (colliderConfig is BoxColliderConfig boxConfig)
-                        {
-                            Vector3 boxCenterWorld = basePosition + transform.TransformDirection(boxConfig.Center);
-                            Quaternion worldBoxRotation = transform.rotation * boxConfig.Rotation;
+                Gizmos.color = Color.red;
 
-                            Matrix4x4 oldMatrix = Gizmos.matrix;
-                            Gizmos.matrix = Matrix4x4.TRS(boxCenterWorld, worldBoxRotation, Vector3.one);
-                            Gizmos.DrawWireCube(Vector3.zero, boxConfig.Size);
-                            Gizmos.matrix = oldMatrix;
-                        }
+                foreach (var colliderConfig in config.ColliderConfigs)
+                {
+                    switch (colliderConfig.ColliderType)
+                    {
+                        case ColliderType.Sphere:
+                            if (colliderConfig is SphereColliderConfig sphereConfig)
+                            {
+                                Gizmos.DrawWireSphere(basePosition, sphereConfig.Radius);
+                            }
 
-                        break;
+                            break;
 
-                    case ColliderType.Capsule:
-                        if (colliderConfig is CapsuleColliderConfig capsuleConfig)
-                        {
-                            Vector3 point1 = basePosition + capsuleConfig.Direction *
-                                (capsuleConfig.Height / 2 - capsuleConfig.Radius);
-                            Vector3 point2 = basePosition - capsuleConfig.Direction *
-                                (capsuleConfig.Height / 2 - capsuleConfig.Radius);
-                            Gizmos.DrawWireSphere(point1, capsuleConfig.Radius);
-                            Gizmos.DrawWireSphere(point2, capsuleConfig.Radius);
-                            Gizmos.DrawLine(point1, point2);
-                        }
+                        case ColliderType.Box:
+                            if (colliderConfig is BoxColliderConfig boxConfig)
+                            {
+                                Vector3 boxCenterWorld = basePosition + transform.TransformDirection(boxConfig.Center);
+                                Quaternion worldBoxRotation = transform.rotation * boxConfig.Rotation;
 
-                        break;
+                                Matrix4x4 oldMatrix = Gizmos.matrix;
+                                Gizmos.matrix = Matrix4x4.TRS(boxCenterWorld, worldBoxRotation, Vector3.one);
+                                Gizmos.DrawWireCube(Vector3.zero, boxConfig.Size);
+                                Gizmos.matrix = oldMatrix;
+                            }
 
-                    default:
-                        Debug.LogWarning($"Unknown ColliderType: {colliderConfig.ColliderType}");
-                        break;
+                            break;
+
+                        case ColliderType.Capsule:
+                            if (colliderConfig is CapsuleColliderConfig capsuleConfig)
+                            {
+                                Vector3 point1 = basePosition + capsuleConfig.Direction *
+                                    (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+                                Vector3 point2 = basePosition - capsuleConfig.Direction *
+                                    (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+                                Gizmos.DrawWireSphere(point1, capsuleConfig.Radius);
+                                Gizmos.DrawWireSphere(point2, capsuleConfig.Radius);
+                                Gizmos.DrawLine(point1, point2);
+                            }
+
+                            break;
+
+                        default:
+                            Debug.LogWarning($"Unknown ColliderType: {colliderConfig.ColliderType}");
+                            break;
+                    }
                 }
             }
         }

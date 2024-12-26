@@ -24671,6 +24671,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 9b9f9f5dd9a52e14b9206bc0742f1ad6, type: 2}
     - {fileID: 11400000, guid: 8d42a19462eccdc40bfa9281ca55806a, type: 2}
     - {fileID: 11400000, guid: a45eeb11df705884d995a5e253073a88, type: 2}
+    - {fileID: 11400000, guid: f73d8e81319deaa40839ee7d4b5226c5, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -24732,7 +24733,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 8
+      Data: 9
     - Name: 
       Entry: 7
       Data: 
@@ -24910,12 +24911,35 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 11
+    - Name: Item2
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
   monsterId: 
+  maxHp: 1000
   lookAtThis: {fileID: 772563401325919270}
   currentState: 0
   currentAttack: 0
@@ -24923,6 +24947,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   lookAtIK: {fileID: 0}
   dummyMode: 0
+  scarecrowMode: 0
   targetList: []
   currentTarget: {fileID: 0}
   turnLeftClip: {fileID: 7400000, guid: 8dd2048633c6ab14d9f8957bd430364a, type: 2}

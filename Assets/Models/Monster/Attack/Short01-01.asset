@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94ed0c9f9d9a4edb845b31d3ac6b04b1, type: 3}
-  m_Name: Close02-03
+  m_Name: Short01-01
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 1919708242137258, guid: 46a06acf8820d484291032dc2810f217, type: 3}
+    - {fileID: 1996079926692674, guid: 5fc355f2885d5934485c4fe883b7581e, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -57,13 +57,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1.875
+      Data: 1
     - Name: 
       Entry: 4
-      Data: 3.75
+      Data: 1
     - Name: 
       Entry: 4
-      Data: 6.15
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -72,13 +72,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.6
+      Data: 0
     - Name: 
       Entry: 4
       Data: 1
     - Name: 
       Entry: 4
-      Data: -0.48
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -93,10 +93,10 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0.320613
+      Data: 0
     - Name: 
       Entry: 4
-      Data: -0.947210252
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -117,7 +117,7 @@ MonoBehaviour:
       Data: 3|Monster.EffectConfig[], Assembly-CSharp
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 7
       Data: Monster.EffectConfig, Assembly-CSharp
@@ -129,13 +129,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 1
     - Name: 
       Entry: 4
-      Data: 0.5
+      Data: 1
     - Name: 
       Entry: 4
-      Data: 0.5
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -144,73 +144,16 @@ MonoBehaviour:
       Data: UnityEngine.Quaternion, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.242848814
-    - Name: 
-      Entry: 4
-      Data: 0.07365443
-    - Name: 
-      Entry: 4
-      Data: 0.923583
-    - Name: 
-      Entry: 4
-      Data: -0.287391633
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: EffectScale
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: Monster.EffectConfig, Assembly-CSharp
-    - Name: ParticleEffect
-      Entry: 10
       Data: 0
-    - Name: EffectPosition
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0.5
+      Data: 0
     - Name: 
       Entry: 4
-      Data: -0.5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: EffectRotation
-      Entry: 7
-      Data: UnityEngine.Quaternion, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0.111078292
-    - Name: 
-      Entry: 4
-      Data: 0.007055018
-    - Name: 
-      Entry: 4
-      Data: 0.8105599
-    - Name: 
-      Entry: 4
-      Data: -0.574982166
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -238,15 +181,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  damageAmount: 35
+  damageAmount: 10
   cooldown: 0
-  moveSpeed: 1.45
+  moveSpeed: 5
   moveTime: 5
-  moveDirection: {x: 0, y: 0, z: 1}
-  rotateSpeed: 180
+  moveDirection: {x: 0, y: 0, z: 0}
+  rotateSpeed: 0
   rotateTime: 5
-  knockBackType: 6
-  knockBackPower: 0
-  stunDuration: 0
+  knockBackType: 5
+  knockBackPower: 5
+  stunDuration: 0.5
   knockBackForceMode: 0
   soundEffects: []
