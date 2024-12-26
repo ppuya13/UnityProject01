@@ -21,25 +21,13 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: ColliderConfig
+    - Name: RangeType
       Entry: 7
-      Data: 0|Monster.BoxColliderConfig, Assembly-CSharp
-    - Name: Size
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
+      Data: 0|Monster.MeleeAttack, Assembly-CSharp
+    - Name: distance
       Entry: 4
       Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Center
+    - Name: attackPositionOffset
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
@@ -54,30 +42,36 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: Rotation
+    - Name: ColliderConfigs
       Entry: 7
-      Data: UnityEngine.Quaternion, UnityEngine.CoreModule
+      Data: 1|Monster.IColliderConfig[], Assembly-CSharp
     - Name: 
-      Entry: 4
+      Entry: 12
       Data: 0
     - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 1
+      Entry: 13
+      Data: 
     - Name: 
       Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: ColliderConfigs
+      Entry: 7
+      Data: 2|Monster.IColliderConfig[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: EffectConfigs
       Entry: 7
-      Data: 1|Monster.EffectConfig[], Assembly-CSharp
+      Data: 3|Monster.EffectConfig[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 0
@@ -88,6 +82,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   damageAmount: 0
+  cooldown: 15
   moveSpeed: 6
   moveTime: 5
   moveDirection: {x: 0, y: 0, z: -1}

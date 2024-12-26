@@ -5,6 +5,7 @@ using Character;
 using Game;
 using RootMotion.FinalIK;
 using Sirenix.OdinInspector;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -17,6 +18,7 @@ namespace Monster
 
         public float maxHp = 1000;
         private float currentHp = 1000;
+
         public float CurrentHp
         {
             get => currentHp;
@@ -26,11 +28,12 @@ namespace Monster
                 //UI 변경하기
             }
         }
-        
+
         public Transform lookAtThis;
         protected StateMachine Sm;
-        
+
         public MonsterState currentState;
+
         public MonsterState CurrentState
         {
             get => currentState;
@@ -91,6 +94,8 @@ namespace Monster
         [SerializeField]
         public Dictionary<(AttackType attackType, int index), AttackConfig> AttackConfigs = new(); //공격 판정이 담긴 리스트
 
+        private Dictionary<AttackType, bool> attackCooldown = new();
+
         private float patternCooldown = 0f; //패턴이 발동된 이후 일정시간동안 다른 패턴이 발동되지 못하게 함
         private const float PatternThreshold = 0.2f; //다른 패턴이 발동되지 못하게 하는 시간
 
@@ -100,6 +105,7 @@ namespace Monster
 
         private const float TakeDamageThreshold = 0.2f; // 같은 공격에 다시 맞지 않는 시간
         private Dictionary<(PlayerAttackConfig, Transform), bool> hitDict;
+        private bool isCounter = false;
 
         ///
         /// 이동 중에도 일정시간? 거리에 따라? 스킬이 발동하도록 변경하는 게 좋을 듯.
@@ -533,13 +539,18 @@ namespace Monster
                 //20이상: 초장거리
 
                 List<(string, AttackType, int)> patternList = new();
+                bool v;
                 if (distance < 3.0f) //타겟과의 거리에 따라 패턴리스트에 패턴을 추가한다.
                 {
-                    // patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
-                    // patternList.Add(("Attack", AttackType.MonsterAttackCloseCounter, 20));
-                    // patternList.Add(("Attack", AttackType.MonsterAttackClose01, 50));
-                    // patternList.Add(("Attack", AttackType.MonsterAttackClose02, 50));
-                    patternList.Add(("Attack", AttackType.MonsterAttackClose03, 50));
+                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
+                    // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackCloseCounter, out v))
+                    //     patternList.Add(("Attack", AttackType.MonsterAttackCloseCounter, 20));
+                    // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackClose01, out v))
+                    //     patternList.Add(("Attack", AttackType.MonsterAttackClose01, 50));
+                    // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackClose02, out v))
+                    //     patternList.Add(("Attack", AttackType.MonsterAttackClose02, 50));
+                    // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackClose03, out v))
+                    //     patternList.Add(("Attack", AttackType.MonsterAttackClose03, 50));
 
                     // patternList.Add(("DodgeBack", AttackType.MonsterAttackUnknown, 14));
                     // patternList.Add(("DodgeLeft", AttackType.MonsterAttackUnknown, 7));
@@ -586,37 +597,39 @@ namespace Monster
                             break;
                         case "Attack":
                             Debug.Log("공격할래");
-                            switch (selectedPattern.Value.attackType)
-                            {
-                                case AttackType.MonsterAttackClose01:
-                                    SendChangeState(MonsterState.MonsterStatusAttack, AttackType.MonsterAttackClose01);
-                                    break;
-                                case AttackType.MonsterAttackClose02:
-                                    SendChangeState(MonsterState.MonsterStatusAttack, AttackType.MonsterAttackClose02);
-                                    break;
-                                case AttackType.MonsterAttackClose03:
-                                    SendChangeState(MonsterState.MonsterStatusAttack, AttackType.MonsterAttackClose03);
-                                    break;
-                                case AttackType.MonsterAttackCloseCounter:
-                                    SendChangeState(MonsterState.MonsterStatusAttack,
-                                        AttackType.MonsterAttackCloseCounter);
-                                    break;
-                                default:
-                                    Debug.LogError($"정의되지 않은 패턴: {selectedPattern.Value.attackType}");
-                                    break;
-                            }
+                            StartCoroutine(CooldownTimer(selectedPattern.Value.attackType,
+                                AttackConfigs[(selectedPattern.Value.attackType, 1)].cooldown)); //쿨타임 돌림
+                            SendChangeState(MonsterState.MonsterStatusAttack, selectedPattern.Value.attackType);
 
+                            // switch (selectedPattern.Value.attackType)
+                            // {
+                            //     case AttackType.MonsterAttackClose01:
+                            //         SendChangeState(MonsterState.MonsterStatusAttack, AttackType.MonsterAttackClose01);
+                            //         break;
+                            //     case AttackType.MonsterAttackClose02:
+                            //         SendChangeState(MonsterState.MonsterStatusAttack, AttackType.MonsterAttackClose02);
+                            //         break;
+                            //     case AttackType.MonsterAttackClose03:
+                            //         SendChangeState(MonsterState.MonsterStatusAttack, AttackType.MonsterAttackClose03);
+                            //         break;
+                            //     case AttackType.MonsterAttackCloseCounter:
+                            //         SendChangeState(MonsterState.MonsterStatusAttack, AttackType.MonsterAttackCloseCounter);
+                            //         break;
+                            //     default:
+                            //         Debug.LogError($"정의되지 않은 패턴: {selectedPattern.Value.attackType}");
+                            //         break;
+                            // }
                             break;
                         case "DodgeBack":
-                            Debug.Log("구를래");
+                            // Debug.Log("구를래");
                             SendChangeState(MonsterState.MonsterStatusDodge, 0f);
                             break;
                         case "DodgeLeft":
-                            Debug.Log("구를래");
+                            // Debug.Log("구를래");
                             SendChangeState(MonsterState.MonsterStatusDodge, -1);
                             break;
                         case "DodgeRight":
-                            Debug.Log("구를래");
+                            // Debug.Log("구를래");
                             SendChangeState(MonsterState.MonsterStatusDodge, 1);
                             break;
                         default:
@@ -629,6 +642,14 @@ namespace Monster
                     Debug.LogWarning("선택된 패턴이 없습니다.");
                 }
             }
+        }
+
+        //공격 쿨타임을 돌리는 코루틴
+        IEnumerator CooldownTimer(AttackType attackType, float time)
+        {
+            attackCooldown.Add(attackType, true);
+            yield return new WaitForSeconds(time);
+            attackCooldown.Remove(attackType);
         }
 
         //가중치를 기반으로 패턴을 선택하는 메서드
@@ -688,6 +709,36 @@ namespace Monster
             attackIdx = i;
         }
 
+        public void CreateProjectile()
+        {
+            if (!AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig attackConfig))
+            {
+                Debug.LogError($"InitializeAttackConfigs에서 공격이 정의되지 않음: {currentAttack}, AttackIdx: {attackIdx}");
+                return;
+            }
+            
+            if (attackConfig.ColliderConfigs == null || attackConfig.ColliderConfigs.Length == 0)
+            {
+                Debug.LogError($"Inspector에서 공격의 Collider가 정의되지 않음: {currentAttack}, AttackIdx: {attackIdx}");
+                return;
+            }
+
+            if (attackConfig.RangeType is RangeAttack rangeAttack)
+            {
+                foreach (Projectile projectile in rangeAttack.Projectiles)
+                {
+                    GameObject go = Instantiate(projectile.Particle, transform.position + projectile.Position,
+                        projectile.Rotation);
+                    DamageField df = go.AddComponent<DamageField>();
+                    df.SetDamageField(currentAttack, attackIdx, attackConfig);
+                }
+            }
+            else
+            {
+                Debug.LogError($"공격이 RangeAttack이 아닌데 CreateProjectile가 불렸음!!! ({currentAttack}, {attackIdx}, {attackConfig.RangeType})");
+            }
+        }
+
         //애니메이션의 히트판정에서 이벤트로 호출
         public void HitCheck()
         {
@@ -697,77 +748,143 @@ namespace Monster
                 return;
             }
 
-            //데미지를 설정
-            float distance = config.distance;
-            Vector3 attackPositionOffset = config.attackPositionOffset;
-
-            // 공격 위치 계산
-            Vector3 attackPosition = transform.position + transform.forward * distance +
-                                     transform.TransformDirection(attackPositionOffset);
-
-
-            // 히트 판정 수행
-            Collider[] hitColliders = Array.Empty<Collider>();
-
-            switch (config.ColliderConfig.ColliderType)
+            if (config.ColliderConfigs == null || config.ColliderConfigs.Length == 0)
             {
-                case ColliderType.Sphere:
-                    if (config.ColliderConfig is SphereColliderConfig sphereConfig)
-                    {
-                        hitColliders = Physics.OverlapSphere(attackPosition, sphereConfig.Radius, targetLayer);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("SphereCollider 설정이 올바르지 않습니다.");
-                    }
-
-                    break;
-                case ColliderType.Box:
-                    if (config.ColliderConfig is BoxColliderConfig boxConfig)
-                    {
-                        Vector3 boxCenterWorld = attackPosition + transform.TransformDirection(boxConfig.Center);
-                        Quaternion worldRotation = transform.rotation * boxConfig.Rotation;
-                        hitColliders = Physics.OverlapBox(boxCenterWorld, boxConfig.Size * 0.5f, worldRotation,
-                            targetLayer);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("BoxCollider 설정이 올바르지 않습니다.");
-                    }
-
-                    break;
-
-                case ColliderType.Capsule:
-                    if (config.ColliderConfig is CapsuleColliderConfig capsuleConfig)
-                    {
-                        Vector3 point1 = attackPosition +
-                                         capsuleConfig.Direction * (capsuleConfig.Height / 2 - capsuleConfig.Radius);
-                        Vector3 point2 = attackPosition -
-                                         capsuleConfig.Direction * (capsuleConfig.Height / 2 - capsuleConfig.Radius);
-                        hitColliders = Physics.OverlapCapsule(point1, point2, capsuleConfig.Radius, targetLayer);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("CapsuleCollider 설정이 올바르지 않습니다.");
-                    }
-
-                    break;
-
-                default:
-                    Debug.LogWarning($"Unknown ColliderType: {config.ColliderConfig.ColliderType}.");
-                    break;
+                Debug.LogError($"Inspector에서 공격의 Collider가 정의되지 않음: {currentAttack}, AttackIdx: {attackIdx}");
+                return;
             }
 
-            Debug.Log($"공격, {hitColliders.Length}");
 
-            // Debug.Log(
-            //     $"HitCheck - AttackType: {currentAttack}, AttackIdx: {attackIdx}, Distance: {distance}, ColliderType: {config.ColliderConfig.ColliderType}, Hits: {hitColliders.Length}");
-            foreach (var hitCollider in hitColliders)
+            // 공격 위치 계산
+            Vector3 basePosition = transform.position + transform.forward * config.distance +
+                                   transform.TransformDirection(config.attackPositionOffset);
+
+            List<Collider> allHitColliders = new List<Collider>();
+
+            foreach (var colliderConfig in config.ColliderConfigs)
+            {
+                Collider[] hitColliders = Array.Empty<Collider>();
+
+                switch (colliderConfig.ColliderType)
+                {
+                    case ColliderType.Sphere:
+                        if (colliderConfig is SphereColliderConfig sphereConfig)
+                        {
+                            hitColliders = Physics.OverlapSphere(basePosition, sphereConfig.Radius, targetLayer);
+                        }
+
+                        break;
+
+                    case ColliderType.Box:
+                        if (colliderConfig is BoxColliderConfig boxConfig)
+                        {
+                            Vector3 boxCenterWorld = basePosition + transform.TransformDirection(boxConfig.Center);
+                            Quaternion worldRotation = transform.rotation * boxConfig.Rotation;
+                            hitColliders = Physics.OverlapBox(boxCenterWorld, boxConfig.Size * 0.5f, worldRotation,
+                                targetLayer);
+                        }
+
+                        break;
+
+                    case ColliderType.Capsule:
+                        if (colliderConfig is CapsuleColliderConfig capsuleConfig)
+                        {
+                            Vector3 point1 = basePosition + capsuleConfig.Direction *
+                                (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+                            Vector3 point2 = basePosition - capsuleConfig.Direction *
+                                (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+                            hitColliders = Physics.OverlapCapsule(point1, point2, capsuleConfig.Radius, targetLayer);
+                        }
+
+                        break;
+
+                    default:
+                        Debug.LogWarning($"Unknown ColliderType: {colliderConfig.ColliderType}.");
+                        break;
+                }
+
+                allHitColliders.AddRange(hitColliders);
+            }
+
+            foreach (var hitCollider in allHitColliders)
             {
                 PlayerController player = hitCollider.GetComponent<PlayerController>();
                 if (player)
                 {
                     // 데미지 적용
+                    player.AttackValidation(config, currentAttack, attackIdx, transform);
+                }
+            }
+        }
+
+        public void HitCheck(int idx)
+        {
+            if (!AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig config))
+            {
+                Debug.LogError($"InitializeAttackConfigs에서 공격이 정의되지 않음: {currentAttack}, AttackIdx: {attackIdx}");
+                return;
+            }
+            
+            if (idx < 0 || idx >= config.ColliderConfigs.Length)
+            {
+                Debug.LogError($"HitCheck 호출 시 유효하지 않은 인덱스: {idx}. ColliderConfigs 배열의 범위를 벗어났음.");
+                return;
+            }
+
+            var colliderConfig = config.ColliderConfigs[idx];
+
+            // 공격 위치 계산
+            Vector3 basePosition = transform.position + transform.forward * config.distance +
+                                   transform.TransformDirection(config.attackPositionOffset);
+
+            List<Collider> hitColliders = new List<Collider>();
+
+            // 콜라이더 타입에 따른 처리
+            switch (colliderConfig.ColliderType)
+            {
+                case ColliderType.Sphere:
+                    if (colliderConfig is SphereColliderConfig sphereConfig)
+                    {
+                        hitColliders.AddRange(Physics.OverlapSphere(basePosition, sphereConfig.Radius, targetLayer));
+                    }
+
+                    break;
+
+                case ColliderType.Box:
+                    if (colliderConfig is BoxColliderConfig boxConfig)
+                    {
+                        Vector3 boxCenterWorld = basePosition + transform.TransformDirection(boxConfig.Center);
+                        Quaternion worldRotation = transform.rotation * boxConfig.Rotation;
+                        hitColliders.AddRange(Physics.OverlapBox(boxCenterWorld, boxConfig.Size * 0.5f, worldRotation,
+                            targetLayer));
+                    }
+
+                    break;
+
+                case ColliderType.Capsule:
+                    if (colliderConfig is CapsuleColliderConfig capsuleConfig)
+                    {
+                        Vector3 point1 = basePosition +
+                                         capsuleConfig.Direction * (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+                        Vector3 point2 = basePosition -
+                                         capsuleConfig.Direction * (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+                        hitColliders.AddRange(Physics.OverlapCapsule(point1, point2, capsuleConfig.Radius,
+                            targetLayer));
+                    }
+
+                    break;
+
+                default:
+                    Debug.LogWarning($"알 수 없는 ColliderType: {colliderConfig.ColliderType}");
+                    break;
+            }
+
+            // 피격된 플레이어 처리
+            foreach (var hitCollider in hitColliders)
+            {
+                PlayerController player = hitCollider.GetComponent<PlayerController>();
+                if (player)
+                {
                     player.AttackValidation(config, currentAttack, attackIdx, transform);
                 }
             }
@@ -1014,10 +1131,10 @@ namespace Monster
             }
 
             StartCoroutine(HitIntervalTimer(attackConfig, player));
-            
+
             //서버 통신
             TcpProtobufClient.Instance.SendMonsterTakeDamage(monsterId, attackConfig.damageAmount);
-            
+
             //피격 이펙트 발생
         }
 
@@ -1032,11 +1149,10 @@ namespace Monster
             }
 
             StartCoroutine(HitIntervalTimer(attackConfig, player));
-            
+
             //피격 이펙트 발생
-            
         }
-        
+
         IEnumerator HitIntervalTimer(PlayerAttackConfig attackConfig, Transform player)
         {
             hitDict.Add((attackConfig, player), true);
@@ -1049,64 +1165,65 @@ namespace Monster
         {
             if (!AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig config))
             {
-                // 기본 공격 설정 (필요 시 수정)
                 return;
             }
 
-            // 공격 위치 계산 (로컬 좌표계 적용)
-            Vector3 attackPosition = transform.position + transform.forward * config.distance +
-                                     transform.TransformDirection(config.attackPositionOffset);
+            if (config.ColliderConfigs == null || config.ColliderConfigs.Length == 0)
+            {
+                //메시지는 이미 HitCheck에서 출력했으므로 메시지는 넘어감
+                return;
+            }
+
+            Vector3 basePosition = transform.position + transform.forward * config.distance +
+                                   transform.TransformDirection(config.attackPositionOffset);
 
             Gizmos.color = Color.red;
 
-            // ColliderType에 따라 시각화
-            switch (config.ColliderConfig.ColliderType)
+            foreach (var colliderConfig in config.ColliderConfigs)
             {
-                case ColliderType.Sphere:
-                    if (config.ColliderConfig is SphereColliderConfig sphereConfig)
-                    {
-                        Gizmos.DrawWireSphere(attackPosition, sphereConfig.Radius);
-                    }
+                switch (colliderConfig.ColliderType)
+                {
+                    case ColliderType.Sphere:
+                        if (colliderConfig is SphereColliderConfig sphereConfig)
+                        {
+                            Gizmos.DrawWireSphere(basePosition, sphereConfig.Radius);
+                        }
 
-                    break;
+                        break;
 
-                case ColliderType.Box:
-                    if (config.ColliderConfig is BoxColliderConfig boxConfig)
-                    {
-                        Vector3 boxCenterWorld = attackPosition + transform.TransformDirection(boxConfig.Center);
-                        Quaternion worldBoxRotation = transform.rotation * boxConfig.Rotation;
+                    case ColliderType.Box:
+                        if (colliderConfig is BoxColliderConfig boxConfig)
+                        {
+                            Vector3 boxCenterWorld = basePosition + transform.TransformDirection(boxConfig.Center);
+                            Quaternion worldBoxRotation = transform.rotation * boxConfig.Rotation;
 
-                        Matrix4x4 oldMatrix = Gizmos.matrix;
-                        Gizmos.matrix = Matrix4x4.TRS(boxCenterWorld, worldBoxRotation, Vector3.one);
-                        Gizmos.DrawWireCube(Vector3.zero, boxConfig.Size);
-                        Gizmos.matrix = oldMatrix;
-                    }
+                            Matrix4x4 oldMatrix = Gizmos.matrix;
+                            Gizmos.matrix = Matrix4x4.TRS(boxCenterWorld, worldBoxRotation, Vector3.one);
+                            Gizmos.DrawWireCube(Vector3.zero, boxConfig.Size);
+                            Gizmos.matrix = oldMatrix;
+                        }
 
-                    break;
+                        break;
 
-                case ColliderType.Capsule:
-                    if (config.ColliderConfig is CapsuleColliderConfig capsuleConfig)
-                    {
-                        Vector3 point1 = attackPosition +
-                                         capsuleConfig.Direction * (capsuleConfig.Height / 2 - capsuleConfig.Radius);
-                        Vector3 point2 = attackPosition -
-                                         capsuleConfig.Direction * (capsuleConfig.Height / 2 - capsuleConfig.Radius);
-                        Gizmos.DrawWireSphere(point1, capsuleConfig.Radius);
-                        Gizmos.DrawWireSphere(point2, capsuleConfig.Radius);
-                        Gizmos.DrawLine(point1, point2);
-                    }
+                    case ColliderType.Capsule:
+                        if (colliderConfig is CapsuleColliderConfig capsuleConfig)
+                        {
+                            Vector3 point1 = basePosition + capsuleConfig.Direction *
+                                (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+                            Vector3 point2 = basePosition - capsuleConfig.Direction *
+                                (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+                            Gizmos.DrawWireSphere(point1, capsuleConfig.Radius);
+                            Gizmos.DrawWireSphere(point2, capsuleConfig.Radius);
+                            Gizmos.DrawLine(point1, point2);
+                        }
 
-                    break;
+                        break;
 
-                default:
-                    // 기본적으로 Sphere로 시각화
-                    Gizmos.DrawWireSphere(attackPosition, config.distance);
-                    break;
+                    default:
+                        Debug.LogWarning($"Unknown ColliderType: {colliderConfig.ColliderType}");
+                        break;
+                }
             }
-
-            // 공격 방향 표시 (선택 사항)
-            Gizmos.color = Color.blue;
-            Gizmos.DrawLine(transform.position, attackPosition);
         }
 #endif
 

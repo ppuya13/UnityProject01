@@ -40,7 +40,7 @@ namespace Monster
 
         private void AttackClose01()
         {
-            Monster.animator.SetTrigger(Monster.AttackClose02);
+            Monster.animator.SetTrigger(Monster.AttackClose01);
         }
         private void AttackClose02()
         {
@@ -52,7 +52,7 @@ namespace Monster
         }
         private void AttackCounter()
         {
-            Monster.animator.SetTrigger(Monster.AttackClose02);
+            Monster.animator.SetTrigger(Monster.AttackCounter);
         }
 
     }
