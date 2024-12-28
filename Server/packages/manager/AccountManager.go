@@ -28,6 +28,8 @@ type Account struct {
 	CurrentHP      float32
 	IsDie          bool
 	AnimatorParams *pb.AnimatorParams
+
+	monster *Monster
 }
 
 type AccountManager struct {

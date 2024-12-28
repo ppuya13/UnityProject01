@@ -410,6 +410,7 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
     
     public void SendMonsterTakeDamage(string monsterId, float damage)
     {
+        Debug.Log("몬스터 테이크 데미지 메시지 발신");
         var message = new GameMessage()
         {
             MonsterTakeDamage = new MonsterTakeDamage()

@@ -106,7 +106,7 @@ namespace Monster
         private bool isRotating = false;
 
         private const float TakeDamageThreshold = 0.2f; // 같은 공격에 다시 맞지 않는 시간
-        private Dictionary<(PlayerAttackConfig, Transform), bool> hitDict;
+        private Dictionary<(PlayerAttackConfig, Transform), bool> hitDict = new();
         private bool isCounter = false;
 
         ///
@@ -554,9 +554,9 @@ namespace Monster
                     //     patternList.Add(("Attack", AttackType.MonsterAttackClose03, 50));
 
                     patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
-                    patternList.Add(("DodgeBack", AttackType.MonsterAttackUnknown, 14));
-                    patternList.Add(("DodgeLeft", AttackType.MonsterAttackUnknown, 7));
-                    patternList.Add(("DodgeRight", AttackType.MonsterAttackUnknown, 7));
+                    // patternList.Add(("DodgeBack", AttackType.MonsterAttackUnknown, 14));
+                    // patternList.Add(("DodgeLeft", AttackType.MonsterAttackUnknown, 7));
+                    // patternList.Add(("DodgeRight", AttackType.MonsterAttackUnknown, 7));
                 }
                 else if (distance < 5.0f)
                 {
@@ -564,10 +564,10 @@ namespace Monster
                     //옆으로 꽤 멀리 점프한 뒤 타겟을 향해 일섬
                     // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackCloseCounter, out v))
                     //     patternList.Add(("Attack", AttackType.MonsterAttackCloseCounter, 20));
-                    if (!attackCooldown.TryGetValue(AttackType.MonsterAttackShortrange01, out v))
-                        patternList.Add(("Attack", AttackType.MonsterAttackShortrange01, 20));
+                    // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackShortrange01, out v))
+                    //     patternList.Add(("Attack", AttackType.MonsterAttackShortrange01, 20));
                     
-                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 20));
+                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
                     // patternList.Add(("DodgeBack", AttackType.MonsterAttackUnknown, 14));
                     // patternList.Add(("DodgeLeft", AttackType.MonsterAttackUnknown, 7));
                     // patternList.Add(("DodgeRight", AttackType.MonsterAttackUnknown, 7));
@@ -575,20 +575,26 @@ namespace Monster
                 else if (distance < 10.0f)
                 {
                     //중거리 패턴
-                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 20));
+                    // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackShortrange01, out v))
+                    //     patternList.Add(("Attack", AttackType.MonsterAttackShortrange01, 20));
+                    
+                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
                     // patternList.Add(("DodgeLeft", AttackType.MonsterAttackUnknown, 7));
                     // patternList.Add(("DodgeRight", AttackType.MonsterAttackUnknown, 7));
                 }
                 else if (distance < 20.0f)
                 {
                     //장거리 패턴
-                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 20));
+                    // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackShortrange01, out v))
+                    //     patternList.Add(("Attack", AttackType.MonsterAttackShortrange01, 20));
+                    
+                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
                 }
                 else
                 {
                     //초장거리 패턴
                     //사라진 뒤 잠시 후에 타겟 옆에서 나타나서 공격
-                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 20));
+                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
                 }
 
                 // 가중치 기반 패턴 선택
@@ -828,7 +834,7 @@ namespace Monster
             }
         }
 
-        public void HitCheck(int idx)
+        public void HitCheckIdx(int idx)
         {
             if (!AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig attackConfig))
             {
@@ -1179,6 +1185,16 @@ namespace Monster
             StartCoroutine(HitIntervalTimer(attackConfig, player));
 
             //피격 이펙트 발생
+        }
+
+        //실제 데미지를 적용하는 메소드(서버에서 메시지를 받아서 호출)
+        public void TakeDamage(float damage, float msgHp)
+        {
+            Debug.Log($"몬스터가 데미지를 {damage} 받음. 체력: {currentHp} -> {msgHp}");
+            UIManager.Instance.AddLogChat($"몬스터가 데미지를 {damage} 받음. 체력: {currentHp} -> {msgHp}");
+            
+            currentHp = msgHp;
+            //이후 체력바 줄어드는 연출이나 데미지 표기 등 연출을 하면 됨.
         }
 
         IEnumerator HitIntervalTimer(PlayerAttackConfig attackConfig, Transform player)

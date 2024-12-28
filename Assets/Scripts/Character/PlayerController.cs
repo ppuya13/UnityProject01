@@ -32,7 +32,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     protected float WalkSpeed = 2.0f; // 걷기 이동속도
     protected float RunSpeed = 3.0f; // 달리기 이동속도
     protected float SpeedChangeRate = 10f; //이동속도 변경 속도
-    protected float AttackMoveSpeed = 10f;
+    protected float AttackMoveSpeed = 1.0f; //공격 중 전진 속도
     protected float JumpHeight = 2.0f; // 점프 높이 (추가적으로 점프를 적용할 경우)
     protected Vector3 Velocity;
 

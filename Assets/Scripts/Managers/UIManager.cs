@@ -242,8 +242,8 @@ public class UIManager : DDSingletonManager<UIManager>
 
     public void OnJoinBtnClick()
     {
-        // SuperManager.Instance.isHost = false;
-        SuperManager.Instance.isHost = true; //실험용
+        SuperManager.Instance.isHost = false;
+        // SuperManager.Instance.isHost = true; //실험용, 시연할땐 false로 할 것.
         DisableButton();
         
         string ipAddress = "127.0.0.1"; // 기본 IP 주소
@@ -281,18 +281,26 @@ public class UIManager : DDSingletonManager<UIManager>
 
     #region 채팅 관련
 
+    //빌드에서 로그를 확인하기 위한 메소드.
+    public void AddLogChat(string text)
+    {
+        GameObject go = Instantiate(systemMessagePrefab, content);
+        TextMeshProUGUI chat = go.GetComponent<TextMeshProUGUI>();
+        chat.text = $"{text}";
+    }
+
     public void AddChat(ChatMessage msg)
     {
         if (msg.System)
         {
-            Debug.Log("시스템 메시지 수신");
+            // Debug.Log("시스템 메시지 수신");
             GameObject go = Instantiate(systemMessagePrefab, content);
             TextMeshProUGUI chat = go.GetComponent<TextMeshProUGUI>();
             chat.text = "System: " + msg.Message;
         }
         else
         {
-            Debug.Log("플레이어 메시지 수신");
+            // Debug.Log("플레이어 메시지 수신");
             //누가 보냈냐에 따라서 다른 프리팹을 사용한다.
             GameObject go = Instantiate(msg.PlayerId == SuperManager.Instance.playerId ? chatMessagePrefab : otherChatMessagePrefab, content);
 

@@ -22,13 +22,64 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes:
     - Name: ColliderConfig
-      Entry: 6
+      Entry: 7
+      Data: 0|Monster.BoxColliderConfig, Assembly-CSharp
+    - Name: Size
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1.97
+    - Name: 
+      Entry: 4
+      Data: 0.51
+    - Name: 
+      Entry: 4
+      Data: 1.67
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Center
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0.68
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Rotation
+      Entry: 7
+      Data: UnityEngine.Quaternion, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0.6236749
+    - Name: 
+      Entry: 4
+      Data: 0.7816838
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
     - Name: EffectConfigs
       Entry: 6
       Data: 
   attackName: 2
-  damageAmount: 0
-  distance: 0
+  damageAmount: 2
+  distance: 0.5
   attackPositionOffset: {x: 0, y: 0, z: 0}
   soundEffects: []

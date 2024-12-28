@@ -58,6 +58,9 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
                 case GameMessage.PayloadOneofCase.MonsterAction:
                     HandleMonsterAction(msg.MonsterAction);
                     break;
+                case GameMessage.PayloadOneofCase.MonsterTakeDamage:
+                    HandleMonsterTakeDamage(msg.MonsterTakeDamage);
+                    break;
                 case GameMessage.PayloadOneofCase.PlayerInput:
                     HandlePlayerInput(msg.PlayerInput);
                     break;
@@ -137,8 +140,6 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
 
     #region 몬스터 관련
 
-    #region 몬스터 애니메이션 스테이트
-
     private void HandleMonsterAnim(MonsterAnim msg)
     {
         if (SpawnManager.Instance.SpawnedMonsters.TryGetValue(msg.MonsterId, out MonsterController mc))
@@ -150,10 +151,6 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
             Debug.LogError("MonsterController를 찾을 수 없음.");
         }
     }
-
-    #endregion
-
-    #region 몬스터 액션
 
     private void HandleMonsterAction(MonsterAction msg)
     {
@@ -204,7 +201,11 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
         }
     }
 
-    #endregion
+    private void HandleMonsterTakeDamage(MonsterTakeDamage msg)
+    {
+        Debug.Log("몬스터 테이크 데미지 메시지 수신");
+        SpawnManager.Instance.SpawnedMonsters[msg.MonsterId].TakeDamage(msg.Damage, msg.CurrentHp);
+    }
 
     #endregion
 

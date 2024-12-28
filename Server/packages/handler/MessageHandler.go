@@ -38,13 +38,15 @@ func (mh *MessageHandler) ProcessMessage(message *pb.GameMessage, conn net.Conn,
 	case *pb.GameMessage_PlayerAttackAnim:
 		mh.handlePlayerAttackAnim(message)
 	case *pb.GameMessage_MonsterSpawn:
-		mh.handleMonsterSpawn(payload.MonsterSpawn)
+		mh.handleMonsterSpawn(payload.MonsterSpawn, *playerId)
 	case *pb.GameMessage_MonsterAnim:
 		mh.handleMonsterAnim(payload.MonsterAnim)
 	case *pb.GameMessage_MonsterAction:
 		mh.handleMonsterAction(payload.MonsterAction)
+	case *pb.GameMessage_MonsterTakeDamage:
+		mh.handleMonsterTakeDamage(payload.MonsterTakeDamage)
 	default:
-		//log.Printf("Unexpected message type received: %T", payload)
+		log.Printf("메시지 처리가 정의되지 않았음: %T", payload)
 	}
 }
 func (mh *MessageHandler) handlePing(conn net.Conn) {
@@ -80,6 +82,8 @@ func (mh *MessageHandler) handleLoginRequest(request *pb.LoginRequest, conn net.
 		return
 	}
 
+	mh.mcx.SetHostId(account.ID)
+
 	// 계정을 온라인 상태로 설정
 	am.SetPlayerOnline(account.ID, conn)
 
@@ -110,6 +114,7 @@ func (mh *MessageHandler) handleLoginRequest(request *pb.LoginRequest, conn net.
 		},
 	}
 	nm.SendMessageToAll(systemMessage)
+	log.Printf("Login: 현재 서버에 로그인된 인원: %v", mh.mcx.PlayerCount)
 }
 
 func (mh *MessageHandler) handleLogoutRequest(conn net.Conn, playerId *string) {
@@ -121,6 +126,8 @@ func (mh *MessageHandler) handleLogoutRequest(conn net.Conn, playerId *string) {
 	am := mh.mcx.AccountManager()
 
 	am.SetPlayerOffline(*playerId)
+	mh.mcx.PlayerLoggedOut()
+
 	// nm := mh.mcx.NetManager()
 	// am := mh.mcx.AccountManager()
 
@@ -135,7 +142,7 @@ func (mh *MessageHandler) handleLogoutRequest(conn net.Conn, playerId *string) {
 	// }
 
 	// nm.SendMessage(message, conn)
-
+	log.Printf("Logout: 현재 서버에 로그인된 인원: %v", mh.mcx.PlayerCount)
 }
 
 func (mh *MessageHandler) handleGameStart() {
@@ -200,9 +207,10 @@ func (mh *MessageHandler) handleMonsterAnim(request *pb.MonsterAnim) {
 	nm.SendMessageToAll(message)
 }
 
-func (mh *MessageHandler) handleMonsterSpawn(request *pb.MonsterSpawn) {
+func (mh *MessageHandler) handleMonsterSpawn(request *pb.MonsterSpawn, playerId string) {
 	log.Printf("몬스터 스폰 요청 수신")
 	nm := mh.mcx.NetManager()
+	mm := mh.mcx.MonsterManager()
 	monsterUUID, err := uuid.NewV4()
 	var monsterId string
 	if err != nil {
@@ -211,6 +219,16 @@ func (mh *MessageHandler) handleMonsterSpawn(request *pb.MonsterSpawn) {
 	} else {
 		monsterId = monsterUUID.String()
 	}
+
+	monster := &manager.Monster{
+		MonsterId: monsterId,
+		MaxHp:     1000,
+		CurrentHp: 1000,
+		Position:  &pb.GoVector3{X: 0, Y: 0, Z: 0}, // 기본 스폰 위치
+		Rotation:  &pb.GoVector3{X: 0, Y: 0, Z: 0}, // 기본 회전값
+	}
+
+	mm.AddMonster(monster, playerId)
 
 	request.MonsterId = monsterId
 
@@ -229,21 +247,21 @@ func (mh *MessageHandler) handleMonsterAction(request *pb.MonsterAction) {
 
 	switch request.ActionType {
 	case pb.ActionType_MONSTER_ACTION_SET_STATUS:
-		log.Printf("몬스터 스테이터스 변경 수신")
+		// log.Printf("몬스터 스테이터스 변경 수신")
 		message = &pb.GameMessage{
 			Payload: &pb.GameMessage_MonsterAction{
 				MonsterAction: request,
 			},
 		}
 	case pb.ActionType_MONSTER_ACTION_SET_TARGET:
-		log.Printf("몬스터 타겟 변경 수신")
+		// log.Printf("몬스터 타겟 변경 수신")
 		message = &pb.GameMessage{
 			Payload: &pb.GameMessage_MonsterAction{
 				MonsterAction: request,
 			},
 		}
 	case pb.ActionType_MONSTER_ACTION_SET_DESTINATION:
-		log.Printf("몬스터 목적지 변경 수신")
+		// log.Printf("몬스터 목적지 변경 수신")
 		message = &pb.GameMessage{
 			Payload: &pb.GameMessage_MonsterAction{
 				MonsterAction: request,
@@ -252,4 +270,9 @@ func (mh *MessageHandler) handleMonsterAction(request *pb.MonsterAction) {
 	}
 
 	nm.SendMessageToAll(message)
+}
+
+func (mh *MessageHandler) handleMonsterTakeDamage(request *pb.MonsterTakeDamage) {
+	mm := mh.mcx.MonsterManager()
+	mm.TakeDamage(request)
 }

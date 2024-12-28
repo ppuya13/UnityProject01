@@ -392,11 +392,15 @@ public class MyPlayer : PlayerController
             yield return null;
         }
 
-        Debug.LogWarning($"애니메이션에 MoveStop 이벤트가 설정되지 않음.");
+        if (elapsed >= MoveTime)
+        {
+            Debug.LogWarning($"애니메이션에 MoveStop 이벤트가 설정되지 않음.");   
+        }
     }
 
     public override void HitCheck()
     {
+        Debug.Log("히트체크");
         if (!currentAttack)
         {
             Debug.LogError("currentAttack이 null임");
@@ -468,6 +472,7 @@ public class MyPlayer : PlayerController
 
         // Debug.Log(
         //     $"HitCheck - AttackType: {currentAttack}, AttackIdx: {attackIdx}, Distance: {distance}, ColliderType: {config.ColliderConfig.ColliderType}, Hits: {hitColliders.Length}");
+        
         foreach (var hitCollider in hitColliders)
         {
             MonsterController monster = hitCollider.GetComponent<MonsterController>();
@@ -478,4 +483,70 @@ public class MyPlayer : PlayerController
             }
         }
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        if (!currentAttack)
+        {
+            Debug.LogError("currentAttack이 null입니다.");
+            return;
+        }
+
+        if (currentAttack.ColliderConfig == null)
+        {
+            Debug.LogError("currentAttack.ColliderConfig가 null입니다.");
+            return;
+        }
+
+        Vector3 basePosition = transform.position + transform.forward * currentAttack.distance +
+                               transform.TransformDirection(currentAttack.attackPositionOffset);
+
+        Gizmos.color = Color.red;
+
+        switch (currentAttack.ColliderConfig.ColliderType)
+        {
+            case ColliderType.Sphere:
+                if (currentAttack.ColliderConfig is SphereColliderConfig sphereConfig)
+                {
+                    Gizmos.DrawWireSphere(basePosition, sphereConfig.Radius);
+                }
+
+                break;
+
+            case ColliderType.Box:
+                if (currentAttack.ColliderConfig is BoxColliderConfig boxConfig)
+                {
+                    Vector3 boxCenterWorld = basePosition + transform.TransformDirection(boxConfig.Center);
+                    Quaternion worldBoxRotation = transform.rotation * boxConfig.Rotation;
+
+                    Matrix4x4 oldMatrix = Gizmos.matrix;
+                    Gizmos.matrix = Matrix4x4.TRS(boxCenterWorld, worldBoxRotation, Vector3.one);
+                    Gizmos.DrawWireCube(Vector3.zero, boxConfig.Size);
+                    Gizmos.matrix = oldMatrix;
+                }
+
+                break;
+
+            case ColliderType.Capsule:
+                if (currentAttack.ColliderConfig is CapsuleColliderConfig capsuleConfig)
+                {
+                    Vector3 point1 = basePosition + capsuleConfig.Direction *
+                        (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+                    Vector3 point2 = basePosition - capsuleConfig.Direction *
+                        (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+                    Gizmos.DrawWireSphere(point1, capsuleConfig.Radius);
+                    Gizmos.DrawWireSphere(point2, capsuleConfig.Radius);
+                    Gizmos.DrawLine(point1, point2);
+                }
+
+                break;
+
+            default:
+                Debug.LogWarning($"Unknown ColliderType: {currentAttack.ColliderConfig.ColliderType}");
+                break;
+        }
+    }
+    
+#endif
 }
