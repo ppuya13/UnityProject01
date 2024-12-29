@@ -2275,6 +2275,15 @@ MonoBehaviour:
     - Name: Vertical
       Entry: 3
       Data: 1358960330
+    - Name: Dodge
+      Entry: 3
+      Data: 1353639306
+    - Name: DodgeHorizontal
+      Entry: 3
+      Data: 30033659
+    - Name: DodgeVertical
+      Entry: 3
+      Data: -647579331
     - Name: LR
       Entry: 3
       Data: -1737481682
@@ -2332,6 +2341,7 @@ MonoBehaviour:
   currentHp: 0
   lookAtIK: {fileID: 0}
   disableKeyboard: 0
+  IsDodge: 0
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -2340,6 +2350,7 @@ MonoBehaviour:
   mouseSensitivity: 120
   characterCamera: {fileID: 1196573070657777092}
   bodyTilt: {fileID: 4769285727220807651}
+  reference: {fileID: 100322}
   attackConfigs:
   - {fileID: 11400000, guid: 5972edf5184c735479c2d2dba5092b79, type: 2}
   - {fileID: 11400000, guid: d673c06d9843da34cbd0346d8320e24b, type: 2}

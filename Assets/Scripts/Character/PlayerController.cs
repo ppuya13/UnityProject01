@@ -33,6 +33,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     protected float RunSpeed = 3.0f; // 달리기 이동속도
     protected float SpeedChangeRate = 10f; //이동속도 변경 속도
     protected float AttackMoveSpeed = 1.0f; //공격 중 전진 속도
+    protected float DodgeSpeed = 5.0f;
     protected float JumpHeight = 2.0f; // 점프 높이 (추가적으로 점프를 적용할 경우)
     protected Vector3 Velocity;
 
@@ -51,12 +52,15 @@ public abstract class PlayerController : SerializedMonoBehaviour
     protected bool IsDown = false; //다운상태 (시간은 따로 설정되지 않으며 일어나는 애니메이션이 끝날 때 false됨)
     protected bool IsRun = false;
     protected bool IsDie = false;
-    protected bool IsDodge = false; //회피무적상태
+    public bool IsDodge = false; //회피무적상태
     protected Coroutine StunCoroutine;
 
     [HideInInspector] public readonly int Stun = Animator.StringToHash("Stun");
     [HideInInspector] public readonly int Horizontal = Animator.StringToHash("Horizontal");
     [HideInInspector] public readonly int Vertical = Animator.StringToHash("Vertical");
+    [HideInInspector] public readonly int Dodge = Animator.StringToHash("Dodge");
+    [HideInInspector] public readonly int DodgeHorizontal = Animator.StringToHash("DodgeHorizontal");
+    [HideInInspector] public readonly int DodgeVertical = Animator.StringToHash("DodgeVertical");
     [HideInInspector] public readonly int LR = Animator.StringToHash("LR");
     [HideInInspector] public readonly int FB = Animator.StringToHash("FB");
     [HideInInspector] public readonly int MotionIndex = Animator.StringToHash("MotionIndex");

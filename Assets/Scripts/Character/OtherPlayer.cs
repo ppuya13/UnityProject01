@@ -207,6 +207,14 @@ public class OtherPlayer: PlayerController
         Animator.SetTrigger(Damage);
     }
 
+    public void OtherPlayerDodge(float horizontal, float vertical)
+    {
+        Animator.SetFloat(DodgeHorizontal, horizontal);
+        Animator.SetFloat(DodgeVertical, vertical);
+        Animator.SetTrigger(Dodge);
+        //이동도 시켜야 함.
+    }
+
     public void UpdatePosition(Vector3 newPosition, float horizontal, float vertical, bool isRunning)
     {
         TargetPosition = newPosition;

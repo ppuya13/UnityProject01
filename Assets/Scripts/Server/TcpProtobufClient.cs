@@ -325,6 +325,27 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
         SendMessage(message);
     }
 
+    public void SendDodgeParams(float dodgeX, float dodgeY)
+    {
+        var @params = new DodgeAnimParams()
+        {
+            MoveX = dodgeX,
+            MoveY = dodgeY
+        };
+        
+        var message = new GameMessage()
+        {
+            PlayerInput = new PlayerInput()
+            {
+                PlayerId = SuperManager.Instance.playerId,
+                PlayerActionType = PlayerActionType.PlayerActionDodge,
+                DodgeParams = @params,
+            }
+        };
+        
+        SendMessage(message);
+    }
+
     #endregion
 
     #region 몬스터 관련

@@ -260,6 +260,28 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
                 }
             }
                 break;
+            case PlayerActionType.PlayerActionDodge:
+                Debug.Log("플레이어 회피 메시지 수신");
+            {
+                if (SpawnManager.Instance.SpawnedPlayers.TryGetValue(msg.PlayerId,
+                        out PlayerController playerController))
+                {
+                    if (playerController is OtherPlayer otherPlayer)
+                    {
+                        otherPlayer.OtherPlayerDodge(msg.DodgeParams.MoveX, msg.DodgeParams.MoveY);
+                    }
+                    else
+                    {
+                        Debug.LogError($"{playerController}가 otherPlayer가 아님.");
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"{msg.PlayerId}가 SpawnManager.Instance.SpawnedPlayers에 없음.");
+                }
+            }
+                
+                break;
         }
     }
 

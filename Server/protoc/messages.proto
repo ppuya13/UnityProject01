@@ -131,6 +131,9 @@ message PlayerInput{
   float current_hp = 11; //공격을 받은 후 남은 hp
   bool is_die = 12; //공격을 받은 이후 사망여부
   AnimatorParams params = 13; //애니메이터 파라미터를 변경하기 위한 값
+
+  //회피에 사용할 변수들
+  DodgeAnimParams dodge_params = 17;
 }
 
 message AnimatorParams{
@@ -139,7 +142,11 @@ message AnimatorParams{
   bool is_bound = 3;
   bool is_down = 4;
   float motion_index = 5;
+}
 
+message DodgeAnimParams{
+  float move_x = 1;
+  float move_y = 2;
 }
 
 enum PlayerActionType{
@@ -147,6 +154,7 @@ enum PlayerActionType{
   PLAYER_ACTION_MOVE = 1;
   PLAYER_ACTION_ATTACK = 2;
   PLAYER_ACTION_TAKEDAMAGE = 3;
+  PLAYER_ACTION_DODGE = 4;
 }
 
 enum KnockBackType{
