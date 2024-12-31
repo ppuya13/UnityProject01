@@ -325,12 +325,14 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
         SendMessage(message);
     }
 
-    public void SendDodgeParams(float dodgeX, float dodgeY)
+    public void SendDodgeParams(float dodgeX, float dodgeY, bool isBack, float dodgeVertical)
     {
         var @params = new DodgeAnimParams()
         {
             MoveX = dodgeX,
-            MoveY = dodgeY
+            MoveY = dodgeY,
+            IsBack = isBack,
+            DodgeVertical = dodgeVertical,
         };
         
         var message = new GameMessage()

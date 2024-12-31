@@ -5,7 +5,7 @@ namespace Character
 {
     public class AnyStateBehaviour : SerializedStateMachineBehaviour
     {
-        private static readonly int Vertical = Animator.StringToHash("Vertical");
+        private static readonly int DodgeVertical = Animator.StringToHash("DodgeVertical");
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
@@ -18,11 +18,12 @@ namespace Character
                 // 블렌드 트리 입력값을 기반으로 현재 클립 매핑
                 string currentClipName = GetDodgeClipName(animator);
                 float clipLength = GetOriginalAnimationClipLength(animator, currentClipName);
-                Debug.Log($"Dodge Animation Length: {clipLength} seconds (Original Clip: {currentClipName})");
+                // Debug.Log($"Dodge Animation Length: {clipLength} seconds (Original Clip: {currentClipName})");
                 player.dodgeAnimLength = clipLength * 0.8f;
             }
             else
             {
+                if(player.dodgeInvincible) Debug.LogWarning("AnyStateBehaviour: OnStateEnter가 실행될 때 Invincible이 true임. 회피무적이 제대로 해제되지 않았음.");
                 player.DodgeFlagOff();
             }
         }
@@ -30,7 +31,7 @@ namespace Character
         private string GetDodgeClipName(Animator animator)
         {
             // 블렌드 트리 입력값 가져오기
-            float vertical = animator.GetFloat(Vertical);
+            float vertical = animator.GetFloat(DodgeVertical);
 
             // 입력값을 기반으로 클립 이름 매핑
             if (vertical < -0.1f) // 뒤로 이동 (Dodge_Back)

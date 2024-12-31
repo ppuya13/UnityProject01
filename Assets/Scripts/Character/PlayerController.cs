@@ -27,13 +27,15 @@ public abstract class PlayerController : SerializedMonoBehaviour
     public float maxHp;
     public float currentHp;
 
+    public float yaw = 0f;
+
     protected const float gravity = -9.81f; // 중력 값
     protected float CurrentSpeed; // 이동 속도
     protected float WalkSpeed = 2.0f; // 걷기 이동속도
-    protected float RunSpeed = 3.0f; // 달리기 이동속도
+    protected float RunSpeed = 4.0f; // 달리기 이동속도
     protected float SpeedChangeRate = 10f; //이동속도 변경 속도
-    protected float AttackMoveSpeed = 1.0f; //공격 중 전진 속도
-    protected float DodgeSpeed = 5.0f;
+    protected float AttackMoveSpeed = 2.0f; //공격 중 전진 속도
+    protected float DodgeSpeed = 8.5f; //회피 중 날아가는 속도
     protected float JumpHeight = 2.0f; // 점프 높이 (추가적으로 점프를 적용할 경우)
     protected Vector3 Velocity;
 
@@ -52,8 +54,14 @@ public abstract class PlayerController : SerializedMonoBehaviour
     protected bool IsDown = false; //다운상태 (시간은 따로 설정되지 않으며 일어나는 애니메이션이 끝날 때 false됨)
     protected bool IsRun = false;
     protected bool IsDie = false;
-    public bool IsDodge = false; //회피무적상태
+    public bool isDodge = false; //회피 애니메이션 실행 중을 의미하는 상태
+    public bool dodgeInvincible; //회피 애니메이션 안의 무적 상태를 의미함
     protected Coroutine StunCoroutine;
+    public float dodgeAnimLength = 0f;
+    
+    //회피 관련 변수
+    protected Coroutine RotateStopCoroutine; //회피 중 원래 보던 방향으로 다시 회전하기 위한 코루틴
+    protected Quaternion DodgeRotation;
 
     [HideInInspector] public readonly int Stun = Animator.StringToHash("Stun");
     [HideInInspector] public readonly int Horizontal = Animator.StringToHash("Horizontal");
@@ -115,10 +123,10 @@ public abstract class PlayerController : SerializedMonoBehaviour
         }
     }
 
-    //닿은 공격이 유효한지 체크
+    //플레이어에게 닿은 공격이 유효한지 체크
     public void AttackValidation(AttackConfig config, AttackType attackType, int attackIdx, Transform monsterTransform)
     {
-        if (IsDodge) return; //회피중이면 리턴
+        if (dodgeInvincible) return; //회피무적상태면 리턴
 
         if (attackIdx < 0) //0미만이면 다단히트라서 조건 계산 할 필요 없음 
         {
@@ -245,4 +253,29 @@ public abstract class PlayerController : SerializedMonoBehaviour
 
     //가한 공격의 피격체크
     public abstract void HitCheck();
+    
+    //Animation Event에서 호출
+    public void DodgeFlagOn()
+    {
+        isDodge = true;
+    }
+
+    //Animation Event에서 호출
+    public void DodgeFlagOff()
+    {
+        isDodge = false;
+        yaw = transform.eulerAngles.y;
+    }
+
+    public void InvincibleOn()
+    {
+        dodgeInvincible = true;
+    }
+    
+    public void InvincibleOff()
+    {
+        dodgeInvincible = false;
+    }
+
+    public abstract void RotateStop();
 }

@@ -91,6 +91,11 @@ public class Dummy: PlayerController
         throw new System.NotImplementedException();
     }
 
+    public override void RotateStop()
+    {
+        throw new System.NotImplementedException();
+    }
+
     //현재 위치가 initialPosition에서 threshold만큼 떨어지면 포지션을 initialPosition으로 변경
     private void FixPosition()
     {

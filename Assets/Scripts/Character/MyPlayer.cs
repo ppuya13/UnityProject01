@@ -13,9 +13,6 @@ public class MyPlayer : PlayerController
     public float axisSpeed = 5f; // 축 값이 변화하는 속도
     private float moveX = 0f;
     private float moveZ = 0f;
-
-    private float yaw = 0f;
-
     public float mouseSensitivity = 120f; // 마우스 민감도
     public Camera characterCamera;
     public BodyTilt bodyTilt;
@@ -36,11 +33,6 @@ public class MyPlayer : PlayerController
 
     public PlayerAttackConfig[] attackConfigs;
     public Dictionary<PlayerAttackName, PlayerAttackConfig> AttackDict = new();
-    
-    //회피 관련 변수
-    private Coroutine rotateStopCoroutine;
-    private Quaternion dodgeRotation;
-    public float dodgeAnimLength = 0f;
 
     protected override void Awake()
     {
@@ -70,7 +62,7 @@ public class MyPlayer : PlayerController
         HandleMouseInput();
         
         //회피중이 아닐때만 실행
-        if (IsDodge) return;
+        if (isDodge) return;
         HandleAttackInput();
         HandleDodgeInput();
 
@@ -290,34 +282,39 @@ public class MyPlayer : PlayerController
             float targetMoveZ = Input.GetAxisRaw("Vertical");
 
             // Animator Parameter를 업데이트할 변수 선언
-            float dodgeHorizontal = targetMoveX;
+            // float dodgeHorizontal = targetMoveX;
+            if (Mathf.Abs(targetMoveX) <= 0.1f && Mathf.Abs(targetMoveZ) <= 0.1f)
+            {
+                //방향키 중립일 때 회피 시 뒤로 회피함
+                targetMoveZ = -1f;
+            }
             float dodgeVertical = (Mathf.Abs(targetMoveX) <= 0.1f && targetMoveZ <= 0.1f) || targetMoveZ < -0.1f ? -1 : 1;
-
 
             // Animator Parameter 업데이트
             Animator.SetFloat(DodgeVertical, dodgeVertical);
             Animator.SetTrigger(Dodge);
             
-            TcpProtobufClient.Instance.SendDodgeParams(dodgeHorizontal,dodgeVertical);
-            PerformDodge(targetMoveX, targetMoveZ);
+            PerformDodge(targetMoveX, targetMoveZ, dodgeVertical);
         }
     }
 
-    private void PerformDodge(float targetMoveX, float targetMoveZ)
+    private void PerformDodge(float targetMoveX, float targetMoveZ, float dodgeVertical)
     {
         // 로컬 방향을 월드 방향으로 변환
         Vector3 dodgeDirection = transform.TransformDirection(new Vector3(targetMoveX, 0, targetMoveZ).normalized);
-        
         StartCoroutine(DodgeCoroutine(dodgeDirection));
+        bool isBack = targetMoveZ < -0.1f;
 
+        TcpProtobufClient.Instance.SendDodgeParams(targetMoveX, targetMoveZ, isBack, dodgeVertical);
         
         //뒤로 회피할 이동 방향을 그대로 둔 채로 뒤를 봐야하기 때문에 방향 설정을 이동 이후에 한다.
-        if (targetMoveZ < -0.1f)
+        if (isBack)
         {
             dodgeDirection = -dodgeDirection; //뒤로 회피할땐 방향 반전
         }
         // Reference의 월드 회전 설정
-        dodgeRotation = Quaternion.LookRotation(dodgeDirection, Vector3.up);
+        DodgeRotation = Quaternion.LookRotation(dodgeDirection, Vector3.up);
+        
     }
     
     private IEnumerator DodgeCoroutine(Vector3 dodgeDirection)
@@ -332,34 +329,49 @@ public class MyPlayer : PlayerController
         float elapsedTime = 0f;
         Vector3 startPosition = transform.position;
 
-        Debug.Log($"dodgeAnimLength: {dodgeAnimLength}");
+        // Debug.Log($"dodgeAnimLength: {dodgeAnimLength}");
         while (elapsedTime < dodgeAnimLength)
         {
-            Debug.Log($"dodgeAnimLength: {dodgeAnimLength}");
+            // Debug.Log($"dodgeAnimLength: {dodgeAnimLength}");
             // Lerp로 이동
             transform.position = Vector3.Lerp(startPosition, dodgeTargetPosition, elapsedTime / dodgeAnimLength);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         
-        transform.position = dodgeTargetPosition;
+        // DodgeAnimLength의 20%에 해당하는 시간만큼 추가 이동
+        float extraMoveTime = dodgeAnimLength * 0.2f; // 20%
+        Vector3 extraTargetPosition = transform.position + dodgeDirection * (CurrentSpeed * extraMoveTime);
+
+        elapsedTime = 0f;
+        Vector3 extraStartPosition = transform.position;
+
+        while (elapsedTime < extraMoveTime)
+        {
+            // Lerp로 이동
+            transform.position = Vector3.Lerp(extraStartPosition, extraTargetPosition, elapsedTime / extraMoveTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = extraTargetPosition; // 최종 위치를 고정
     }
 
-    public void RotateStop()
+    public override void RotateStop()
     {
         // 이미 RotateStop이 실행 중이면 기존 Coroutine 중지
-        if (rotateStopCoroutine != null)
+        if (RotateStopCoroutine != null)
         {
-            StopCoroutine(rotateStopCoroutine);
+            StopCoroutine(RotateStopCoroutine);
         }
 
         // 회전 복귀 Coroutine 시작
-        rotateStopCoroutine = StartCoroutine(RotateBackToOriginal());
+        RotateStopCoroutine = StartCoroutine(RotateBackToOriginal());
     }
 
     private IEnumerator RotateBackToOriginal()
     {
-        Quaternion initialRotation = dodgeRotation; // 현재 dodgeRotation
+        Quaternion initialRotation = DodgeRotation; // 현재 dodgeRotation
         Quaternion targetRotation = Quaternion.Euler(0f, yaw, 0f);; // 원래 상태 (기본 회전값)
 
         float duration = 0.2f; // 0.2초 동안 회전
@@ -368,29 +380,29 @@ public class MyPlayer : PlayerController
         while (elapsedTime < duration)
         {
             // dodgeRotation 값을 점진적으로 변경
-            dodgeRotation = Quaternion.Slerp(initialRotation, targetRotation, elapsedTime / duration);
-            reference.transform.rotation = dodgeRotation; // 적용된 회전을 유지
+            DodgeRotation = Quaternion.Slerp(initialRotation, targetRotation, elapsedTime / duration);
+            reference.transform.rotation = DodgeRotation; // 적용된 회전을 유지
             elapsedTime += Time.deltaTime;
 
             yield return null;
         }
 
         // 최종적으로 정확히 targetRotation으로 설정
-        dodgeRotation = targetRotation;
-        reference.transform.rotation = dodgeRotation;
+        DodgeRotation = targetRotation;
+        reference.transform.rotation = DodgeRotation;
 
         // Coroutine 종료 처리
-        rotateStopCoroutine = null;
+        RotateStopCoroutine = null;
     }
 
     private void LateUpdate()
     {
         transform.rotation = Quaternion.Euler(0f, yaw, 0f);
         
-        if (IsDodge)
+        if (isDodge)
         {
             // 회피 중에는 dodgeRotation 유지
-            reference.transform.rotation = dodgeRotation;
+            reference.transform.rotation = DodgeRotation;
         }
         else
         {
@@ -398,17 +410,6 @@ public class MyPlayer : PlayerController
             transform.rotation = Quaternion.Euler(0f, yaw, 0f);
             reference.transform.rotation = Quaternion.Euler(0f, yaw, 0f); // Reference도 동기화
         }
-    }
-    
-    public void DodgeFlagOn()
-    {
-        IsDodge = true;
-    }
-
-    public void DodgeFlagOff()
-    {
-        IsDodge = false;
-        yaw = transform.eulerAngles.y;
     }
 
 

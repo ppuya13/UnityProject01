@@ -268,7 +268,8 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
                 {
                     if (playerController is OtherPlayer otherPlayer)
                     {
-                        otherPlayer.OtherPlayerDodge(msg.DodgeParams.MoveX, msg.DodgeParams.MoveY);
+                        otherPlayer.OtherPlayerDodge(msg.DodgeParams.MoveX, msg.DodgeParams.MoveY,
+                            msg.DodgeParams.IsBack, msg.DodgeParams.DodgeVertical);
                     }
                     else
                     {

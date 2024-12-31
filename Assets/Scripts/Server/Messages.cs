@@ -69,45 +69,46 @@ namespace Game {
             "LmdhbWUuQW5pbWF0b3JQYXJhbXMSKwoMZG9kZ2VfcGFyYW1zGBEgASgLMhUu",
             "Z2FtZS5Eb2RnZUFuaW1QYXJhbXMiYQoOQW5pbWF0b3JQYXJhbXMSCgoCbHIY",
             "ASABKAISCgoCZmIYAiABKAISEAoIaXNfYm91bmQYAyABKAgSDwoHaXNfZG93",
-            "bhgEIAEoCBIUCgxtb3Rpb25faW5kZXgYBSABKAIiMQoPRG9kZ2VBbmltUGFy",
-            "YW1zEg4KBm1vdmVfeBgBIAEoAhIOCgZtb3ZlX3kYAiABKAIiOgoVTW9uc3Rl",
-            "clBvc2l0aW9uVXBkYXRlEiEKCHBvc2l0aW9uGAEgASgLMg8uZ2FtZS5Hb1Zl",
-            "Y3RvcjMiIgoMTW9uc3RlclNwYXduEhIKCm1vbnN0ZXJfaWQYASABKAkinQEK",
-            "C01vbnN0ZXJBbmltEhIKCm1vbnN0ZXJfaWQYASABKAkSEQoJYW5pbV9oYXNo",
-            "GAIgASgFEisKDnBhcmFtZXRlcl90eXBlGAMgASgOMhMuZ2FtZS5QYXJhbWV0",
-            "ZXJUeXBlEhEKCWludF92YWx1ZRgEIAEoBRITCgtmbG9hdF92YWx1ZRgFIAEo",
-            "AhISCgpib29sX3ZhbHVlGAYgASgIIuoBCg1Nb25zdGVyQWN0aW9uEhIKCm1v",
-            "bnN0ZXJfaWQYASABKAkSJQoLYWN0aW9uX3R5cGUYAiABKA4yEC5nYW1lLkFj",
-            "dGlvblR5cGUSKQoNbW9uc3Rlcl9zdGF0ZRgDIAEoDjISLmdhbWUuTW9uc3Rl",
-            "clN0YXRlEiUKC2F0dGFja190eXBlGAQgASgOMhAuZ2FtZS5BdHRhY2tUeXBl",
-            "EhAKCHRhcmdldElkGAUgASgJEiQKC2Rlc3RpbmF0aW9uGAYgASgLMg8uZ2Ft",
-            "ZS5Hb1ZlY3RvcjMSFAoMZG9kZ2Vfb3B0aW9uGAcgASgCIksKEU1vbnN0ZXJU",
-            "YWtlRGFtYWdlEhIKCm1vbnN0ZXJfaWQYASABKAkSDgoGZGFtYWdlGAIgASgC",
-            "EhIKCmN1cnJlbnRfaHAYAyABKAIqlgEKEFBsYXllckFjdGlvblR5cGUSGQoV",
-            "UExBWUVSX0FDVElPTl9VTktOT1dOEAASFgoSUExBWUVSX0FDVElPTl9NT1ZF",
-            "EAESGAoUUExBWUVSX0FDVElPTl9BVFRBQ0sQAhIcChhQTEFZRVJfQUNUSU9O",
-            "X1RBS0VEQU1BR0UQAxIXChNQTEFZRVJfQUNUSU9OX0RPREdFEAQqnQEKDUtu",
-            "b2NrQmFja1R5cGUSFQoRS05PQ0tCQUNLX1VOS05PV04QABISCg5LTk9DS0JB",
-            "Q0tfTk9ORRABEhAKDEtOT0NLQkFDS19VUBACEhIKDktOT0NLQkFDS19QVVNI",
-            "EAMSEgoOS05PQ0tCQUNLX1BVTEwQBBITCg9LTk9DS0JBQ0tfQk9VTkQQBRIS",
-            "Cg5LTk9DS0JBQ0tfRE9XThAGKnkKDVBhcmFtZXRlclR5cGUSFQoRUEFSQU1F",
-            "VEVSX1VOS05PV04QABIRCg1QQVJBTUVURVJfSU5UEAESEwoPUEFSQU1FVEVS",
-            "X0ZMT0FUEAISEgoOUEFSQU1FVEVSX0JPT0wQAxIVChFQQVJBTUVURVJfVFJJ",
-            "R0dFUhAEKooBCgpBY3Rpb25UeXBlEhoKFk1PTlNURVJfQUNUSU9OX1VOS05P",
-            "V04QABIdChlNT05TVEVSX0FDVElPTl9TRVRfU1RBVFVTEAESHQoZTU9OU1RF",
-            "Ul9BQ1RJT05fU0VUX1RBUkdFVBACEiIKHk1PTlNURVJfQUNUSU9OX1NFVF9E",
-            "RVNUSU5BVElPThADKsQBCgxNb25zdGVyU3RhdGUSGgoWTU9OU1RFUl9TVEFU",
-            "VVNfVU5LTk9XThAAEhgKFE1PTlNURVJfU1RBVFVTX1NQQVdOEAESFwoTTU9O",
-            "U1RFUl9TVEFUVVNfSURMRRACEhcKE01PTlNURVJfU1RBVFVTX01PVkUQAxIX",
-            "ChNNT05TVEVSX1NUQVRVU19EQVNIEAQSGAoUTU9OU1RFUl9TVEFUVVNfRE9E",
-            "R0UQBRIZChVNT05TVEVSX1NUQVRVU19BVFRBQ0sQBiqmAgoKQXR0YWNrVHlw",
-            "ZRIaChZNT05TVEVSX0FUVEFDS19VTktOT1dOEAASGwoXTU9OU1RFUl9BVFRB",
-            "Q0tfQ0xPU0VfMDEQARIbChdNT05TVEVSX0FUVEFDS19DTE9TRV8wMhACEhsK",
-            "F01PTlNURVJfQVRUQUNLX0NMT1NFXzAzEAMSIAocTU9OU1RFUl9BVFRBQ0tf",
-            "Q0xPU0VfQ09VTlRFUhAEEiAKHE1PTlNURVJfQVRUQUNLX1NIT1JUUkFOR0Vf",
-            "MDEQCxIeChpNT05TVEVSX0FUVEFDS19NSURSQU5HRV8wMRAVEh8KG01PTlNU",
-            "RVJfQVRUQUNLX0xPTkdSQU5HRV8wMRAfEiAKHE1PTlNURVJfQVRUQUNLX0VY",
-            "VFJBUkFOR0VfMDEQKUIRWg9TZXJ2ZXIvbWVzc2FnZXNiBnByb3RvMw=="));
+            "bhgEIAEoCBIUCgxtb3Rpb25faW5kZXgYBSABKAIiWgoPRG9kZ2VBbmltUGFy",
+            "YW1zEg4KBm1vdmVfeBgBIAEoAhIOCgZtb3ZlX3kYAiABKAISDwoHaXNfYmFj",
+            "axgDIAEoCBIWCg5kb2RnZV92ZXJ0aWNhbBgEIAEoAiI6ChVNb25zdGVyUG9z",
+            "aXRpb25VcGRhdGUSIQoIcG9zaXRpb24YASABKAsyDy5nYW1lLkdvVmVjdG9y",
+            "MyIiCgxNb25zdGVyU3Bhd24SEgoKbW9uc3Rlcl9pZBgBIAEoCSKdAQoLTW9u",
+            "c3RlckFuaW0SEgoKbW9uc3Rlcl9pZBgBIAEoCRIRCglhbmltX2hhc2gYAiAB",
+            "KAUSKwoOcGFyYW1ldGVyX3R5cGUYAyABKA4yEy5nYW1lLlBhcmFtZXRlclR5",
+            "cGUSEQoJaW50X3ZhbHVlGAQgASgFEhMKC2Zsb2F0X3ZhbHVlGAUgASgCEhIK",
+            "CmJvb2xfdmFsdWUYBiABKAgi6gEKDU1vbnN0ZXJBY3Rpb24SEgoKbW9uc3Rl",
+            "cl9pZBgBIAEoCRIlCgthY3Rpb25fdHlwZRgCIAEoDjIQLmdhbWUuQWN0aW9u",
+            "VHlwZRIpCg1tb25zdGVyX3N0YXRlGAMgASgOMhIuZ2FtZS5Nb25zdGVyU3Rh",
+            "dGUSJQoLYXR0YWNrX3R5cGUYBCABKA4yEC5nYW1lLkF0dGFja1R5cGUSEAoI",
+            "dGFyZ2V0SWQYBSABKAkSJAoLZGVzdGluYXRpb24YBiABKAsyDy5nYW1lLkdv",
+            "VmVjdG9yMxIUCgxkb2RnZV9vcHRpb24YByABKAIiSwoRTW9uc3RlclRha2VE",
+            "YW1hZ2USEgoKbW9uc3Rlcl9pZBgBIAEoCRIOCgZkYW1hZ2UYAiABKAISEgoK",
+            "Y3VycmVudF9ocBgDIAEoAiqWAQoQUGxheWVyQWN0aW9uVHlwZRIZChVQTEFZ",
+            "RVJfQUNUSU9OX1VOS05PV04QABIWChJQTEFZRVJfQUNUSU9OX01PVkUQARIY",
+            "ChRQTEFZRVJfQUNUSU9OX0FUVEFDSxACEhwKGFBMQVlFUl9BQ1RJT05fVEFL",
+            "RURBTUFHRRADEhcKE1BMQVlFUl9BQ1RJT05fRE9ER0UQBCqdAQoNS25vY2tC",
+            "YWNrVHlwZRIVChFLTk9DS0JBQ0tfVU5LTk9XThAAEhIKDktOT0NLQkFDS19O",
+            "T05FEAESEAoMS05PQ0tCQUNLX1VQEAISEgoOS05PQ0tCQUNLX1BVU0gQAxIS",
+            "Cg5LTk9DS0JBQ0tfUFVMTBAEEhMKD0tOT0NLQkFDS19CT1VORBAFEhIKDktO",
+            "T0NLQkFDS19ET1dOEAYqeQoNUGFyYW1ldGVyVHlwZRIVChFQQVJBTUVURVJf",
+            "VU5LTk9XThAAEhEKDVBBUkFNRVRFUl9JTlQQARITCg9QQVJBTUVURVJfRkxP",
+            "QVQQAhISCg5QQVJBTUVURVJfQk9PTBADEhUKEVBBUkFNRVRFUl9UUklHR0VS",
+            "EAQqigEKCkFjdGlvblR5cGUSGgoWTU9OU1RFUl9BQ1RJT05fVU5LTk9XThAA",
+            "Eh0KGU1PTlNURVJfQUNUSU9OX1NFVF9TVEFUVVMQARIdChlNT05TVEVSX0FD",
+            "VElPTl9TRVRfVEFSR0VUEAISIgoeTU9OU1RFUl9BQ1RJT05fU0VUX0RFU1RJ",
+            "TkFUSU9OEAMqxAEKDE1vbnN0ZXJTdGF0ZRIaChZNT05TVEVSX1NUQVRVU19V",
+            "TktOT1dOEAASGAoUTU9OU1RFUl9TVEFUVVNfU1BBV04QARIXChNNT05TVEVS",
+            "X1NUQVRVU19JRExFEAISFwoTTU9OU1RFUl9TVEFUVVNfTU9WRRADEhcKE01P",
+            "TlNURVJfU1RBVFVTX0RBU0gQBBIYChRNT05TVEVSX1NUQVRVU19ET0RHRRAF",
+            "EhkKFU1PTlNURVJfU1RBVFVTX0FUVEFDSxAGKqYCCgpBdHRhY2tUeXBlEhoK",
+            "Fk1PTlNURVJfQVRUQUNLX1VOS05PV04QABIbChdNT05TVEVSX0FUVEFDS19D",
+            "TE9TRV8wMRABEhsKF01PTlNURVJfQVRUQUNLX0NMT1NFXzAyEAISGwoXTU9O",
+            "U1RFUl9BVFRBQ0tfQ0xPU0VfMDMQAxIgChxNT05TVEVSX0FUVEFDS19DTE9T",
+            "RV9DT1VOVEVSEAQSIAocTU9OU1RFUl9BVFRBQ0tfU0hPUlRSQU5HRV8wMRAL",
+            "Eh4KGk1PTlNURVJfQVRUQUNLX01JRFJBTkdFXzAxEBUSHwobTU9OU1RFUl9B",
+            "VFRBQ0tfTE9OR1JBTkdFXzAxEB8SIAocTU9OU1RFUl9BVFRBQ0tfRVhUUkFS",
+            "QU5HRV8wMRApQhFaD1NlcnZlci9tZXNzYWdlc2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Game.PlayerActionType), typeof(global::Game.KnockBackType), typeof(global::Game.ParameterType), typeof(global::Game.ActionType), typeof(global::Game.MonsterState), typeof(global::Game.AttackType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -127,7 +128,7 @@ namespace Game {
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.LogoutResponse), global::Game.LogoutResponse.Parser, new[]{ "Success", "ErrorMessage" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.PlayerInput), global::Game.PlayerInput.Parser, new[]{ "PlayerId", "PlayerActionType", "Position", "Velocity", "Rotation", "Horizontal", "Vertical", "IsRunning", "AnimHash", "Knockback", "StunDuration", "CurrentHp", "IsDie", "Params", "DodgeParams" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.AnimatorParams), global::Game.AnimatorParams.Parser, new[]{ "Lr", "Fb", "IsBound", "IsDown", "MotionIndex" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.DodgeAnimParams), global::Game.DodgeAnimParams.Parser, new[]{ "MoveX", "MoveY" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.DodgeAnimParams), global::Game.DodgeAnimParams.Parser, new[]{ "MoveX", "MoveY", "IsBack", "DodgeVertical" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterPositionUpdate), global::Game.MonsterPositionUpdate.Parser, new[]{ "Position" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterSpawn), global::Game.MonsterSpawn.Parser, new[]{ "MonsterId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterAnim), global::Game.MonsterAnim.Parser, new[]{ "MonsterId", "AnimHash", "ParameterType", "IntValue", "FloatValue", "BoolValue" }, null, null, null, null),
@@ -5679,6 +5680,8 @@ namespace Game {
     public DodgeAnimParams(DodgeAnimParams other) : this() {
       moveX_ = other.moveX_;
       moveY_ = other.moveY_;
+      isBack_ = other.isBack_;
+      dodgeVertical_ = other.dodgeVertical_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -5712,6 +5715,30 @@ namespace Game {
       }
     }
 
+    /// <summary>Field number for the "is_back" field.</summary>
+    public const int IsBackFieldNumber = 3;
+    private bool isBack_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool IsBack {
+      get { return isBack_; }
+      set {
+        isBack_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "dodge_vertical" field.</summary>
+    public const int DodgeVerticalFieldNumber = 4;
+    private float dodgeVertical_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float DodgeVertical {
+      get { return dodgeVertical_; }
+      set {
+        dodgeVertical_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -5729,6 +5756,8 @@ namespace Game {
       }
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(MoveX, other.MoveX)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(MoveY, other.MoveY)) return false;
+      if (IsBack != other.IsBack) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(DodgeVertical, other.DodgeVertical)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -5738,6 +5767,8 @@ namespace Game {
       int hash = 1;
       if (MoveX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(MoveX);
       if (MoveY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(MoveY);
+      if (IsBack != false) hash ^= IsBack.GetHashCode();
+      if (DodgeVertical != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(DodgeVertical);
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -5764,6 +5795,14 @@ namespace Game {
         output.WriteRawTag(21);
         output.WriteFloat(MoveY);
       }
+      if (IsBack != false) {
+        output.WriteRawTag(24);
+        output.WriteBool(IsBack);
+      }
+      if (DodgeVertical != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(DodgeVertical);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -5782,6 +5821,14 @@ namespace Game {
         output.WriteRawTag(21);
         output.WriteFloat(MoveY);
       }
+      if (IsBack != false) {
+        output.WriteRawTag(24);
+        output.WriteBool(IsBack);
+      }
+      if (DodgeVertical != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(DodgeVertical);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -5796,6 +5843,12 @@ namespace Game {
         size += 1 + 4;
       }
       if (MoveY != 0F) {
+        size += 1 + 4;
+      }
+      if (IsBack != false) {
+        size += 1 + 1;
+      }
+      if (DodgeVertical != 0F) {
         size += 1 + 4;
       }
       if (_unknownFields != null) {
@@ -5815,6 +5868,12 @@ namespace Game {
       }
       if (other.MoveY != 0F) {
         MoveY = other.MoveY;
+      }
+      if (other.IsBack != false) {
+        IsBack = other.IsBack;
+      }
+      if (other.DodgeVertical != 0F) {
+        DodgeVertical = other.DodgeVertical;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -5843,6 +5902,14 @@ namespace Game {
             MoveY = input.ReadFloat();
             break;
           }
+          case 24: {
+            IsBack = input.ReadBool();
+            break;
+          }
+          case 37: {
+            DodgeVertical = input.ReadFloat();
+            break;
+          }
         }
       }
     #endif
@@ -5868,6 +5935,14 @@ namespace Game {
           }
           case 21: {
             MoveY = input.ReadFloat();
+            break;
+          }
+          case 24: {
+            IsBack = input.ReadBool();
+            break;
+          }
+          case 37: {
+            DodgeVertical = input.ReadFloat();
             break;
           }
         }

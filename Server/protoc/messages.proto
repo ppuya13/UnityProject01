@@ -147,6 +147,8 @@ message AnimatorParams{
 message DodgeAnimParams{
   float move_x = 1;
   float move_y = 2;
+  bool is_back = 3;
+  float dodge_vertical = 4;
 }
 
 enum PlayerActionType{
