@@ -38,6 +38,8 @@ public class UIManager : DDSingletonManager<UIManager>
     
     private volatile bool serverReady = false;
 
+    public Action<bool> ChattingActivated;
+
     protected override void Awake()
     {
         base.Awake();
@@ -72,20 +74,22 @@ public class UIManager : DDSingletonManager<UIManager>
             if (!chatInput.isFocused)
             {
                 // 입력 필드가 포커스되지 않은 상태에서 Enter 키를 누르면 포커스를 설정
-                chatInput.ActivateInputField();
                 if(SpawnManager.Instance.MyCharacter)
-                    SpawnManager.Instance.MyCharacter.disableKeyboard = true; // 채팅 중 키보드 입력 비활성화
+                    SpawnManager.Instance.MyCharacter.disableKeyboard = true; // 채팅 중 키보드로 인한 캐릭터의 움직임 비활성화
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+                ChattingActivated.Invoke(true);
+                chatInput.ActivateInputField();
             }
         }
         // Escape 키를 눌렀을 때
         if (chatInput.isFocused && Input.GetKeyDown(KeyCode.Escape))
         {
             // 입력 필드의 포커스를 제거
-            chatInput.DeactivateInputField();
             if(SpawnManager.Instance.MyCharacter)
                 SpawnManager.Instance.MyCharacter.disableKeyboard = false; // 키보드 입력 활성화
+            ChattingActivated.Invoke(false);
+            chatInput.DeactivateInputField();
         }
 
         // 마우스 클릭으로 입력 필드 외부를 클릭했을 때 포커스 제거
@@ -94,6 +98,7 @@ public class UIManager : DDSingletonManager<UIManager>
             // 현재 선택된 UI 요소가 입력 필드가 아닌 경우 포커스 제거
             if (EventSystem.current.currentSelectedGameObject != chatInput.gameObject)
             {
+                ChattingActivated.Invoke(false);
                 chatInput.DeactivateInputField();
             }
         }

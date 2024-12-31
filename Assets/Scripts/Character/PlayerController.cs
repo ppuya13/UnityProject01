@@ -58,7 +58,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     public bool dodgeInvincible; //회피 애니메이션 안의 무적 상태를 의미함
     protected Coroutine StunCoroutine;
     public float dodgeAnimLength = 0f;
-    
+
     //회피 관련 변수
     protected Coroutine RotateStopCoroutine; //회피 중 원래 보던 방향으로 다시 회전하기 위한 코루틴
     protected Quaternion DodgeRotation;
@@ -77,7 +77,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     [HideInInspector] public readonly int Damage = Animator.StringToHash("Damage"); //피격당했을때
     [HideInInspector] public readonly int StunEnd = Animator.StringToHash("StunEnd");
     [HideInInspector] public readonly int Die = Animator.StringToHash("Die");
-    
+
     public LayerMask targetLayer;
     public PlayerAttackConfig currentAttack;
 
@@ -253,7 +253,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
 
     //가한 공격의 피격체크
     public abstract void HitCheck();
-    
+
     //Animation Event에서 호출
     public void DodgeFlagOn()
     {
@@ -271,11 +271,76 @@ public abstract class PlayerController : SerializedMonoBehaviour
     {
         dodgeInvincible = true;
     }
-    
+
     public void InvincibleOff()
     {
         dodgeInvincible = false;
     }
 
     public abstract void RotateStop();
+
+    public void CreateAttackParticle(int idx)
+    {
+        if (!currentAttack)
+        {
+            Debug.LogError("currentAttack이 null임");
+            return;
+        }
+
+        // 파티클 이펙트가 설정되어 있는지 확인합니다.
+        if (currentAttack.EffectConfigs != null && currentAttack.EffectConfigs.Length > idx)
+        {
+            EffectConfig effect = currentAttack.EffectConfigs[idx];
+            if (currentAttack.EffectConfigs[idx].ParticleEffect)
+            {
+                // // 공격 위치 계산 (HitCheck와 유사하게)
+                // Vector3 attackPosition = transform.position + transform.forward * config.distance +
+                //                          transform.TransformDirection(config.attackPositionOffset);
+
+                // 이펙트의 위치, 회전, 크기를 설정합니다.
+                Vector3 effectPosition = transform.position + transform.TransformDirection(effect.EffectPosition);
+                Quaternion effectRotation = transform.rotation * effect.EffectRotation;
+                Vector3 effectScale = effect.EffectScale != Vector3.zero ? effect.EffectScale : Vector3.one;
+
+                // 파티클 이펙트를 인스턴스화합니다.
+                GameObject particle = Instantiate(effect.ParticleEffect, effectPosition, effectRotation, transform);
+                particle.transform.localScale = effectScale;
+
+                // 이펙트가 일정 시간 후에 자동으로 파괴되도록 설정 (선택 사항)
+                ParticleSystem ps = particle.GetComponent<ParticleSystem>();
+                if (ps)
+                {
+                    Destroy(particle, ps.main.duration + ps.main.startLifetime.constantMax);
+                }
+                else
+                {
+                    // ParticleSystem이 없을 경우 기본적으로 5초 후 파괴
+                    Destroy(particle, 5f);
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"AttackConfig에 파티클 이펙트가 설정되어 있지 않습니다: {currentAttack}");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("AttackConfig의 EffectConfigs가 null이거나 idx가 배열을 초과합니다.");
+        }
+
+        // 사운드 이펙트가 설정되어 있는지 확인하고 재생합니다.
+        if (currentAttack.soundEffects is { Length: > 0 })
+        {
+            // AudioSource가 존재하는지 확인하고 없으면 추가합니다.
+            AudioSource audioSource = GetComponent<AudioSource>();
+            if (!audioSource)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+
+            // 사운드 클립을 랜덤으로 선택하여 재생합니다.
+            AudioClip selectedClip = currentAttack.soundEffects[Random.Range(0, currentAttack.soundEffects.Length)];
+            audioSource.PlayOneShot(selectedClip);
+        }
+    }
 }
