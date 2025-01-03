@@ -2208,7 +2208,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
   m_Controller: {fileID: 9100000, guid: 8d5a0e0d58f4e4176a844a1a03976c19, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -2274,6 +2274,15 @@ MonoBehaviour:
     - Name: Vertical
       Entry: 3
       Data: 1358960330
+    - Name: Dodge
+      Entry: 3
+      Data: 1353639306
+    - Name: DodgeHorizontal
+      Entry: 3
+      Data: 30033659
+    - Name: DodgeVertical
+      Entry: 3
+      Data: -647579331
     - Name: LR
       Entry: 3
       Data: -1737481682
@@ -2286,6 +2295,9 @@ MonoBehaviour:
     - Name: FallDown
       Entry: 3
       Data: 426567206
+    - Name: Down
+      Entry: 3
+      Data: -1127399675
     - Name: Damage
       Entry: 3
       Data: 375673178
@@ -2300,8 +2312,16 @@ MonoBehaviour:
   type: 2
   maxHp: 0
   currentHp: 0
+  yaw: 0
   lookAtIK: {fileID: 0}
   disableKeyboard: 0
+  isDodge: 0
+  dodgeInvincible: 0
+  dodgeAnimLength: 0
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  currentAttack: {fileID: 0}
 --- !u!114 &4254783032390875711
 MonoBehaviour:
   m_ObjectHideFlags: 0

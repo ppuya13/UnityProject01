@@ -24637,7 +24637,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 13d8e3dd1da9f6845b5d673e9ac54ecf, type: 3}
   m_Controller: {fileID: 9100000, guid: 3610dffd0cc09084f9f4cc1e4ec5577e, type: 2}
-  m_CullingMode: 2
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -24673,53 +24673,18 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 8d42a19462eccdc40bfa9281ca55806a, type: 2}
     - {fileID: 11400000, guid: a45eeb11df705884d995a5e253073a88, type: 2}
     - {fileID: 11400000, guid: f73d8e81319deaa40839ee7d4b5226c5, type: 2}
+    - {fileID: 11400000, guid: ee6aa7c287d871b4fb85c4bed8b56a65, type: 2}
+    - {fileID: 11400000, guid: 34a50c6018121364d9cae3525d688a7d, type: 2}
+    - {fileID: 11400000, guid: 9721fc3e31b770543afff497ef6231dc, type: 2}
+    - {fileID: 11400000, guid: 806fb00b748df814b900225f30b06364, type: 2}
+    - {fileID: 11400000, guid: ac3eee1ad68cc9e47899490654096aaf, type: 2}
+    - {fileID: 11400000, guid: 8b83ef4f954cefb4a808740e5fa99db8, type: 2}
+    - {fileID: 11400000, guid: e16e3ef0cf9fbe64e973f8fab94e75b5, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Spawn
-      Entry: 3
-      Data: 1372578019
-    - Name: Horizontal
-      Entry: 3
-      Data: 475924382
-    - Name: Vertical
-      Entry: 3
-      Data: 1358960330
-    - Name: Dash
-      Entry: 3
-      Data: 995914302
-    - Name: Dodge
-      Entry: 3
-      Data: 1353639306
-    - Name: LR
-      Entry: 3
-      Data: -1737481682
-    - Name: TurnLeft
-      Entry: 3
-      Data: -1847120011
-    - Name: TurnRight
-      Entry: 3
-      Data: -685270779
-    - Name: MoveAnimSpeed
-      Entry: 3
-      Data: 541295930
-    - Name: AttackClose01
-      Entry: 3
-      Data: 2016119741
-    - Name: AttackClose02
-      Entry: 3
-      Data: -517809657
-    - Name: AttackClose03
-      Entry: 3
-      Data: -1775900015
-    - Name: AttackCounter
-      Entry: 3
-      Data: 1130465550
-    - Name: AttackShortRange01
-      Entry: 3
-      Data: -1935112358
     - Name: ReadyToAction
       Entry: 6
       Data: 
@@ -24737,7 +24702,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 9
+      Data: 16
     - Name: 
       Entry: 7
       Data: 
@@ -24937,11 +24902,216 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 4
+    - Name: Item2
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 9
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 4
+    - Name: Item2
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 4
+    - Name: Item2
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 11
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 12
+    - Name: Item2
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 12
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 12
+    - Name: Item2
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 13
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 13
+    - Name: Item2
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 14
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[Game.AttackType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: Item1
+      Entry: 3
+      Data: 13
+    - Name: Item2
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 15
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
+    - Name: Spawn
+      Entry: 3
+      Data: 1372578019
+    - Name: Horizontal
+      Entry: 3
+      Data: 475924382
+    - Name: Vertical
+      Entry: 3
+      Data: 1358960330
+    - Name: Dash
+      Entry: 3
+      Data: 995914302
+    - Name: Dodge
+      Entry: 3
+      Data: 1353639306
+    - Name: LR
+      Entry: 3
+      Data: -1737481682
+    - Name: TurnLeft
+      Entry: 3
+      Data: -1847120011
+    - Name: TurnRight
+      Entry: 3
+      Data: -685270779
+    - Name: MoveAnimSpeed
+      Entry: 3
+      Data: 541295930
+    - Name: AttackCounter
+      Entry: 3
+      Data: 1130465550
+    - Name: CounterIndex
+      Entry: 3
+      Data: 1261124225
+    - Name: AttackClose01
+      Entry: 3
+      Data: 2016119741
+    - Name: AttackClose02
+      Entry: 3
+      Data: -517809657
+    - Name: AttackClose03
+      Entry: 3
+      Data: -1775900015
+    - Name: AttackShortRange01
+      Entry: 3
+      Data: -1935112358
+    - Name: AttackShortRange02
+      Entry: 3
+      Data: 362927840
+    - Name: AttackShortRange03
+      Entry: 3
+      Data: 1655105142
   monsterId: 
   maxHp: 1000
   lookAtThis: {fileID: 772563401325919270}

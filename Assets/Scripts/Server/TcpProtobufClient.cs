@@ -348,6 +348,20 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
         SendMessage(message);
     }
 
+    public void SendCurrentAttack(PlayerAttackName attackName)
+    {
+        var message = new GameMessage()
+        {
+            SetPlayerAttack = new SetPlayerAttack()
+            {
+                PlayerId = SuperManager.Instance.playerId,
+                AttackName = attackName,
+            }
+        };
+        
+        SendMessage(message);
+    }
+
     #endregion
 
     #region 몬스터 관련

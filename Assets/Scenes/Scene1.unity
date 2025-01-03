@@ -424,6 +424,11 @@ MonoBehaviour:
   otherPlayerPrefab: {fileID: 100096, guid: 15d435228cbc1a147aad4478cbe93c3d, type: 3}
   characterSpawner: {fileID: 2068202733}
   MyCharacter: {fileID: 0}
+  attackConfigs:
+  - {fileID: 11400000, guid: 5972edf5184c735479c2d2dba5092b79, type: 2}
+  - {fileID: 11400000, guid: d673c06d9843da34cbd0346d8320e24b, type: 2}
+  - {fileID: 11400000, guid: d1dd31c96ea0afb44b05f21f2d5a99af, type: 2}
+  - {fileID: 11400000, guid: 2659f216a170c6f4d8ed4c99ff1803a2, type: 2}
 --- !u!4 &287403837
 Transform:
   m_ObjectHideFlags: 0
@@ -1963,7 +1968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 

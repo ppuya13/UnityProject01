@@ -56,24 +56,7 @@ namespace Monster
 
         public List<PlayerController> targetList = new();
         public PlayerController currentTarget;
-
-        [HideInInspector] public readonly int Spawn = Animator.StringToHash("Spawn");
-        [HideInInspector] public readonly int Horizontal = Animator.StringToHash("Horizontal");
-        [HideInInspector] public readonly int Vertical = Animator.StringToHash("Vertical");
-        [HideInInspector] public readonly int Dash = Animator.StringToHash("Dash");
-        [HideInInspector] public readonly int Dodge = Animator.StringToHash("Dodge");
-        [HideInInspector] public readonly int LR = Animator.StringToHash("LR");
-        [HideInInspector] public readonly int TurnLeft = Animator.StringToHash("TurnLeft");
-        [HideInInspector] public readonly int TurnRight = Animator.StringToHash("TurnRight");
-        [HideInInspector] public readonly int MoveAnimSpeed = Animator.StringToHash("MoveAnimSpeed");
-
-        [HideInInspector] public readonly int AttackClose01 = Animator.StringToHash("AttackClose01");
-        [HideInInspector] public readonly int AttackClose02 = Animator.StringToHash("AttackClose02");
-        [HideInInspector] public readonly int AttackClose03 = Animator.StringToHash("AttackClose03");
-        [HideInInspector] public readonly int AttackCounter = Animator.StringToHash("AttackCounter");
-
-        [HideInInspector] public readonly int AttackShortRange01 = Animator.StringToHash("AttackShortRange01");
-
+        
         //회전 관련 변수
         public AnimationClip turnLeftClip;
         public AnimationClip turnRightClip;
@@ -108,6 +91,28 @@ namespace Monster
         private const float TakeDamageThreshold = 0.2f; // 같은 공격에 다시 맞지 않는 시간
         private Dictionary<(PlayerAttackConfig, Transform), bool> hitDict = new();
         private bool isCounter = false;
+        private Coroutine counterCoroutine;
+        
+        [HideInInspector] public readonly int Spawn = Animator.StringToHash("Spawn");
+        [HideInInspector] public readonly int Horizontal = Animator.StringToHash("Horizontal");
+        [HideInInspector] public readonly int Vertical = Animator.StringToHash("Vertical");
+        [HideInInspector] public readonly int Dash = Animator.StringToHash("Dash");
+        [HideInInspector] public readonly int Dodge = Animator.StringToHash("Dodge");
+        [HideInInspector] public readonly int LR = Animator.StringToHash("LR");
+        [HideInInspector] public readonly int TurnLeft = Animator.StringToHash("TurnLeft");
+        [HideInInspector] public readonly int TurnRight = Animator.StringToHash("TurnRight");
+        [HideInInspector] public readonly int MoveAnimSpeed = Animator.StringToHash("MoveAnimSpeed");
+
+        [HideInInspector] public readonly int AttackCounter = Animator.StringToHash("AttackCounter");
+        [HideInInspector] public readonly int CounterIndex = Animator.StringToHash("CounterIndex");
+        
+        [HideInInspector] public readonly int AttackClose01 = Animator.StringToHash("AttackClose01");
+        [HideInInspector] public readonly int AttackClose02 = Animator.StringToHash("AttackClose02");
+        [HideInInspector] public readonly int AttackClose03 = Animator.StringToHash("AttackClose03");
+
+        [HideInInspector] public readonly int AttackShortRange01 = Animator.StringToHash("AttackShortRange01");
+        [HideInInspector] public readonly int AttackShortRange02 = Animator.StringToHash("AttackShortRange02");
+        [HideInInspector] public readonly int AttackShortRange03 = Animator.StringToHash("AttackShortRange03");
 
         ///
         /// 이동 중에도 일정시간? 거리에 따라? 스킬이 발동하도록 변경하는 게 좋을 듯.
@@ -516,7 +521,7 @@ namespace Monster
         #region 공격, 패턴 관련
 
         //타겟과의 거리에 따라서 패턴을 선택한다. 호스트만 사용함.
-        public void ChoicePattern()
+        private void ChoicePattern()
         {
             Debug.Log("패턴고를래");
             if (!SuperManager.Instance.isHost || patternCooldown < PatternThreshold) return;
@@ -552,6 +557,8 @@ namespace Monster
                     //     patternList.Add(("Attack", AttackType.MonsterAttackClose02, 50));
                     // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackClose03, out v))
                     //     patternList.Add(("Attack", AttackType.MonsterAttackClose03, 50));
+                    if (!attackCooldown.TryGetValue(AttackType.MonsterAttackShortRange03, out v))
+                        patternList.Add(("Attack", AttackType.MonsterAttackShortRange03, 20));
 
                     patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
                     // patternList.Add(("DodgeBack", AttackType.MonsterAttackUnknown, 14));
@@ -564,8 +571,14 @@ namespace Monster
                     //옆으로 꽤 멀리 점프한 뒤 타겟을 향해 일섬
                     // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackCloseCounter, out v))
                     //     patternList.Add(("Attack", AttackType.MonsterAttackCloseCounter, 20));
-                    // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackShortrange01, out v))
-                    //     patternList.Add(("Attack", AttackType.MonsterAttackShortrange01, 20));
+                    // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackShortRange01, out v))
+                    //     patternList.Add(("Attack", AttackType.MonsterAttackShortRange01, 20));
+                    // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackShortRange01, out v))
+                    //     patternList.Add(("Attack", AttackType.MonsterAttackShortRange01, 20));
+                    // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackShortRange02, out v))
+                    //     patternList.Add(("Attack", AttackType.MonsterAttackShortRange02, 20));
+                    if (!attackCooldown.TryGetValue(AttackType.MonsterAttackShortRange03, out v))
+                        patternList.Add(("Attack", AttackType.MonsterAttackShortRange03, 20));
                     
                     patternList.Add(("Move", AttackType.MonsterAttackUnknown, 10));
                     // patternList.Add(("DodgeBack", AttackType.MonsterAttackUnknown, 14));
@@ -613,25 +626,6 @@ namespace Monster
                             StartCoroutine(CooldownTimer(selectedPattern.Value.attackType,
                                 AttackConfigs[(selectedPattern.Value.attackType, 1)].cooldown)); //쿨타임 돌림
                             SendChangeState(MonsterState.MonsterStatusAttack, selectedPattern.Value.attackType);
-
-                            // switch (selectedPattern.Value.attackType)
-                            // {
-                            //     case AttackType.MonsterAttackClose01:
-                            //         SendChangeState(MonsterState.MonsterStatusAttack, AttackType.MonsterAttackClose01);
-                            //         break;
-                            //     case AttackType.MonsterAttackClose02:
-                            //         SendChangeState(MonsterState.MonsterStatusAttack, AttackType.MonsterAttackClose02);
-                            //         break;
-                            //     case AttackType.MonsterAttackClose03:
-                            //         SendChangeState(MonsterState.MonsterStatusAttack, AttackType.MonsterAttackClose03);
-                            //         break;
-                            //     case AttackType.MonsterAttackCloseCounter:
-                            //         SendChangeState(MonsterState.MonsterStatusAttack, AttackType.MonsterAttackCloseCounter);
-                            //         break;
-                            //     default:
-                            //         Debug.LogError($"정의되지 않은 패턴: {selectedPattern.Value.attackType}");
-                            //         break;
-                            // }
                             break;
                         case "DodgeBack":
                             // Debug.Log("구를래");
@@ -989,6 +983,7 @@ namespace Monster
         //공격 중에 이동을 하는 메소드, 애니메이션을 재생하지 않으며, AnimationEvent로 호출된다.
         public void MoveStart()
         {
+            Debug.Log("무브스타트");
             if (moveCoroutine != null)
             {
                 StopCoroutine(moveCoroutine);
@@ -1007,6 +1002,7 @@ namespace Monster
 
         public void MoveStop()
         {
+            Debug.Log("무브스탑");
             if (moveCoroutine != null)
             {
                 StopCoroutine(moveCoroutine);
@@ -1050,6 +1046,8 @@ namespace Monster
                 transform.position += movement;
                 agent.SetDestination(transform.position);
 
+                // Debug.Log($"공격: {attackIdx}, (elapsed({elapsed}) < config.moveTime({config.moveTime})) transform.position: {transform.position}");
+
                 elapsed += Time.deltaTime;
                 yield return null;
             }
@@ -1092,7 +1090,6 @@ namespace Monster
         {
             if (!currentTarget)
                 yield break;
-
 
             float rotateSpeed = config.rotateSpeed;
             float elapsed = 0f; // 코루틴 실행 시간 누적 변수
@@ -1166,6 +1163,14 @@ namespace Monster
 
             StartCoroutine(HitIntervalTimer(attackConfig, player));
 
+            if (isCounter)
+            {
+                isCounter = false;
+                //카운터중이면 
+                animator.SetInteger(CounterIndex, 1);
+                return;
+            }
+
             //서버 통신
             TcpProtobufClient.Instance.SendMonsterTakeDamage(monsterId, attackConfig.damageAmount);
 
@@ -1202,6 +1207,26 @@ namespace Monster
             hitDict.Add((attackConfig, player), true);
             yield return new WaitForSeconds(TakeDamageThreshold);
             hitDict.Remove((attackConfig, player));
+        }
+
+        public void StartCounter()
+        {
+            isCounter = true;
+            counterCoroutine = StartCoroutine(Counter());
+            animator.SetInteger(CounterIndex, 0);
+            //CounterIndex가 0이면 카운터중, 1이면 카운터 성공, 2면 카운터 실패
+        }
+
+        private IEnumerator Counter()
+        {
+            yield return new WaitForSeconds(2.0f);
+            isCounter = false;
+            if (animator.GetInteger(CounterIndex) != 1)
+            {
+                animator.SetInteger(CounterIndex, 2);
+            }
+            yield return null;
+            animator.SetInteger(CounterIndex, 0);
         }
 
 #if UNITY_EDITOR

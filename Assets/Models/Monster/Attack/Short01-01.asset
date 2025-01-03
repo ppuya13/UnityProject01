@@ -398,7 +398,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   damageAmount: 10
-  cooldown: 0
+  cooldown: 12
   moveSpeed: 5
   moveTime: 5
   moveDirection: {x: 0, y: 0, z: 0}

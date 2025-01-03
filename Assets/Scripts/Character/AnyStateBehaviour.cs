@@ -24,7 +24,8 @@ namespace Character
             else
             {
                 if(player.dodgeInvincible) Debug.LogWarning("AnyStateBehaviour: OnStateEnter가 실행될 때 Invincible이 true임. 회피무적이 제대로 해제되지 않았음.");
-                player.DodgeFlagOff();
+                // player.DodgeFlagOff(); //DodgeStop에 포함됨
+                player.DodgeStop();
             }
         }
 

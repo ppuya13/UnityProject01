@@ -20,6 +20,7 @@ message GameMessage {
     PlayerInput player_input = 11;
     PlayerSpawn player_spawn = 12;
     PlayerAttackAnim player_attack_anim = 13;
+    SetPlayerAttack set_player_attack = 14;
 
     //몬스터관련은 31-40
     MonsterSpawn monster_spawn = 31;
@@ -159,6 +160,21 @@ enum PlayerActionType{
   PLAYER_ACTION_DODGE = 4;
 }
 
+//플레이어가 공격할 때 OtherPlayer에 currentAttack를 전달하기 위해 사용
+message SetPlayerAttack{
+  string player_id = 1;
+  PlayerAttackName attack_name = 2;
+  int32 attack_index = 3;
+}
+
+enum PlayerAttackName{
+  PLAYER_ATTACK_UNKNOWN = 0;
+  COMBO_01 = 1;
+  COMBO_02 = 2;
+  COMBO_03 = 3;
+  COMBO_04 = 4;
+}
+
 enum KnockBackType{
   KNOCKBACK_UNKNOWN = 0;
   KNOCKBACK_NONE = 1;
@@ -237,14 +253,16 @@ enum AttackType{
   MONSTER_ATTACK_CLOSE_COUNTER = 4; //반격기
 
   //11~20 근거리 공격    
-  MONSTER_ATTACK_SHORTRANGE_01 = 11;  
+  MONSTER_ATTACK_SHORT_RANGE_01 = 11;
+  MONSTER_ATTACK_SHORT_RANGE_02 = 12;
+  MONSTER_ATTACK_SHORT_RANGE_03 = 13;
 
   //21~30 중거리 공격
-  MONSTER_ATTACK_MIDRANGE_01 = 21;
+  MONSTER_ATTACK_MID_RANGE_01 = 21;
 
   //31~40 원거리 공격
-  MONSTER_ATTACK_LONGRANGE_01 = 31;
+  MONSTER_ATTACK_LONG_RANGE_01 = 31;
 
   //41~50 초장거리 공격
-  MONSTER_ATTACK_EXTRARANGE_01 = 41;
+  MONSTER_ATTACK_EXTRA_RANGE_01 = 41;
 }

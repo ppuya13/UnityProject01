@@ -2209,7 +2209,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
   m_Controller: {fileID: 9100000, guid: 8d5a0e0d58f4e4176a844a1a03976c19, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -2266,6 +2266,32 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: AttackDict
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[Character.PlayerAttackName,
+        Assembly-CSharp],[Character.PlayerAttackConfig, Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Character.PlayerAttackName,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: Stun
       Entry: 3
       Data: 1397128752
@@ -2308,40 +2334,18 @@ MonoBehaviour:
     - Name: Die
       Entry: 3
       Data: 20298039
-    - Name: AttackDict
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[Character.PlayerAttackName,
-        Assembly-CSharp],[Character.PlayerAttackConfig, Assembly-CSharp]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Character.PlayerAttackName,
-        Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
   playerId: 
   nickname: 
   type: 1
   maxHp: 0
   currentHp: 0
+  yaw: 0
   lookAtIK: {fileID: 0}
   disableKeyboard: 0
-  IsDodge: 0
+  isDodge: 0
+  dodgeInvincible: 0
+  dodgeAnimLength: 0
+  attackConfigs: []
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -2351,11 +2355,6 @@ MonoBehaviour:
   characterCamera: {fileID: 1196573070657777092}
   bodyTilt: {fileID: 4769285727220807651}
   reference: {fileID: 100322}
-  attackConfigs:
-  - {fileID: 11400000, guid: 5972edf5184c735479c2d2dba5092b79, type: 2}
-  - {fileID: 11400000, guid: d673c06d9843da34cbd0346d8320e24b, type: 2}
-  - {fileID: 11400000, guid: d1dd31c96ea0afb44b05f21f2d5a99af, type: 2}
-  - {fileID: 11400000, guid: 2659f216a170c6f4d8ed4c99ff1803a2, type: 2}
 --- !u!114 &4254783032390875711
 MonoBehaviour:
   m_ObjectHideFlags: 0

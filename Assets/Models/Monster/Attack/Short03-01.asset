@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94ed0c9f9d9a4edb845b31d3ac6b04b1, type: 3}
-  m_Name: Counter
+  m_Name: Short03-01
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 1996079926692674, guid: 5fc355f2885d5934485c4fe883b7581e, type: 3}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -63,64 +62,7 @@ MonoBehaviour:
       Data: 2|Monster.EffectConfig[], Assembly-CSharp
     - Name: 
       Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: Monster.EffectConfig, Assembly-CSharp
-    - Name: ParticleEffect
-      Entry: 10
       Data: 0
-    - Name: EffectPosition
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0.5
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: EffectRotation
-      Entry: 7
-      Data: UnityEngine.Quaternion, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: EffectScale
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -129,10 +71,10 @@ MonoBehaviour:
       Data: 
   damageAmount: 10
   cooldown: 0
-  moveSpeed: 5
+  moveSpeed: 5.5
   moveTime: 5
-  moveDirection: {x: 0, y: 0, z: 0}
-  rotateSpeed: 0
+  moveDirection: {x: 1, y: 0, z: 0}
+  rotateSpeed: 270
   rotateTime: 5
   knockBackType: 5
   knockBackPower: 5

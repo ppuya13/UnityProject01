@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Character;
 using Game;
 using Monster;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class SpawnManager: DDSingletonManager<SpawnManager>
     public PlayerController MyCharacter;
     
     private GameObject characters; //캐릭터들을 담고 있는 루트 오브젝트
+    public PlayerAttackConfig[] attackConfigs;
 
     protected override void Awake()
     {
@@ -46,6 +48,9 @@ public class SpawnManager: DDSingletonManager<SpawnManager>
             pc = go.GetComponent<PlayerController>();
             pc.type = PlayerController.CharacterType.OtherPlayer;
         }
+
+        pc.attackConfigs = attackConfigs;
+        pc.InitializeAttackConfigs();
         
         go.transform.SetParent(characters.transform);
         pc.playerId = playerId;

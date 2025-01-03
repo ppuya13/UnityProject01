@@ -33,26 +33,26 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
                     Debug.Log("퐁");
                     break;
                 case GameMessage.PayloadOneofCase.LoginResponse:
-                    Debug.Log("로그인 리스폰스 수신");
+                    // Debug.Log("로그인 리스폰스 수신");
                     HandleLoginResponse(msg.LoginResponse);
                     break;
                 case GameMessage.PayloadOneofCase.LogoutResponse:
-                    Debug.Log("로그아웃 리스폰스 수신");
+                    // Debug.Log("로그아웃 리스폰스 수신");
                     break;
                 case GameMessage.PayloadOneofCase.PlayerSpawn:
-                    Debug.Log("플레이어 스폰 메시지 수신");
+                    // Debug.Log("플레이어 스폰 메시지 수신");
                     HandlePlayerSpawn(msg.PlayerSpawn);
                     break;
                 case GameMessage.PayloadOneofCase.ChatMessage:
-                    Debug.Log("채팅 메시지 수신");
+                    // Debug.Log("채팅 메시지 수신");
                     HandleChatMessage(msg.ChatMessage);
                     break;
                 case GameMessage.PayloadOneofCase.MonsterSpawn:
-                    Debug.Log("몬스터 스폰 메시지 수신");
+                    // Debug.Log("몬스터 스폰 메시지 수신");
                     SpawnManager.Instance.SpawnMonster(msg.MonsterSpawn);
                     break;
                 case GameMessage.PayloadOneofCase.MonsterAnim:
-                    Debug.Log("몬스터 애니메이션 스테이트 변경 메시지 수신");
+                    // Debug.Log("몬스터 애니메이션 스테이트 변경 메시지 수신");
                     HandleMonsterAnim(msg.MonsterAnim);
                     break;
                 case GameMessage.PayloadOneofCase.MonsterAction:
@@ -66,6 +66,9 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
                     break;
                 case GameMessage.PayloadOneofCase.PlayerAttackAnim:
                     HandlePlayerAttackAnim(msg.PlayerAttackAnim);
+                    break;
+                case GameMessage.PayloadOneofCase.SetPlayerAttack:
+                    HandleSetPlayerAttack(msg.SetPlayerAttack);
                     break;
                 default:
                     Debug.LogError($"정의되지 않은 케이스 ({msg.PayloadCase})");
@@ -294,6 +297,18 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
             if (player is OtherPlayer otherPlayer)
             {
                 otherPlayer.PlayAttackAnimation(msg.Hash, msg.Layer);
+            }
+        }
+    }
+
+    private void HandleSetPlayerAttack(SetPlayerAttack msg)
+    {
+        Debug.Log("플레이어 currentAttack 변경 메시지 수신");
+        if (SpawnManager.Instance.SpawnedPlayers.TryGetValue(msg.PlayerId, out PlayerController player))
+        {
+            if (player is OtherPlayer otherPlayer)
+            {
+                otherPlayer.SetCurrentAttack(msg.AttackName);
             }
         }
     }

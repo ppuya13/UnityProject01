@@ -32,9 +32,9 @@ public abstract class PlayerController : SerializedMonoBehaviour
     protected const float gravity = -9.81f; // 중력 값
     protected float CurrentSpeed; // 이동 속도
     protected float WalkSpeed = 2.0f; // 걷기 이동속도
-    protected float RunSpeed = 4.0f; // 달리기 이동속도
+    protected float RunSpeed = 3.5f; // 달리기 이동속도
     protected float SpeedChangeRate = 10f; //이동속도 변경 속도
-    protected float AttackMoveSpeed = 2.0f; //공격 중 전진 속도
+    protected float AttackMoveSpeed = 2.5f; //공격 중 전진 속도
     protected float DodgeSpeed = 8.5f; //회피 중 날아가는 속도
     protected float JumpHeight = 2.0f; // 점프 높이 (추가적으로 점프를 적용할 경우)
     protected Vector3 Velocity;
@@ -57,11 +57,17 @@ public abstract class PlayerController : SerializedMonoBehaviour
     public bool isDodge = false; //회피 애니메이션 실행 중을 의미하는 상태
     public bool dodgeInvincible; //회피 애니메이션 안의 무적 상태를 의미함
     protected Coroutine StunCoroutine;
+    protected Coroutine DodgeCoroutine;
     public float dodgeAnimLength = 0f;
 
     //회피 관련 변수
     protected Coroutine RotateStopCoroutine; //회피 중 원래 보던 방향으로 다시 회전하기 위한 코루틴
     protected Quaternion DodgeRotation;
+    
+    public PlayerAttackConfig[] attackConfigs;
+    public Dictionary<PlayerAttackName, PlayerAttackConfig> AttackDict = new();
+    public LayerMask targetLayer;
+    public PlayerAttackConfig currentAttack;
 
     [HideInInspector] public readonly int Stun = Animator.StringToHash("Stun");
     [HideInInspector] public readonly int Horizontal = Animator.StringToHash("Horizontal");
@@ -77,10 +83,6 @@ public abstract class PlayerController : SerializedMonoBehaviour
     [HideInInspector] public readonly int Damage = Animator.StringToHash("Damage"); //피격당했을때
     [HideInInspector] public readonly int StunEnd = Animator.StringToHash("StunEnd");
     [HideInInspector] public readonly int Die = Animator.StringToHash("Die");
-
-    public LayerMask targetLayer;
-    public PlayerAttackConfig currentAttack;
-
 
     protected virtual void Awake()
     {
@@ -98,6 +100,25 @@ public abstract class PlayerController : SerializedMonoBehaviour
         // Velocity를 기반으로 플레이어 이동
         CharacterController.Move(Velocity * Time.deltaTime);
         Velocity = Vector3.Lerp(Velocity, Vector3.zero, Time.deltaTime * 5f);
+    }
+
+
+    public void InitializeAttackConfigs()
+    {
+        foreach (PlayerAttackConfig config in attackConfigs)
+        {
+            if (config.attackName != PlayerAttackName.PlayerAttackUnknown)
+            {
+                if (!AttackDict.TryAdd(config.attackName, config))
+                {
+                    Debug.LogError($"PlayerAttackConfig {config.name}이 중복됨");
+                }
+            }
+            else
+            {
+                Debug.LogError($"PlayerAttackConfig중 한 개 이상의 attackName이 설정되지 않음.");
+            }
+        }
     }
 
     private void InitializeCharacter()
@@ -127,6 +148,8 @@ public abstract class PlayerController : SerializedMonoBehaviour
     public void AttackValidation(AttackConfig config, AttackType attackType, int attackIdx, Transform monsterTransform)
     {
         if (dodgeInvincible) return; //회피무적상태면 리턴
+        
+        Debug.LogWarning("인빈시블아님");
 
         if (attackIdx < 0) //0미만이면 다단히트라서 조건 계산 할 필요 없음 
         {
@@ -251,6 +274,11 @@ public abstract class PlayerController : SerializedMonoBehaviour
         if (!IsDie) Animator.SetTrigger(StunEnd); //죽지 않았을 경우에만 스턴이 풀림
     }
 
+    public void StandUp()
+    {
+        IsDown = false;
+    }
+    
     //가한 공격의 피격체크
     public abstract void HitCheck();
 
@@ -275,6 +303,20 @@ public abstract class PlayerController : SerializedMonoBehaviour
     public void InvincibleOff()
     {
         dodgeInvincible = false;
+    }
+    
+    
+    //닷지 중에 피격될 경우
+    public void DodgeStop()
+    {
+        isDodge = false;
+        yaw = transform.eulerAngles.y;
+        
+        if (DodgeCoroutine != null)
+        {
+            StopCoroutine(DodgeCoroutine);
+            DodgeCoroutine = null;
+        }
     }
 
     public abstract void RotateStop();
@@ -343,4 +385,13 @@ public abstract class PlayerController : SerializedMonoBehaviour
             audioSource.PlayOneShot(selectedClip);
         }
     }
+    
+    //애니메이션 이벤트로 호출됨
+    public abstract void AttackStart(PlayerAttackName attackName);
+
+    //anystate에서 시작하는 모든 clip에도 다 달아놔야 함. <- 귀찮아서 AnyStateBehaviour로 대체
+    public abstract void AttackEnd();
+
+    public abstract void AttackMoveStart();
+    public abstract void AttackMoveStop();
 }

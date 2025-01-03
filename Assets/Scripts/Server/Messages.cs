@@ -24,7 +24,7 @@ namespace Game {
     static MessagesReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg5tZXNzYWdlcy5wcm90bxIEZ2FtZSKYBgoLR2FtZU1lc3NhZ2USKwoNbG9n",
+            "Cg5tZXNzYWdlcy5wcm90bxIEZ2FtZSLMBgoLR2FtZU1lc3NhZ2USKwoNbG9n",
             "aW5fcmVxdWVzdBgBIAEoCzISLmdhbWUuTG9naW5SZXF1ZXN0SAASLQoObG9n",
             "aW5fcmVzcG9uc2UYAiABKAsyEy5nYW1lLkxvZ2luUmVzcG9uc2VIABItCg5s",
             "b2dvdXRfcmVxdWVzdBgDIAEoCzITLmdhbWUuTG9nb3V0UmVxdWVzdEgAEi8K",
@@ -35,84 +35,92 @@ namespace Game {
             "bmdIABIpCgxwbGF5ZXJfaW5wdXQYCyABKAsyES5nYW1lLlBsYXllcklucHV0",
             "SAASKQoMcGxheWVyX3NwYXduGAwgASgLMhEuZ2FtZS5QbGF5ZXJTcGF3bkgA",
             "EjQKEnBsYXllcl9hdHRhY2tfYW5pbRgNIAEoCzIWLmdhbWUuUGxheWVyQXR0",
-            "YWNrQW5pbUgAEisKDW1vbnN0ZXJfc3Bhd24YHyABKAsyEi5nYW1lLk1vbnN0",
-            "ZXJTcGF3bkgAEj4KF21vbnN0ZXJfcG9zaXRpb25fdXBkYXRlGCAgASgLMhsu",
-            "Z2FtZS5Nb25zdGVyUG9zaXRpb25VcGRhdGVIABIpCgxtb25zdGVyX2FuaW0Y",
-            "ISABKAsyES5nYW1lLk1vbnN0ZXJBbmltSAASLQoObW9uc3Rlcl9hY3Rpb24Y",
-            "IiABKAsyEy5nYW1lLk1vbnN0ZXJBY3Rpb25IABI2ChNtb25zdGVyX3Rha2Vf",
-            "ZGFtYWdlGCMgASgLMhcuZ2FtZS5Nb25zdGVyVGFrZURhbWFnZUgAEi0KDnNl",
-            "cnZlcl9zdGFydGVkGGQgASgLMhMuZ2FtZS5TZXJ2ZXJTdGFydGVkSABCCQoH",
-            "cGF5bG9hZCIsCglHb1ZlY3RvcjMSCQoBeBgBIAEoAhIJCgF5GAIgASgCEgkK",
-            "AXoYAyABKAIiGQoEUGluZxIRCgl0aW1lc3RhbXAYASABKAMiGQoEUG9uZxIR",
-            "Cgl0aW1lc3RhbXAYASABKAMiDwoNU2VydmVyU3RhcnRlZCJCCgxMb2dpblJl",
-            "cXVlc3QSCgoCaWQYASABKAkSEAoIbmlja25hbWUYAiABKAkSFAoMZ2FtZV91",
-            "c2VyX2lkGAMgASgJInIKDUxvZ2luUmVzcG9uc2USDwoHc3VjY2VzcxgBIAEo",
-            "CBIRCglwbGF5ZXJfaWQYAiABKAkSEAoIdXNlcm5hbWUYAyABKAkSFAoMZ2Ft",
-            "ZV91c2VyX2lkGAQgASgJEhUKDWVycm9yX21lc3NhZ2UYBSABKAkiCwoJR2Ft",
-            "ZVN0YXJ0IlMKC0NoYXRNZXNzYWdlEhEKCXBsYXllcl9pZBgBIAEoCRIQCghu",
-            "aWNrbmFtZRgCIAEoCRIPCgdtZXNzYWdlGAMgASgJEg4KBnN5c3RlbRgEIAEo",
-            "CCJVCgtQbGF5ZXJTcGF3bhIRCglwbGF5ZXJfaWQYASABKAkSEAoIbmlja25h",
-            "bWUYAiABKAkSIQoHcGxheWVycxgDIAMoCzIQLmdhbWUuUGxheWVySW5mbyJC",
-            "ChBQbGF5ZXJBdHRhY2tBbmltEhEKCXBsYXllcl9pZBgBIAEoCRIMCgRoYXNo",
-            "GAIgASgFEg0KBWxheWVyGAMgASgFIioKClBsYXllckluZm8SCgoCaWQYASAB",
-            "KAkSEAoIbmlja25hbWUYAiABKAkiIgoNTG9nb3V0UmVxdWVzdBIRCglwbGF5",
-            "ZXJfaWQYASABKAkiOAoOTG9nb3V0UmVzcG9uc2USDwoHc3VjY2VzcxgBIAEo",
-            "CBIVCg1lcnJvcl9tZXNzYWdlGAIgASgJIrsDCgtQbGF5ZXJJbnB1dBIRCglw",
-            "bGF5ZXJfaWQYASABKAkSMgoScGxheWVyX2FjdGlvbl90eXBlGAIgASgOMhYu",
-            "Z2FtZS5QbGF5ZXJBY3Rpb25UeXBlEiEKCHBvc2l0aW9uGAMgASgLMg8uZ2Ft",
-            "ZS5Hb1ZlY3RvcjMSIQoIdmVsb2NpdHkYBCABKAsyDy5nYW1lLkdvVmVjdG9y",
-            "MxIhCghyb3RhdGlvbhgFIAEoCzIPLmdhbWUuR29WZWN0b3IzEhIKCmhvcml6",
-            "b250YWwYDiABKAISEAoIdmVydGljYWwYDyABKAISEQoJaXNSdW5uaW5nGBAg",
-            "ASgIEhEKCWFuaW1faGFzaBgGIAEoBRIiCglrbm9ja2JhY2sYCSABKAsyDy5n",
-            "YW1lLkdvVmVjdG9yMxIVCg1zdHVuX2R1cmF0aW9uGAogASgCEhIKCmN1cnJl",
-            "bnRfaHAYCyABKAISDgoGaXNfZGllGAwgASgIEiQKBnBhcmFtcxgNIAEoCzIU",
-            "LmdhbWUuQW5pbWF0b3JQYXJhbXMSKwoMZG9kZ2VfcGFyYW1zGBEgASgLMhUu",
-            "Z2FtZS5Eb2RnZUFuaW1QYXJhbXMiYQoOQW5pbWF0b3JQYXJhbXMSCgoCbHIY",
-            "ASABKAISCgoCZmIYAiABKAISEAoIaXNfYm91bmQYAyABKAgSDwoHaXNfZG93",
-            "bhgEIAEoCBIUCgxtb3Rpb25faW5kZXgYBSABKAIiWgoPRG9kZ2VBbmltUGFy",
-            "YW1zEg4KBm1vdmVfeBgBIAEoAhIOCgZtb3ZlX3kYAiABKAISDwoHaXNfYmFj",
-            "axgDIAEoCBIWCg5kb2RnZV92ZXJ0aWNhbBgEIAEoAiI6ChVNb25zdGVyUG9z",
-            "aXRpb25VcGRhdGUSIQoIcG9zaXRpb24YASABKAsyDy5nYW1lLkdvVmVjdG9y",
-            "MyIiCgxNb25zdGVyU3Bhd24SEgoKbW9uc3Rlcl9pZBgBIAEoCSKdAQoLTW9u",
-            "c3RlckFuaW0SEgoKbW9uc3Rlcl9pZBgBIAEoCRIRCglhbmltX2hhc2gYAiAB",
-            "KAUSKwoOcGFyYW1ldGVyX3R5cGUYAyABKA4yEy5nYW1lLlBhcmFtZXRlclR5",
-            "cGUSEQoJaW50X3ZhbHVlGAQgASgFEhMKC2Zsb2F0X3ZhbHVlGAUgASgCEhIK",
-            "CmJvb2xfdmFsdWUYBiABKAgi6gEKDU1vbnN0ZXJBY3Rpb24SEgoKbW9uc3Rl",
-            "cl9pZBgBIAEoCRIlCgthY3Rpb25fdHlwZRgCIAEoDjIQLmdhbWUuQWN0aW9u",
-            "VHlwZRIpCg1tb25zdGVyX3N0YXRlGAMgASgOMhIuZ2FtZS5Nb25zdGVyU3Rh",
-            "dGUSJQoLYXR0YWNrX3R5cGUYBCABKA4yEC5nYW1lLkF0dGFja1R5cGUSEAoI",
-            "dGFyZ2V0SWQYBSABKAkSJAoLZGVzdGluYXRpb24YBiABKAsyDy5nYW1lLkdv",
-            "VmVjdG9yMxIUCgxkb2RnZV9vcHRpb24YByABKAIiSwoRTW9uc3RlclRha2VE",
-            "YW1hZ2USEgoKbW9uc3Rlcl9pZBgBIAEoCRIOCgZkYW1hZ2UYAiABKAISEgoK",
-            "Y3VycmVudF9ocBgDIAEoAiqWAQoQUGxheWVyQWN0aW9uVHlwZRIZChVQTEFZ",
-            "RVJfQUNUSU9OX1VOS05PV04QABIWChJQTEFZRVJfQUNUSU9OX01PVkUQARIY",
-            "ChRQTEFZRVJfQUNUSU9OX0FUVEFDSxACEhwKGFBMQVlFUl9BQ1RJT05fVEFL",
-            "RURBTUFHRRADEhcKE1BMQVlFUl9BQ1RJT05fRE9ER0UQBCqdAQoNS25vY2tC",
-            "YWNrVHlwZRIVChFLTk9DS0JBQ0tfVU5LTk9XThAAEhIKDktOT0NLQkFDS19O",
-            "T05FEAESEAoMS05PQ0tCQUNLX1VQEAISEgoOS05PQ0tCQUNLX1BVU0gQAxIS",
-            "Cg5LTk9DS0JBQ0tfUFVMTBAEEhMKD0tOT0NLQkFDS19CT1VORBAFEhIKDktO",
-            "T0NLQkFDS19ET1dOEAYqeQoNUGFyYW1ldGVyVHlwZRIVChFQQVJBTUVURVJf",
-            "VU5LTk9XThAAEhEKDVBBUkFNRVRFUl9JTlQQARITCg9QQVJBTUVURVJfRkxP",
-            "QVQQAhISCg5QQVJBTUVURVJfQk9PTBADEhUKEVBBUkFNRVRFUl9UUklHR0VS",
-            "EAQqigEKCkFjdGlvblR5cGUSGgoWTU9OU1RFUl9BQ1RJT05fVU5LTk9XThAA",
-            "Eh0KGU1PTlNURVJfQUNUSU9OX1NFVF9TVEFUVVMQARIdChlNT05TVEVSX0FD",
-            "VElPTl9TRVRfVEFSR0VUEAISIgoeTU9OU1RFUl9BQ1RJT05fU0VUX0RFU1RJ",
-            "TkFUSU9OEAMqxAEKDE1vbnN0ZXJTdGF0ZRIaChZNT05TVEVSX1NUQVRVU19V",
-            "TktOT1dOEAASGAoUTU9OU1RFUl9TVEFUVVNfU1BBV04QARIXChNNT05TVEVS",
-            "X1NUQVRVU19JRExFEAISFwoTTU9OU1RFUl9TVEFUVVNfTU9WRRADEhcKE01P",
-            "TlNURVJfU1RBVFVTX0RBU0gQBBIYChRNT05TVEVSX1NUQVRVU19ET0RHRRAF",
-            "EhkKFU1PTlNURVJfU1RBVFVTX0FUVEFDSxAGKqYCCgpBdHRhY2tUeXBlEhoK",
-            "Fk1PTlNURVJfQVRUQUNLX1VOS05PV04QABIbChdNT05TVEVSX0FUVEFDS19D",
-            "TE9TRV8wMRABEhsKF01PTlNURVJfQVRUQUNLX0NMT1NFXzAyEAISGwoXTU9O",
-            "U1RFUl9BVFRBQ0tfQ0xPU0VfMDMQAxIgChxNT05TVEVSX0FUVEFDS19DTE9T",
-            "RV9DT1VOVEVSEAQSIAocTU9OU1RFUl9BVFRBQ0tfU0hPUlRSQU5HRV8wMRAL",
-            "Eh4KGk1PTlNURVJfQVRUQUNLX01JRFJBTkdFXzAxEBUSHwobTU9OU1RFUl9B",
-            "VFRBQ0tfTE9OR1JBTkdFXzAxEB8SIAocTU9OU1RFUl9BVFRBQ0tfRVhUUkFS",
-            "QU5HRV8wMRApQhFaD1NlcnZlci9tZXNzYWdlc2IGcHJvdG8z"));
+            "YWNrQW5pbUgAEjIKEXNldF9wbGF5ZXJfYXR0YWNrGA4gASgLMhUuZ2FtZS5T",
+            "ZXRQbGF5ZXJBdHRhY2tIABIrCg1tb25zdGVyX3NwYXduGB8gASgLMhIuZ2Ft",
+            "ZS5Nb25zdGVyU3Bhd25IABI+Chdtb25zdGVyX3Bvc2l0aW9uX3VwZGF0ZRgg",
+            "IAEoCzIbLmdhbWUuTW9uc3RlclBvc2l0aW9uVXBkYXRlSAASKQoMbW9uc3Rl",
+            "cl9hbmltGCEgASgLMhEuZ2FtZS5Nb25zdGVyQW5pbUgAEi0KDm1vbnN0ZXJf",
+            "YWN0aW9uGCIgASgLMhMuZ2FtZS5Nb25zdGVyQWN0aW9uSAASNgoTbW9uc3Rl",
+            "cl90YWtlX2RhbWFnZRgjIAEoCzIXLmdhbWUuTW9uc3RlclRha2VEYW1hZ2VI",
+            "ABItCg5zZXJ2ZXJfc3RhcnRlZBhkIAEoCzITLmdhbWUuU2VydmVyU3RhcnRl",
+            "ZEgAQgkKB3BheWxvYWQiLAoJR29WZWN0b3IzEgkKAXgYASABKAISCQoBeRgC",
+            "IAEoAhIJCgF6GAMgASgCIhkKBFBpbmcSEQoJdGltZXN0YW1wGAEgASgDIhkK",
+            "BFBvbmcSEQoJdGltZXN0YW1wGAEgASgDIg8KDVNlcnZlclN0YXJ0ZWQiQgoM",
+            "TG9naW5SZXF1ZXN0EgoKAmlkGAEgASgJEhAKCG5pY2tuYW1lGAIgASgJEhQK",
+            "DGdhbWVfdXNlcl9pZBgDIAEoCSJyCg1Mb2dpblJlc3BvbnNlEg8KB3N1Y2Nl",
+            "c3MYASABKAgSEQoJcGxheWVyX2lkGAIgASgJEhAKCHVzZXJuYW1lGAMgASgJ",
+            "EhQKDGdhbWVfdXNlcl9pZBgEIAEoCRIVCg1lcnJvcl9tZXNzYWdlGAUgASgJ",
+            "IgsKCUdhbWVTdGFydCJTCgtDaGF0TWVzc2FnZRIRCglwbGF5ZXJfaWQYASAB",
+            "KAkSEAoIbmlja25hbWUYAiABKAkSDwoHbWVzc2FnZRgDIAEoCRIOCgZzeXN0",
+            "ZW0YBCABKAgiVQoLUGxheWVyU3Bhd24SEQoJcGxheWVyX2lkGAEgASgJEhAK",
+            "CG5pY2tuYW1lGAIgASgJEiEKB3BsYXllcnMYAyADKAsyEC5nYW1lLlBsYXll",
+            "ckluZm8iQgoQUGxheWVyQXR0YWNrQW5pbRIRCglwbGF5ZXJfaWQYASABKAkS",
+            "DAoEaGFzaBgCIAEoBRINCgVsYXllchgDIAEoBSIqCgpQbGF5ZXJJbmZvEgoK",
+            "AmlkGAEgASgJEhAKCG5pY2tuYW1lGAIgASgJIiIKDUxvZ291dFJlcXVlc3QS",
+            "EQoJcGxheWVyX2lkGAEgASgJIjgKDkxvZ291dFJlc3BvbnNlEg8KB3N1Y2Nl",
+            "c3MYASABKAgSFQoNZXJyb3JfbWVzc2FnZRgCIAEoCSK7AwoLUGxheWVySW5w",
+            "dXQSEQoJcGxheWVyX2lkGAEgASgJEjIKEnBsYXllcl9hY3Rpb25fdHlwZRgC",
+            "IAEoDjIWLmdhbWUuUGxheWVyQWN0aW9uVHlwZRIhCghwb3NpdGlvbhgDIAEo",
+            "CzIPLmdhbWUuR29WZWN0b3IzEiEKCHZlbG9jaXR5GAQgASgLMg8uZ2FtZS5H",
+            "b1ZlY3RvcjMSIQoIcm90YXRpb24YBSABKAsyDy5nYW1lLkdvVmVjdG9yMxIS",
+            "Cgpob3Jpem9udGFsGA4gASgCEhAKCHZlcnRpY2FsGA8gASgCEhEKCWlzUnVu",
+            "bmluZxgQIAEoCBIRCglhbmltX2hhc2gYBiABKAUSIgoJa25vY2tiYWNrGAkg",
+            "ASgLMg8uZ2FtZS5Hb1ZlY3RvcjMSFQoNc3R1bl9kdXJhdGlvbhgKIAEoAhIS",
+            "CgpjdXJyZW50X2hwGAsgASgCEg4KBmlzX2RpZRgMIAEoCBIkCgZwYXJhbXMY",
+            "DSABKAsyFC5nYW1lLkFuaW1hdG9yUGFyYW1zEisKDGRvZGdlX3BhcmFtcxgR",
+            "IAEoCzIVLmdhbWUuRG9kZ2VBbmltUGFyYW1zImEKDkFuaW1hdG9yUGFyYW1z",
+            "EgoKAmxyGAEgASgCEgoKAmZiGAIgASgCEhAKCGlzX2JvdW5kGAMgASgIEg8K",
+            "B2lzX2Rvd24YBCABKAgSFAoMbW90aW9uX2luZGV4GAUgASgCIloKD0RvZGdl",
+            "QW5pbVBhcmFtcxIOCgZtb3ZlX3gYASABKAISDgoGbW92ZV95GAIgASgCEg8K",
+            "B2lzX2JhY2sYAyABKAgSFgoOZG9kZ2VfdmVydGljYWwYBCABKAIiZwoPU2V0",
+            "UGxheWVyQXR0YWNrEhEKCXBsYXllcl9pZBgBIAEoCRIrCgthdHRhY2tfbmFt",
+            "ZRgCIAEoDjIWLmdhbWUuUGxheWVyQXR0YWNrTmFtZRIUCgxhdHRhY2tfaW5k",
+            "ZXgYAyABKAUiOgoVTW9uc3RlclBvc2l0aW9uVXBkYXRlEiEKCHBvc2l0aW9u",
+            "GAEgASgLMg8uZ2FtZS5Hb1ZlY3RvcjMiIgoMTW9uc3RlclNwYXduEhIKCm1v",
+            "bnN0ZXJfaWQYASABKAkinQEKC01vbnN0ZXJBbmltEhIKCm1vbnN0ZXJfaWQY",
+            "ASABKAkSEQoJYW5pbV9oYXNoGAIgASgFEisKDnBhcmFtZXRlcl90eXBlGAMg",
+            "ASgOMhMuZ2FtZS5QYXJhbWV0ZXJUeXBlEhEKCWludF92YWx1ZRgEIAEoBRIT",
+            "CgtmbG9hdF92YWx1ZRgFIAEoAhISCgpib29sX3ZhbHVlGAYgASgIIuoBCg1N",
+            "b25zdGVyQWN0aW9uEhIKCm1vbnN0ZXJfaWQYASABKAkSJQoLYWN0aW9uX3R5",
+            "cGUYAiABKA4yEC5nYW1lLkFjdGlvblR5cGUSKQoNbW9uc3Rlcl9zdGF0ZRgD",
+            "IAEoDjISLmdhbWUuTW9uc3RlclN0YXRlEiUKC2F0dGFja190eXBlGAQgASgO",
+            "MhAuZ2FtZS5BdHRhY2tUeXBlEhAKCHRhcmdldElkGAUgASgJEiQKC2Rlc3Rp",
+            "bmF0aW9uGAYgASgLMg8uZ2FtZS5Hb1ZlY3RvcjMSFAoMZG9kZ2Vfb3B0aW9u",
+            "GAcgASgCIksKEU1vbnN0ZXJUYWtlRGFtYWdlEhIKCm1vbnN0ZXJfaWQYASAB",
+            "KAkSDgoGZGFtYWdlGAIgASgCEhIKCmN1cnJlbnRfaHAYAyABKAIqlgEKEFBs",
+            "YXllckFjdGlvblR5cGUSGQoVUExBWUVSX0FDVElPTl9VTktOT1dOEAASFgoS",
+            "UExBWUVSX0FDVElPTl9NT1ZFEAESGAoUUExBWUVSX0FDVElPTl9BVFRBQ0sQ",
+            "AhIcChhQTEFZRVJfQUNUSU9OX1RBS0VEQU1BR0UQAxIXChNQTEFZRVJfQUNU",
+            "SU9OX0RPREdFEAQqZQoQUGxheWVyQXR0YWNrTmFtZRIZChVQTEFZRVJfQVRU",
+            "QUNLX1VOS05PV04QABIMCghDT01CT18wMRABEgwKCENPTUJPXzAyEAISDAoI",
+            "Q09NQk9fMDMQAxIMCghDT01CT18wNBAEKp0BCg1Lbm9ja0JhY2tUeXBlEhUK",
+            "EUtOT0NLQkFDS19VTktOT1dOEAASEgoOS05PQ0tCQUNLX05PTkUQARIQCgxL",
+            "Tk9DS0JBQ0tfVVAQAhISCg5LTk9DS0JBQ0tfUFVTSBADEhIKDktOT0NLQkFD",
+            "S19QVUxMEAQSEwoPS05PQ0tCQUNLX0JPVU5EEAUSEgoOS05PQ0tCQUNLX0RP",
+            "V04QBip5Cg1QYXJhbWV0ZXJUeXBlEhUKEVBBUkFNRVRFUl9VTktOT1dOEAAS",
+            "EQoNUEFSQU1FVEVSX0lOVBABEhMKD1BBUkFNRVRFUl9GTE9BVBACEhIKDlBB",
+            "UkFNRVRFUl9CT09MEAMSFQoRUEFSQU1FVEVSX1RSSUdHRVIQBCqKAQoKQWN0",
+            "aW9uVHlwZRIaChZNT05TVEVSX0FDVElPTl9VTktOT1dOEAASHQoZTU9OU1RF",
+            "Ul9BQ1RJT05fU0VUX1NUQVRVUxABEh0KGU1PTlNURVJfQUNUSU9OX1NFVF9U",
+            "QVJHRVQQAhIiCh5NT05TVEVSX0FDVElPTl9TRVRfREVTVElOQVRJT04QAyrE",
+            "AQoMTW9uc3RlclN0YXRlEhoKFk1PTlNURVJfU1RBVFVTX1VOS05PV04QABIY",
+            "ChRNT05TVEVSX1NUQVRVU19TUEFXThABEhcKE01PTlNURVJfU1RBVFVTX0lE",
+            "TEUQAhIXChNNT05TVEVSX1NUQVRVU19NT1ZFEAMSFwoTTU9OU1RFUl9TVEFU",
+            "VVNfREFTSBAEEhgKFE1PTlNURVJfU1RBVFVTX0RPREdFEAUSGQoVTU9OU1RF",
+            "Ul9TVEFUVVNfQVRUQUNLEAYq8AIKCkF0dGFja1R5cGUSGgoWTU9OU1RFUl9B",
+            "VFRBQ0tfVU5LTk9XThAAEhsKF01PTlNURVJfQVRUQUNLX0NMT1NFXzAxEAES",
+            "GwoXTU9OU1RFUl9BVFRBQ0tfQ0xPU0VfMDIQAhIbChdNT05TVEVSX0FUVEFD",
+            "S19DTE9TRV8wMxADEiAKHE1PTlNURVJfQVRUQUNLX0NMT1NFX0NPVU5URVIQ",
+            "BBIhCh1NT05TVEVSX0FUVEFDS19TSE9SVF9SQU5HRV8wMRALEiEKHU1PTlNU",
+            "RVJfQVRUQUNLX1NIT1JUX1JBTkdFXzAyEAwSIQodTU9OU1RFUl9BVFRBQ0tf",
+            "U0hPUlRfUkFOR0VfMDMQDRIfChtNT05TVEVSX0FUVEFDS19NSURfUkFOR0Vf",
+            "MDEQFRIgChxNT05TVEVSX0FUVEFDS19MT05HX1JBTkdFXzAxEB8SIQodTU9O",
+            "U1RFUl9BVFRBQ0tfRVhUUkFfUkFOR0VfMDEQKUIRWg9TZXJ2ZXIvbWVzc2Fn",
+            "ZXNiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Game.PlayerActionType), typeof(global::Game.KnockBackType), typeof(global::Game.ParameterType), typeof(global::Game.ActionType), typeof(global::Game.MonsterState), typeof(global::Game.AttackType), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.GameMessage), global::Game.GameMessage.Parser, new[]{ "LoginRequest", "LoginResponse", "LogoutRequest", "LogoutResponse", "GameStart", "ChatMessage", "Ping", "Pong", "PlayerInput", "PlayerSpawn", "PlayerAttackAnim", "MonsterSpawn", "MonsterPositionUpdate", "MonsterAnim", "MonsterAction", "MonsterTakeDamage", "ServerStarted" }, new[]{ "Payload" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Game.PlayerActionType), typeof(global::Game.PlayerAttackName), typeof(global::Game.KnockBackType), typeof(global::Game.ParameterType), typeof(global::Game.ActionType), typeof(global::Game.MonsterState), typeof(global::Game.AttackType), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.GameMessage), global::Game.GameMessage.Parser, new[]{ "LoginRequest", "LoginResponse", "LogoutRequest", "LogoutResponse", "GameStart", "ChatMessage", "Ping", "Pong", "PlayerInput", "PlayerSpawn", "PlayerAttackAnim", "SetPlayerAttack", "MonsterSpawn", "MonsterPositionUpdate", "MonsterAnim", "MonsterAction", "MonsterTakeDamage", "ServerStarted" }, new[]{ "Payload" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.GoVector3), global::Game.GoVector3.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.Ping), global::Game.Ping.Parser, new[]{ "Timestamp" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.Pong), global::Game.Pong.Parser, new[]{ "Timestamp" }, null, null, null, null),
@@ -129,6 +137,7 @@ namespace Game {
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.PlayerInput), global::Game.PlayerInput.Parser, new[]{ "PlayerId", "PlayerActionType", "Position", "Velocity", "Rotation", "Horizontal", "Vertical", "IsRunning", "AnimHash", "Knockback", "StunDuration", "CurrentHp", "IsDie", "Params", "DodgeParams" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.AnimatorParams), global::Game.AnimatorParams.Parser, new[]{ "Lr", "Fb", "IsBound", "IsDown", "MotionIndex" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.DodgeAnimParams), global::Game.DodgeAnimParams.Parser, new[]{ "MoveX", "MoveY", "IsBack", "DodgeVertical" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.SetPlayerAttack), global::Game.SetPlayerAttack.Parser, new[]{ "PlayerId", "AttackName", "AttackIndex" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterPositionUpdate), global::Game.MonsterPositionUpdate.Parser, new[]{ "Position" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterSpawn), global::Game.MonsterSpawn.Parser, new[]{ "MonsterId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterAnim), global::Game.MonsterAnim.Parser, new[]{ "MonsterId", "AnimHash", "ParameterType", "IntValue", "FloatValue", "BoolValue" }, null, null, null, null),
@@ -146,6 +155,14 @@ namespace Game {
     [pbr::OriginalName("PLAYER_ACTION_ATTACK")] PlayerActionAttack = 2,
     [pbr::OriginalName("PLAYER_ACTION_TAKEDAMAGE")] PlayerActionTakedamage = 3,
     [pbr::OriginalName("PLAYER_ACTION_DODGE")] PlayerActionDodge = 4,
+  }
+
+  public enum PlayerAttackName {
+    [pbr::OriginalName("PLAYER_ATTACK_UNKNOWN")] PlayerAttackUnknown = 0,
+    [pbr::OriginalName("COMBO_01")] Combo01 = 1,
+    [pbr::OriginalName("COMBO_02")] Combo02 = 2,
+    [pbr::OriginalName("COMBO_03")] Combo03 = 3,
+    [pbr::OriginalName("COMBO_04")] Combo04 = 4,
   }
 
   public enum KnockBackType {
@@ -210,19 +227,21 @@ namespace Game {
     /// <summary>
     ///11~20 근거리 공격    
     /// </summary>
-    [pbr::OriginalName("MONSTER_ATTACK_SHORTRANGE_01")] MonsterAttackShortrange01 = 11,
+    [pbr::OriginalName("MONSTER_ATTACK_SHORT_RANGE_01")] MonsterAttackShortRange01 = 11,
+    [pbr::OriginalName("MONSTER_ATTACK_SHORT_RANGE_02")] MonsterAttackShortRange02 = 12,
+    [pbr::OriginalName("MONSTER_ATTACK_SHORT_RANGE_03")] MonsterAttackShortRange03 = 13,
     /// <summary>
     ///21~30 중거리 공격
     /// </summary>
-    [pbr::OriginalName("MONSTER_ATTACK_MIDRANGE_01")] MonsterAttackMidrange01 = 21,
+    [pbr::OriginalName("MONSTER_ATTACK_MID_RANGE_01")] MonsterAttackMidRange01 = 21,
     /// <summary>
     ///31~40 원거리 공격
     /// </summary>
-    [pbr::OriginalName("MONSTER_ATTACK_LONGRANGE_01")] MonsterAttackLongrange01 = 31,
+    [pbr::OriginalName("MONSTER_ATTACK_LONG_RANGE_01")] MonsterAttackLongRange01 = 31,
     /// <summary>
     ///41~50 초장거리 공격
     /// </summary>
-    [pbr::OriginalName("MONSTER_ATTACK_EXTRARANGE_01")] MonsterAttackExtrarange01 = 41,
+    [pbr::OriginalName("MONSTER_ATTACK_EXTRA_RANGE_01")] MonsterAttackExtraRange01 = 41,
   }
 
   #endregion
@@ -296,6 +315,9 @@ namespace Game {
           break;
         case PayloadOneofCase.PlayerAttackAnim:
           PlayerAttackAnim = other.PlayerAttackAnim.Clone();
+          break;
+        case PayloadOneofCase.SetPlayerAttack:
+          SetPlayerAttack = other.SetPlayerAttack.Clone();
           break;
         case PayloadOneofCase.MonsterSpawn:
           MonsterSpawn = other.MonsterSpawn.Clone();
@@ -461,6 +483,18 @@ namespace Game {
       }
     }
 
+    /// <summary>Field number for the "set_player_attack" field.</summary>
+    public const int SetPlayerAttackFieldNumber = 14;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Game.SetPlayerAttack SetPlayerAttack {
+      get { return payloadCase_ == PayloadOneofCase.SetPlayerAttack ? (global::Game.SetPlayerAttack) payload_ : null; }
+      set {
+        payload_ = value;
+        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.SetPlayerAttack;
+      }
+    }
+
     /// <summary>Field number for the "monster_spawn" field.</summary>
     public const int MonsterSpawnFieldNumber = 31;
     /// <summary>
@@ -551,6 +585,7 @@ namespace Game {
       PlayerInput = 11,
       PlayerSpawn = 12,
       PlayerAttackAnim = 13,
+      SetPlayerAttack = 14,
       MonsterSpawn = 31,
       MonsterPositionUpdate = 32,
       MonsterAnim = 33,
@@ -598,6 +633,7 @@ namespace Game {
       if (!object.Equals(PlayerInput, other.PlayerInput)) return false;
       if (!object.Equals(PlayerSpawn, other.PlayerSpawn)) return false;
       if (!object.Equals(PlayerAttackAnim, other.PlayerAttackAnim)) return false;
+      if (!object.Equals(SetPlayerAttack, other.SetPlayerAttack)) return false;
       if (!object.Equals(MonsterSpawn, other.MonsterSpawn)) return false;
       if (!object.Equals(MonsterPositionUpdate, other.MonsterPositionUpdate)) return false;
       if (!object.Equals(MonsterAnim, other.MonsterAnim)) return false;
@@ -623,6 +659,7 @@ namespace Game {
       if (payloadCase_ == PayloadOneofCase.PlayerInput) hash ^= PlayerInput.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.PlayerSpawn) hash ^= PlayerSpawn.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.PlayerAttackAnim) hash ^= PlayerAttackAnim.GetHashCode();
+      if (payloadCase_ == PayloadOneofCase.SetPlayerAttack) hash ^= SetPlayerAttack.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.MonsterSpawn) hash ^= MonsterSpawn.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.MonsterPositionUpdate) hash ^= MonsterPositionUpdate.GetHashCode();
       if (payloadCase_ == PayloadOneofCase.MonsterAnim) hash ^= MonsterAnim.GetHashCode();
@@ -691,6 +728,10 @@ namespace Game {
       if (payloadCase_ == PayloadOneofCase.PlayerAttackAnim) {
         output.WriteRawTag(106);
         output.WriteMessage(PlayerAttackAnim);
+      }
+      if (payloadCase_ == PayloadOneofCase.SetPlayerAttack) {
+        output.WriteRawTag(114);
+        output.WriteMessage(SetPlayerAttack);
       }
       if (payloadCase_ == PayloadOneofCase.MonsterSpawn) {
         output.WriteRawTag(250, 1);
@@ -770,6 +811,10 @@ namespace Game {
         output.WriteRawTag(106);
         output.WriteMessage(PlayerAttackAnim);
       }
+      if (payloadCase_ == PayloadOneofCase.SetPlayerAttack) {
+        output.WriteRawTag(114);
+        output.WriteMessage(SetPlayerAttack);
+      }
       if (payloadCase_ == PayloadOneofCase.MonsterSpawn) {
         output.WriteRawTag(250, 1);
         output.WriteMessage(MonsterSpawn);
@@ -836,6 +881,9 @@ namespace Game {
       }
       if (payloadCase_ == PayloadOneofCase.PlayerAttackAnim) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerAttackAnim);
+      }
+      if (payloadCase_ == PayloadOneofCase.SetPlayerAttack) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(SetPlayerAttack);
       }
       if (payloadCase_ == PayloadOneofCase.MonsterSpawn) {
         size += 2 + pb::CodedOutputStream.ComputeMessageSize(MonsterSpawn);
@@ -933,6 +981,12 @@ namespace Game {
             PlayerAttackAnim = new global::Game.PlayerAttackAnim();
           }
           PlayerAttackAnim.MergeFrom(other.PlayerAttackAnim);
+          break;
+        case PayloadOneofCase.SetPlayerAttack:
+          if (SetPlayerAttack == null) {
+            SetPlayerAttack = new global::Game.SetPlayerAttack();
+          }
+          SetPlayerAttack.MergeFrom(other.SetPlayerAttack);
           break;
         case PayloadOneofCase.MonsterSpawn:
           if (MonsterSpawn == null) {
@@ -1088,6 +1142,15 @@ namespace Game {
             }
             input.ReadMessage(subBuilder);
             PlayerAttackAnim = subBuilder;
+            break;
+          }
+          case 114: {
+            global::Game.SetPlayerAttack subBuilder = new global::Game.SetPlayerAttack();
+            if (payloadCase_ == PayloadOneofCase.SetPlayerAttack) {
+              subBuilder.MergeFrom(SetPlayerAttack);
+            }
+            input.ReadMessage(subBuilder);
+            SetPlayerAttack = subBuilder;
             break;
           }
           case 250: {
@@ -1260,6 +1323,15 @@ namespace Game {
             }
             input.ReadMessage(subBuilder);
             PlayerAttackAnim = subBuilder;
+            break;
+          }
+          case 114: {
+            global::Game.SetPlayerAttack subBuilder = new global::Game.SetPlayerAttack();
+            if (payloadCase_ == PayloadOneofCase.SetPlayerAttack) {
+              subBuilder.MergeFrom(SetPlayerAttack);
+            }
+            input.ReadMessage(subBuilder);
+            SetPlayerAttack = subBuilder;
             break;
           }
           case 250: {
@@ -5952,6 +6024,281 @@ namespace Game {
 
   }
 
+  /// <summary>
+  ///플레이어가 공격할 때 OtherPlayer에 currentAttack를 전달하기 위해 사용
+  /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+  public sealed partial class SetPlayerAttack : pb::IMessage<SetPlayerAttack>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<SetPlayerAttack> _parser = new pb::MessageParser<SetPlayerAttack>(() => new SetPlayerAttack());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<SetPlayerAttack> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Game.MessagesReflection.Descriptor.MessageTypes[17]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SetPlayerAttack() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SetPlayerAttack(SetPlayerAttack other) : this() {
+      playerId_ = other.playerId_;
+      attackName_ = other.attackName_;
+      attackIndex_ = other.attackIndex_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SetPlayerAttack Clone() {
+      return new SetPlayerAttack(this);
+    }
+
+    /// <summary>Field number for the "player_id" field.</summary>
+    public const int PlayerIdFieldNumber = 1;
+    private string playerId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string PlayerId {
+      get { return playerId_; }
+      set {
+        playerId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "attack_name" field.</summary>
+    public const int AttackNameFieldNumber = 2;
+    private global::Game.PlayerAttackName attackName_ = global::Game.PlayerAttackName.PlayerAttackUnknown;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Game.PlayerAttackName AttackName {
+      get { return attackName_; }
+      set {
+        attackName_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "attack_index" field.</summary>
+    public const int AttackIndexFieldNumber = 3;
+    private int attackIndex_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int AttackIndex {
+      get { return attackIndex_; }
+      set {
+        attackIndex_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as SetPlayerAttack);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(SetPlayerAttack other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (PlayerId != other.PlayerId) return false;
+      if (AttackName != other.AttackName) return false;
+      if (AttackIndex != other.AttackIndex) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (PlayerId.Length != 0) hash ^= PlayerId.GetHashCode();
+      if (AttackName != global::Game.PlayerAttackName.PlayerAttackUnknown) hash ^= AttackName.GetHashCode();
+      if (AttackIndex != 0) hash ^= AttackIndex.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (PlayerId.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(PlayerId);
+      }
+      if (AttackName != global::Game.PlayerAttackName.PlayerAttackUnknown) {
+        output.WriteRawTag(16);
+        output.WriteEnum((int) AttackName);
+      }
+      if (AttackIndex != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(AttackIndex);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (PlayerId.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(PlayerId);
+      }
+      if (AttackName != global::Game.PlayerAttackName.PlayerAttackUnknown) {
+        output.WriteRawTag(16);
+        output.WriteEnum((int) AttackName);
+      }
+      if (AttackIndex != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(AttackIndex);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (PlayerId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(PlayerId);
+      }
+      if (AttackName != global::Game.PlayerAttackName.PlayerAttackUnknown) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) AttackName);
+      }
+      if (AttackIndex != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(AttackIndex);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(SetPlayerAttack other) {
+      if (other == null) {
+        return;
+      }
+      if (other.PlayerId.Length != 0) {
+        PlayerId = other.PlayerId;
+      }
+      if (other.AttackName != global::Game.PlayerAttackName.PlayerAttackUnknown) {
+        AttackName = other.AttackName;
+      }
+      if (other.AttackIndex != 0) {
+        AttackIndex = other.AttackIndex;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            PlayerId = input.ReadString();
+            break;
+          }
+          case 16: {
+            AttackName = (global::Game.PlayerAttackName) input.ReadEnum();
+            break;
+          }
+          case 24: {
+            AttackIndex = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            PlayerId = input.ReadString();
+            break;
+          }
+          case 16: {
+            AttackName = (global::Game.PlayerAttackName) input.ReadEnum();
+            break;
+          }
+          case 24: {
+            AttackIndex = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class MonsterPositionUpdate : pb::IMessage<MonsterPositionUpdate>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
@@ -5967,7 +6314,7 @@ namespace Game {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Game.MessagesReflection.Descriptor.MessageTypes[17]; }
+      get { return global::Game.MessagesReflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6174,7 +6521,7 @@ namespace Game {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Game.MessagesReflection.Descriptor.MessageTypes[18]; }
+      get { return global::Game.MessagesReflection.Descriptor.MessageTypes[19]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6375,7 +6722,7 @@ namespace Game {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Game.MessagesReflection.Descriptor.MessageTypes[19]; }
+      get { return global::Game.MessagesReflection.Descriptor.MessageTypes[20]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6758,7 +7105,7 @@ namespace Game {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Game.MessagesReflection.Descriptor.MessageTypes[20]; }
+      get { return global::Game.MessagesReflection.Descriptor.MessageTypes[21]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7187,7 +7534,7 @@ namespace Game {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Game.MessagesReflection.Descriptor.MessageTypes[21]; }
+      get { return global::Game.MessagesReflection.Descriptor.MessageTypes[22]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

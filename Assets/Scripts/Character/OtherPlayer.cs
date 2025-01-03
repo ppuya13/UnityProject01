@@ -1,6 +1,8 @@
 ﻿
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using Character;
 using Game;
 using Monster;
 using UnityEngine;
@@ -50,82 +52,82 @@ public class OtherPlayer: PlayerController
 
     public override void HitCheck()
     {
-        if (!currentAttack)
-        {
-            Debug.LogError("currentAttack이 null임");
-            return;
-        }
-
-        //데미지를 설정
-        float distance = currentAttack.distance;
-        Vector3 attackPositionOffset = currentAttack.attackPositionOffset;
-
-        // 공격 위치 계산
-        Vector3 attackPosition = transform.position + transform.forward * distance +
-                                 transform.TransformDirection(attackPositionOffset);
-
-
-        // 히트 판정 수행
-        Collider[] hitColliders = Array.Empty<Collider>();
-
-        switch (currentAttack.ColliderConfig.ColliderType)
-        {
-            case ColliderType.Sphere:
-                if (currentAttack.ColliderConfig is SphereColliderConfig sphereConfig)
-                {
-                    hitColliders = Physics.OverlapSphere(attackPosition, sphereConfig.Radius, targetLayer);
-                }
-                else
-                {
-                    Debug.LogWarning("SphereCollider 설정이 올바르지 않습니다.");
-                }
-
-                break;
-            case ColliderType.Box:
-                if (currentAttack.ColliderConfig is BoxColliderConfig boxConfig)
-                {
-                    Vector3 boxCenterWorld = attackPosition + transform.TransformDirection(boxConfig.Center);
-                    Quaternion worldRotation = transform.rotation * boxConfig.Rotation;
-                    hitColliders = Physics.OverlapBox(boxCenterWorld, boxConfig.Size * 0.5f, worldRotation,
-                        targetLayer);
-                }
-                else
-                {
-                    Debug.LogWarning("BoxCollider 설정이 올바르지 않습니다.");
-                }
-
-                break;
-
-            case ColliderType.Capsule:
-                if (currentAttack.ColliderConfig is CapsuleColliderConfig capsuleConfig)
-                {
-                    Vector3 point1 = attackPosition +
-                                     capsuleConfig.Direction * (capsuleConfig.Height / 2 - capsuleConfig.Radius);
-                    Vector3 point2 = attackPosition -
-                                     capsuleConfig.Direction * (capsuleConfig.Height / 2 - capsuleConfig.Radius);
-                    hitColliders = Physics.OverlapCapsule(point1, point2, capsuleConfig.Radius, targetLayer);
-                }
-                else
-                {
-                    Debug.LogWarning("CapsuleCollider 설정이 올바르지 않습니다.");
-                }
-
-                break;
-
-            default:
-                Debug.LogWarning($"Unknown ColliderType: {currentAttack.ColliderConfig.ColliderType}.");
-                break;
-        }
-        
-        foreach (var hitCollider in hitColliders)
-        {
-            MonsterController monster = hitCollider.GetComponent<MonsterController>();
-            if (monster)
-            {
-                //OtherPlayer의 공격은 데미지를 적용하지 않고 이펙트만 적용한다.
-                monster.OtherPlayerAttackValidation(currentAttack, transform);
-            }
-        }
+        // if (!currentAttack)
+        // {
+        //     Debug.LogError("currentAttack이 null임");
+        //     return;
+        // }
+        //
+        // //데미지를 설정
+        // float distance = currentAttack.distance;
+        // Vector3 attackPositionOffset = currentAttack.attackPositionOffset;
+        //
+        // // 공격 위치 계산
+        // Vector3 attackPosition = transform.position + transform.forward * distance +
+        //                          transform.TransformDirection(attackPositionOffset);
+        //
+        //
+        // // 히트 판정 수행
+        // Collider[] hitColliders = Array.Empty<Collider>();
+        //
+        // switch (currentAttack.ColliderConfig.ColliderType)
+        // {
+        //     case ColliderType.Sphere:
+        //         if (currentAttack.ColliderConfig is SphereColliderConfig sphereConfig)
+        //         {
+        //             hitColliders = Physics.OverlapSphere(attackPosition, sphereConfig.Radius, targetLayer);
+        //         }
+        //         else
+        //         {
+        //             Debug.LogWarning("SphereCollider 설정이 올바르지 않습니다.");
+        //         }
+        //
+        //         break;
+        //     case ColliderType.Box:
+        //         if (currentAttack.ColliderConfig is BoxColliderConfig boxConfig)
+        //         {
+        //             Vector3 boxCenterWorld = attackPosition + transform.TransformDirection(boxConfig.Center);
+        //             Quaternion worldRotation = transform.rotation * boxConfig.Rotation;
+        //             hitColliders = Physics.OverlapBox(boxCenterWorld, boxConfig.Size * 0.5f, worldRotation,
+        //                 targetLayer);
+        //         }
+        //         else
+        //         {
+        //             Debug.LogWarning("BoxCollider 설정이 올바르지 않습니다.");
+        //         }
+        //
+        //         break;
+        //
+        //     case ColliderType.Capsule:
+        //         if (currentAttack.ColliderConfig is CapsuleColliderConfig capsuleConfig)
+        //         {
+        //             Vector3 point1 = attackPosition +
+        //                              capsuleConfig.Direction * (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+        //             Vector3 point2 = attackPosition -
+        //                              capsuleConfig.Direction * (capsuleConfig.Height / 2 - capsuleConfig.Radius);
+        //             hitColliders = Physics.OverlapCapsule(point1, point2, capsuleConfig.Radius, targetLayer);
+        //         }
+        //         else
+        //         {
+        //             Debug.LogWarning("CapsuleCollider 설정이 올바르지 않습니다.");
+        //         }
+        //
+        //         break;
+        //
+        //     default:
+        //         Debug.LogWarning($"Unknown ColliderType: {currentAttack.ColliderConfig.ColliderType}.");
+        //         break;
+        // }
+        //
+        // foreach (var hitCollider in hitColliders)
+        // {
+        //     MonsterController monster = hitCollider.GetComponent<MonsterController>();
+        //     if (monster)
+        //     {
+        //         //OtherPlayer의 공격은 데미지를 적용하지 않고 이펙트만 적용한다.
+        //         monster.OtherPlayerAttackValidation(currentAttack, transform);
+        //     }
+        // }
     }
 
     //OtherPlayer의 TakeDamage는 로컬이 아니라 서버에서 받아온 정보로 처리한다.
@@ -178,7 +180,7 @@ public class OtherPlayer: PlayerController
         Animator.SetTrigger(Dodge);
         
         // 이동 처리 (회피 애니메이션 길이에 따라)
-        StartCoroutine(DodgeAnimationMovement(dodgeDirection));
+        DodgeCoroutine = StartCoroutine(DodgeAnimationMovement(dodgeDirection));
     }
     
     private IEnumerator DodgeAnimationMovement(Vector3 direction)
@@ -212,7 +214,15 @@ public class OtherPlayer: PlayerController
         // 회전 복귀 Coroutine 시작
         RotateStopCoroutine = StartCoroutine(RotateBackToOriginal());
     }
-    
+
+    public override void AttackStart(PlayerAttackName attackName)
+    {
+    }
+
+    public override void AttackEnd()
+    {
+    }
+
     private IEnumerator RotateBackToOriginal()
     {
         Quaternion initialRotation = lastDodgeDirection; // 현재 lastDodgeDirection
@@ -290,6 +300,25 @@ public class OtherPlayer: PlayerController
     public void PlayAttackAnimation(int hash, int layer)
     {
         Animator.Play(hash, layer);
+    }
+
+    public void SetCurrentAttack(PlayerAttackName attackName)
+    {
+        if (attackName == PlayerAttackName.PlayerAttackUnknown)
+        {
+            currentAttack = null;
+            return;
+        }
+        
+        currentAttack = AttackDict[attackName];
+    }
+    
+    public override void AttackMoveStart()
+    {
+    }
+
+    public override void AttackMoveStop()
+    {
     }
     
 }

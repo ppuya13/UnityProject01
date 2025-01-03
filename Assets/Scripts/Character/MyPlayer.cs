@@ -22,7 +22,7 @@ public class MyPlayer : PlayerController
     private float lastSendTime;
 
     private bool inGame = false;
-    private bool invincible = false;
+    private bool invincible = false; //공격을 맞아도 체력이 닳지 않게 하는 모드(i키로 활성화)
     private bool isAttack = false;
     private bool attackMove = false; //공격 중에 앞키를 누르면 true가 됨. 공격 모션 중 이동 가능 상태일 때 true이면 앞으로 이동함.
     private const float MoveTime = 2.0f; // 애니메이션에 moveEnd를 달지 않았거나 호출되지 않았을 시 최대 이동 시간을 설정하기 위한 변수.
@@ -31,8 +31,7 @@ public class MyPlayer : PlayerController
 
     private static readonly int Attack = Animator.StringToHash("Attack");
 
-    public PlayerAttackConfig[] attackConfigs;
-    public Dictionary<PlayerAttackName, PlayerAttackConfig> AttackDict = new();
+    
 
     protected override void Awake()
     {
@@ -45,7 +44,8 @@ public class MyPlayer : PlayerController
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        InitializeAttackConfigs();
+        // InitializeAttackConfigs();
+        
     }
 
     protected override void Update()
@@ -76,24 +76,6 @@ public class MyPlayer : PlayerController
         else
         {
             HandleAttackMoveInput();
-        }
-    }
-
-    private void InitializeAttackConfigs()
-    {
-        foreach (PlayerAttackConfig config in attackConfigs)
-        {
-            if (config.attackName != PlayerAttackName.PlayerAttackUnknown)
-            {
-                if (!AttackDict.TryAdd(config.attackName, config))
-                {
-                    Debug.LogError($"PlayerAttackConfig {config.name}이 중복됨");
-                }
-            }
-            else
-            {
-                Debug.LogError($"PlayerAttackConfig중 한 개 이상의 attackName이 설정되지 않음.");
-            }
         }
     }
 
@@ -277,6 +259,7 @@ public class MyPlayer : PlayerController
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            dodgeInvincible = true;
             // 입력 값을 가져옵니다.
             float targetMoveX = Input.GetAxisRaw("Horizontal");
             float targetMoveZ = Input.GetAxisRaw("Vertical");
@@ -302,7 +285,7 @@ public class MyPlayer : PlayerController
     {
         // 로컬 방향을 월드 방향으로 변환
         Vector3 dodgeDirection = transform.TransformDirection(new Vector3(targetMoveX, 0, targetMoveZ).normalized);
-        StartCoroutine(DodgeCoroutine(dodgeDirection));
+        DodgeCoroutine = StartCoroutine(DodgeAnimationMovement(dodgeDirection));
         bool isBack = targetMoveZ < -0.1f;
 
         TcpProtobufClient.Instance.SendDodgeParams(targetMoveX, targetMoveZ, isBack, dodgeVertical);
@@ -317,7 +300,7 @@ public class MyPlayer : PlayerController
         
     }
     
-    private IEnumerator DodgeCoroutine(Vector3 dodgeDirection)
+    private IEnumerator DodgeAnimationMovement(Vector3 dodgeDirection)
     {
         // dodgeAnimLength이 설정되도록 1프레임 대기
         yield return null;
@@ -431,6 +414,7 @@ public class MyPlayer : PlayerController
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            //공격 통신 관련 메소드는 SendAttackState를 참조
             Animator.SetTrigger(Attack);
         }
     }
@@ -449,10 +433,6 @@ public class MyPlayer : PlayerController
         CharacterController.Move(move * (CurrentSpeed * Time.deltaTime) + Velocity * Time.deltaTime);
     }
 
-    private void StandUp()
-    {
-        IsDown = false;
-    }
 
     private void TiltSetting()
     {
@@ -467,7 +447,7 @@ public class MyPlayer : PlayerController
     }
 
     //애니메이션 이벤트로 호출됨
-    public void AttackStart(PlayerAttackName attackName)
+    public override void AttackStart(PlayerAttackName attackName)
     {
         // Debug.Log("어택스타트");
         if (attackName == PlayerAttackName.PlayerAttackUnknown)
@@ -477,6 +457,7 @@ public class MyPlayer : PlayerController
         else
         {
             currentAttack = AttackDict[attackName];
+            TcpProtobufClient.Instance.SendCurrentAttack(attackName);
         }
 
         moveX = 0;
@@ -487,10 +468,11 @@ public class MyPlayer : PlayerController
     }
 
     //anystate에서 시작하는 모든 clip에도 다 달아놔야 함. <- 귀찮아서 AnyStateBehaviour로 대체
-    public void AttackEnd()
+    public override void AttackEnd()
     {
         // Debug.Log("어택엔드");
         isAttack = false;
+        TcpProtobufClient.Instance.SendCurrentAttack(PlayerAttackName.PlayerAttackUnknown);
 
         if (attackMoveCoroutine != null)
         {
@@ -502,7 +484,7 @@ public class MyPlayer : PlayerController
     }
 
     //각 공격 애니메이션의 이동 시간에 이벤트로 호출
-    public void AttackMoveStart()
+    public override void AttackMoveStart()
     {
         if (attackMoveCoroutine != null)
         {
@@ -513,7 +495,7 @@ public class MyPlayer : PlayerController
         attackMoveCoroutine = StartCoroutine(AttackMove());
     }
 
-    public void AttackMoveStop()
+    public override void AttackMoveStop()
     {
         if (attackMoveCoroutine != null)
         {

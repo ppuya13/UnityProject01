@@ -11,6 +11,7 @@ namespace Character
     {
         [Header("이름")] public PlayerAttackName attackName; //공격의 이름, 같은 공격에 여러번 맞지 않게 하기 위해 사용.
         
+        
         [Header("공격 데미지")] public float damageAmount; //공격 데미지
         
         [Header("공격 판정")]
@@ -22,13 +23,5 @@ namespace Character
         [Header("이펙트 설정")] public EffectConfig[] EffectConfigs;
 
         [Header("사운드 설정")] public AudioClip[] soundEffects; // 공격 시 재생할 소리 클립
-    }
-    
-    public enum PlayerAttackName{
-        PlayerAttackUnknown,
-        Combo01,
-        Combo02,
-        Combo03,
-        Combo04,
     }
 }

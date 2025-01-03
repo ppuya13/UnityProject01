@@ -1,4 +1,5 @@
 ﻿
+using Character;
 using Game;
 using Monster;
 using UnityEngine;
@@ -92,6 +93,26 @@ public class Dummy: PlayerController
     }
 
     public override void RotateStop()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void AttackStart(PlayerAttackName attackName)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void AttackEnd()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void AttackMoveStart()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void AttackMoveStop()
     {
         throw new System.NotImplementedException();
     }
