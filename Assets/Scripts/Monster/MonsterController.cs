@@ -5,6 +5,7 @@ using Character;
 using Game;
 using RootMotion.FinalIK;
 using Sirenix.OdinInspector;
+using Sound;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
@@ -134,8 +135,9 @@ namespace Monster
         /// 3.공격 전 이동 끝 부분에 MoveStop 할당
         /// 4.회전도 동일하게 RotateStart, RotateStop 할당
         /// 5.파티클 생성 부분에 CreateAttackParticle 할당
-        /// 6.타격판정 부분에 HitCheck 할당
-        /// 7.콤보 공격의 마지막 애니메이션의 마지막에 AttackEnd 할당
+        /// 6.사운드 생성 부분에 PlayAttackSound 할당
+        /// 7.타격판정 부분에 HitCheck 할당
+        /// 8.콤보 공격의 마지막 애니메이션의 마지막에 AttackEnd 할당
         ///
         /// 패턴 등록:
         /// 1.AttackConfig 생성
@@ -977,6 +979,26 @@ namespace Monster
                 // 사운드 클립을 랜덤으로 선택하여 재생합니다.
                 AudioClip selectedClip = config.soundEffects[Random.Range(0, config.soundEffects.Length)];
                 audioSource.PlayOneShot(selectedClip);
+            }
+        }
+
+        //HitCheck처럼 현재 공격에 따라서 해당하는 AttackConfig의 사운드를 재생한다. 애니메이션 이벤트로 호출.
+        public void PlayAttackSound(int idx)
+        {
+            if (!AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig config))
+            {
+                Debug.LogError($"InitializeAttackConfigs에서 공격이 정의되지 않음: {currentAttack}, AttackIdx: {attackIdx}");
+                return;
+            }
+
+            if (config.soundEffects != null && config.soundEffects.Length > idx)
+            {
+                // config.soundEffects[idx]
+                SoundManager.Instance.PlaySound(config.soundEffects[idx], position: transform.position);
+            }
+            else
+            {
+                Debug.LogWarning("AttackConfig의 soundEffects가 null이거나 idx가 배열을 초과합니다.");
             }
         }
 

@@ -6,6 +6,7 @@ using Game;
 using Monster;
 using RootMotion.FinalIK;
 using Sirenix.OdinInspector;
+using Sound;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -383,6 +384,25 @@ public abstract class PlayerController : SerializedMonoBehaviour
             // 사운드 클립을 랜덤으로 선택하여 재생합니다.
             AudioClip selectedClip = currentAttack.soundEffects[Random.Range(0, currentAttack.soundEffects.Length)];
             audioSource.PlayOneShot(selectedClip);
+        }
+    }
+    
+    public void PlayAttackSound(int idx)
+    {
+        if (!currentAttack)
+        {
+            Debug.LogError("currentAttack이 null임");
+            return;
+        }
+
+        if (currentAttack.soundEffects != null && currentAttack.soundEffects.Length > idx)
+        {
+            // config.soundEffects[idx]
+            SoundManager.Instance.PlaySound(currentAttack.soundEffects[idx], position: transform.position);
+        }
+        else
+        {
+            Debug.LogWarning("AttackConfig의 soundEffects가 null이거나 idx가 배열을 초과합니다.");
         }
     }
     
