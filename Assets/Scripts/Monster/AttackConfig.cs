@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game;
 using Sirenix.OdinInspector;
+using Sound;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -36,7 +37,7 @@ namespace Monster
         public EffectConfig[] EffectConfigs;
         
         [Header("사운드 설정")]
-        public AudioClip[] soundEffects; // 공격 시 재생할 소리 클립
+        public SoundEffectGroup[] SoundEffects; // 공격 시 재생할 소리 클립
         
         //이동 방향을 설정하는데 쓸 드롭다운 아이템
         private static IEnumerable<ValueDropdownItem<Vector3>> GetMoveDirectionOptions()

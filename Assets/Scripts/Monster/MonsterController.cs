@@ -966,20 +966,20 @@ namespace Monster
                 Debug.LogWarning("AttackConfig의 EffectConfigs가 null이거나 idx가 배열을 초과합니다.");
             }
 
-            // 사운드 이펙트가 설정되어 있는지 확인하고 재생합니다.
-            if (config.soundEffects is { Length: > 0 })
-            {
-                // AudioSource가 존재하는지 확인하고 없으면 추가합니다.
-                AudioSource audioSource = GetComponent<AudioSource>();
-                if (!audioSource)
-                {
-                    audioSource = gameObject.AddComponent<AudioSource>();
-                }
-
-                // 사운드 클립을 랜덤으로 선택하여 재생합니다.
-                AudioClip selectedClip = config.soundEffects[Random.Range(0, config.soundEffects.Length)];
-                audioSource.PlayOneShot(selectedClip);
-            }
+            // // 사운드 이펙트가 설정되어 있는지 확인하고 재생합니다.
+            // if (config.SoundEffects is { Length: > 0 })
+            // {
+            //     // AudioSource가 존재하는지 확인하고 없으면 추가합니다.
+            //     AudioSource audioSource = GetComponent<AudioSource>();
+            //     if (!audioSource)
+            //     {
+            //         audioSource = gameObject.AddComponent<AudioSource>();
+            //     }
+            //
+            //     // 사운드 클립을 랜덤으로 선택하여 재생합니다.
+            //     AudioClip selectedClip = config.SoundEffects[Random.Range(0, config.SoundEffects.Length)];
+            //     audioSource.PlayOneShot(selectedClip);
+            // }
         }
 
         //HitCheck처럼 현재 공격에 따라서 해당하는 AttackConfig의 사운드를 재생한다. 애니메이션 이벤트로 호출.
@@ -991,10 +991,10 @@ namespace Monster
                 return;
             }
 
-            if (config.soundEffects != null && config.soundEffects.Length > idx)
+            if (config.SoundEffects != null && config.SoundEffects.Length > idx)
             {
                 // config.soundEffects[idx]
-                SoundManager.Instance.PlaySound(config.soundEffects[idx], position: transform.position);
+                SoundManager.Instance.PlayRandomSound(config.SoundEffects[idx].Clips, position: transform.position);
             }
             else
             {

@@ -372,19 +372,19 @@ public abstract class PlayerController : SerializedMonoBehaviour
         }
 
         // 사운드 이펙트가 설정되어 있는지 확인하고 재생합니다.
-        if (currentAttack.soundEffects is { Length: > 0 })
-        {
-            // AudioSource가 존재하는지 확인하고 없으면 추가합니다.
-            AudioSource audioSource = GetComponent<AudioSource>();
-            if (!audioSource)
-            {
-                audioSource = gameObject.AddComponent<AudioSource>();
-            }
-
-            // 사운드 클립을 랜덤으로 선택하여 재생합니다.
-            AudioClip selectedClip = currentAttack.soundEffects[Random.Range(0, currentAttack.soundEffects.Length)];
-            audioSource.PlayOneShot(selectedClip);
-        }
+        // if (currentAttack.SoundEffects is { Length: > 0 })
+        // {
+        //     // AudioSource가 존재하는지 확인하고 없으면 추가합니다.
+        //     AudioSource audioSource = GetComponent<AudioSource>();
+        //     if (!audioSource)
+        //     {
+        //         audioSource = gameObject.AddComponent<AudioSource>();
+        //     }
+        //
+        //     // 사운드 클립을 랜덤으로 선택하여 재생합니다.
+        //     AudioClip selectedClip = currentAttack.SoundEffects[Random.Range(0, currentAttack.SoundEffects.Length)];
+        //     audioSource.PlayOneShot(selectedClip);
+        // }
     }
     
     public void PlayAttackSound(int idx)
@@ -395,10 +395,11 @@ public abstract class PlayerController : SerializedMonoBehaviour
             return;
         }
 
-        if (currentAttack.soundEffects != null && currentAttack.soundEffects.Length > idx)
+        if (currentAttack.SoundEffects != null && currentAttack.SoundEffects.Length > idx)
         {
             // config.soundEffects[idx]
-            SoundManager.Instance.PlaySound(currentAttack.soundEffects[idx], position: transform.position);
+            // SoundManager.Instance.PlayRandomSound(currentAttack.SoundEffects[idx], position: transform.position);
+            SoundManager.Instance.PlayRandomSound(currentAttack.SoundEffects[idx].Clips, position: transform.position);
         }
         else
         {

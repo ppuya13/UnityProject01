@@ -2,6 +2,7 @@
 using Game;
 using Monster;
 using Sirenix.OdinInspector;
+using Sound;
 using UnityEngine;
 
 namespace Character
@@ -22,6 +23,7 @@ namespace Character
         
         [Header("이펙트 설정")] public EffectConfig[] EffectConfigs;
 
-        [Header("사운드 설정")] public AudioClip[] soundEffects; // 공격 시 재생할 소리 클립
+        // [Header("사운드 설정")] public AudioClip[][] SoundEffects; // 공격 시 재생할 소리 클립
+        public SoundEffectGroup[] SoundEffects;
     }
 }
