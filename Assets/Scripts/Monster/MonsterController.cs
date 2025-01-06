@@ -93,6 +93,8 @@ namespace Monster
         private Dictionary<(PlayerAttackConfig, Transform), bool> hitDict = new();
         private bool isCounter = false;
         private Coroutine counterCoroutine;
+
+        private CharacterSounds characterSounds = new();
         
         [HideInInspector] public readonly int Spawn = Animator.StringToHash("Spawn");
         [HideInInspector] public readonly int Horizontal = Animator.StringToHash("Horizontal");
@@ -983,23 +985,9 @@ namespace Monster
         }
 
         //HitCheck처럼 현재 공격에 따라서 해당하는 AttackConfig의 사운드를 재생한다. 애니메이션 이벤트로 호출.
-        public void PlayAttackSound(int idx)
+        public void PlayAttackSound(SoundType soundType)
         {
-            if (!AttackConfigs.TryGetValue((currentAttack, attackIdx), out AttackConfig config))
-            {
-                Debug.LogError($"InitializeAttackConfigs에서 공격이 정의되지 않음: {currentAttack}, AttackIdx: {attackIdx}");
-                return;
-            }
-
-            if (config.SoundEffects != null && config.SoundEffects.Length > idx)
-            {
-                // config.soundEffects[idx]
-                SoundManager.Instance.PlayRandomSound(config.SoundEffects[idx].Clips, position: transform.position);
-            }
-            else
-            {
-                Debug.LogWarning("AttackConfig의 soundEffects가 null이거나 idx가 배열을 초과합니다.");
-            }
+            SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(soundType), position: transform.position);
         }
 
         //공격 중에 이동을 하는 메소드, 애니메이션을 재생하지 않으며, AnimationEvent로 호출된다.

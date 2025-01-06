@@ -145,8 +145,40 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: SoundEffects
+      Entry: 7
+      Data: 2|Sound.SoundEffectGroup[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 3|Sound.SoundEffectGroup, Assembly-CSharp
+    - Name: GroupName
+      Entry: 6
+      Data: 
+    - Name: Clips
+      Entry: 7
+      Data: 4|UnityEngine.AudioClip[], UnityEngine.AudioModule
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   attackName: 1
   damageAmount: 1
   distance: 0.5
   attackPositionOffset: {x: 0, y: 0, z: 0}
-  soundEffects: []

@@ -69,6 +69,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     public Dictionary<PlayerAttackName, PlayerAttackConfig> AttackDict = new();
     public LayerMask targetLayer;
     public PlayerAttackConfig currentAttack;
+    private CharacterSounds characterSounds = new();
 
     [HideInInspector] public readonly int Stun = Animator.StringToHash("Stun");
     [HideInInspector] public readonly int Horizontal = Animator.StringToHash("Horizontal");
@@ -387,24 +388,29 @@ public abstract class PlayerController : SerializedMonoBehaviour
         // }
     }
     
-    public void PlayAttackSound(int idx)
+    // public void PlayAttackSound(int idx)
+    // {
+    //     if (!currentAttack)
+    //     {
+    //         Debug.LogError("currentAttack이 null임");
+    //         return;
+    //     }
+    //
+    //     if (currentAttack.SoundEffects != null && currentAttack.SoundEffects.Length > idx)
+    //     {
+    //         // config.soundEffects[idx]
+    //         // SoundManager.Instance.PlayRandomSound(currentAttack.SoundEffects[idx], position: transform.position);
+    //         SoundManager.Instance.PlayRandomSound(currentAttack.SoundEffects[idx].Clips, position: transform.position);
+    //     }
+    //     else
+    //     {
+    //         Debug.LogWarning("AttackConfig의 soundEffects가 null이거나 idx가 배열을 초과합니다.");
+    //     }
+    // }
+    
+    public void PlayAttackSound(SoundType soundType)
     {
-        if (!currentAttack)
-        {
-            Debug.LogError("currentAttack이 null임");
-            return;
-        }
-
-        if (currentAttack.SoundEffects != null && currentAttack.SoundEffects.Length > idx)
-        {
-            // config.soundEffects[idx]
-            // SoundManager.Instance.PlayRandomSound(currentAttack.SoundEffects[idx], position: transform.position);
-            SoundManager.Instance.PlayRandomSound(currentAttack.SoundEffects[idx].Clips, position: transform.position);
-        }
-        else
-        {
-            Debug.LogWarning("AttackConfig의 soundEffects가 null이거나 idx가 배열을 초과합니다.");
-        }
+        SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(soundType), position: transform.position);
     }
     
     //애니메이션 이벤트로 호출됨

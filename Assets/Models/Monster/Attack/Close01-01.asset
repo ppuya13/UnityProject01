@@ -181,6 +181,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: SoundEffects
+      Entry: 6
+      Data: 
   damageAmount: 10
   cooldown: 10
   moveSpeed: 1.5
@@ -192,4 +195,3 @@ MonoBehaviour:
   knockBackPower: 2.5
   stunDuration: 0.5
   knockBackForceMode: 0
-  soundEffects: []
