@@ -6,6 +6,7 @@ using Game;
 using Monster;
 using RootMotion.FinalIK;
 using Sirenix.Utilities;
+using Sound;
 using UnityEngine;
 
 public class MyPlayer : PlayerController
@@ -473,6 +474,7 @@ public class MyPlayer : PlayerController
         // Debug.Log("어택엔드");
         isAttack = false;
         TcpProtobufClient.Instance.SendCurrentAttack(PlayerAttackName.PlayerAttackUnknown);
+        CurrentHitSound = SoundType.Unknown;
 
         if (attackMoveCoroutine != null)
         {
@@ -603,7 +605,7 @@ public class MyPlayer : PlayerController
             if (monster)
             {
                 // 데미지 적용
-                monster.AttackValidation(currentAttack, transform);
+                monster.AttackValidation(currentAttack, transform, CurrentHitSound);
             }
         }
     }

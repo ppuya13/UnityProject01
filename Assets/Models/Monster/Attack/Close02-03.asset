@@ -238,6 +238,30 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: SoundEffects
+      Entry: 7
+      Data: 4|Sound.CharacterSounds+SoundStruct[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: Sound.CharacterSounds+SoundStruct, Assembly-CSharp
+    - Name: Swing
+      Entry: 3
+      Data: 2
+    - Name: Hit
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   damageAmount: 35
   cooldown: 0
   moveSpeed: 1.45
@@ -249,4 +273,3 @@ MonoBehaviour:
   knockBackPower: 0
   stunDuration: 0
   knockBackForceMode: 0
-  soundEffects: []

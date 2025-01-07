@@ -445,7 +445,7 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
         SendMessage(message);
     }
     
-    public void SendMonsterTakeDamage(string monsterId, float damage)
+    public void SendMonsterTakeDamage(string monsterId, float damage, SoundType soundType)
     {
         Debug.Log("몬스터 테이크 데미지 메시지 발신");
         var message = new GameMessage()
@@ -453,7 +453,8 @@ public class TcpProtobufClient : DDSingletonManager<TcpProtobufClient>
             MonsterTakeDamage = new MonsterTakeDamage()
             {
                 MonsterId = monsterId,
-                Damage = damage
+                Damage = damage,
+                SoundType = soundType,
             }
         };
         SendMessage(message);

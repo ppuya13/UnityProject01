@@ -37,7 +37,7 @@ namespace Monster
         public EffectConfig[] EffectConfigs;
         
         [Header("사운드 설정")]
-        public SoundEffectGroup[] SoundEffects; // 공격 시 재생할 소리 클립
+        public CharacterSounds.SoundStruct[] SoundEffects; //공격 시 재생할 소리 클립, 공격 시 소리와 히트 시 소리로 구성되어 있으며, 추가 가능함.
         
         //이동 방향을 설정하는데 쓸 드롭다운 아이템
         private static IEnumerable<ValueDropdownItem<Vector3>> GetMoveDirectionOptions()

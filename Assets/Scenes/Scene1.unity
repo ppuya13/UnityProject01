@@ -3317,7 +3317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44d026b4d0b30ff45b16e4401a517789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 0}
+  mixer: {fileID: 24100000, guid: c35f084361d74f14d8109e2d81a95c8f, type: 2}
   bgmClips: []
 --- !u!4 &1484474974
 Transform:

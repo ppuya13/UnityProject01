@@ -86,40 +86,42 @@ namespace Game {
             "IAEoDjISLmdhbWUuTW9uc3RlclN0YXRlEiUKC2F0dGFja190eXBlGAQgASgO",
             "MhAuZ2FtZS5BdHRhY2tUeXBlEhAKCHRhcmdldElkGAUgASgJEiQKC2Rlc3Rp",
             "bmF0aW9uGAYgASgLMg8uZ2FtZS5Hb1ZlY3RvcjMSFAoMZG9kZ2Vfb3B0aW9u",
-            "GAcgASgCIksKEU1vbnN0ZXJUYWtlRGFtYWdlEhIKCm1vbnN0ZXJfaWQYASAB",
-            "KAkSDgoGZGFtYWdlGAIgASgCEhIKCmN1cnJlbnRfaHAYAyABKAIqlgEKEFBs",
-            "YXllckFjdGlvblR5cGUSGQoVUExBWUVSX0FDVElPTl9VTktOT1dOEAASFgoS",
-            "UExBWUVSX0FDVElPTl9NT1ZFEAESGAoUUExBWUVSX0FDVElPTl9BVFRBQ0sQ",
-            "AhIcChhQTEFZRVJfQUNUSU9OX1RBS0VEQU1BR0UQAxIXChNQTEFZRVJfQUNU",
-            "SU9OX0RPREdFEAQqZQoQUGxheWVyQXR0YWNrTmFtZRIZChVQTEFZRVJfQVRU",
-            "QUNLX1VOS05PV04QABIMCghDT01CT18wMRABEgwKCENPTUJPXzAyEAISDAoI",
-            "Q09NQk9fMDMQAxIMCghDT01CT18wNBAEKp0BCg1Lbm9ja0JhY2tUeXBlEhUK",
-            "EUtOT0NLQkFDS19VTktOT1dOEAASEgoOS05PQ0tCQUNLX05PTkUQARIQCgxL",
-            "Tk9DS0JBQ0tfVVAQAhISCg5LTk9DS0JBQ0tfUFVTSBADEhIKDktOT0NLQkFD",
-            "S19QVUxMEAQSEwoPS05PQ0tCQUNLX0JPVU5EEAUSEgoOS05PQ0tCQUNLX0RP",
-            "V04QBip5Cg1QYXJhbWV0ZXJUeXBlEhUKEVBBUkFNRVRFUl9VTktOT1dOEAAS",
-            "EQoNUEFSQU1FVEVSX0lOVBABEhMKD1BBUkFNRVRFUl9GTE9BVBACEhIKDlBB",
-            "UkFNRVRFUl9CT09MEAMSFQoRUEFSQU1FVEVSX1RSSUdHRVIQBCqKAQoKQWN0",
-            "aW9uVHlwZRIaChZNT05TVEVSX0FDVElPTl9VTktOT1dOEAASHQoZTU9OU1RF",
-            "Ul9BQ1RJT05fU0VUX1NUQVRVUxABEh0KGU1PTlNURVJfQUNUSU9OX1NFVF9U",
-            "QVJHRVQQAhIiCh5NT05TVEVSX0FDVElPTl9TRVRfREVTVElOQVRJT04QAyrE",
-            "AQoMTW9uc3RlclN0YXRlEhoKFk1PTlNURVJfU1RBVFVTX1VOS05PV04QABIY",
-            "ChRNT05TVEVSX1NUQVRVU19TUEFXThABEhcKE01PTlNURVJfU1RBVFVTX0lE",
-            "TEUQAhIXChNNT05TVEVSX1NUQVRVU19NT1ZFEAMSFwoTTU9OU1RFUl9TVEFU",
-            "VVNfREFTSBAEEhgKFE1PTlNURVJfU1RBVFVTX0RPREdFEAUSGQoVTU9OU1RF",
-            "Ul9TVEFUVVNfQVRUQUNLEAYq8AIKCkF0dGFja1R5cGUSGgoWTU9OU1RFUl9B",
-            "VFRBQ0tfVU5LTk9XThAAEhsKF01PTlNURVJfQVRUQUNLX0NMT1NFXzAxEAES",
-            "GwoXTU9OU1RFUl9BVFRBQ0tfQ0xPU0VfMDIQAhIbChdNT05TVEVSX0FUVEFD",
-            "S19DTE9TRV8wMxADEiAKHE1PTlNURVJfQVRUQUNLX0NMT1NFX0NPVU5URVIQ",
-            "BBIhCh1NT05TVEVSX0FUVEFDS19TSE9SVF9SQU5HRV8wMRALEiEKHU1PTlNU",
-            "RVJfQVRUQUNLX1NIT1JUX1JBTkdFXzAyEAwSIQodTU9OU1RFUl9BVFRBQ0tf",
-            "U0hPUlRfUkFOR0VfMDMQDRIfChtNT05TVEVSX0FUVEFDS19NSURfUkFOR0Vf",
-            "MDEQFRIgChxNT05TVEVSX0FUVEFDS19MT05HX1JBTkdFXzAxEB8SIQodTU9O",
-            "U1RFUl9BVFRBQ0tfRVhUUkFfUkFOR0VfMDEQKUIRWg9TZXJ2ZXIvbWVzc2Fn",
-            "ZXNiBnByb3RvMw=="));
+            "GAcgASgCInAKEU1vbnN0ZXJUYWtlRGFtYWdlEhIKCm1vbnN0ZXJfaWQYASAB",
+            "KAkSDgoGZGFtYWdlGAIgASgCEhIKCmN1cnJlbnRfaHAYAyABKAISIwoKc291",
+            "bmRfdHlwZRgEIAEoDjIPLmdhbWUuU291bmRUeXBlKpYBChBQbGF5ZXJBY3Rp",
+            "b25UeXBlEhkKFVBMQVlFUl9BQ1RJT05fVU5LTk9XThAAEhYKElBMQVlFUl9B",
+            "Q1RJT05fTU9WRRABEhgKFFBMQVlFUl9BQ1RJT05fQVRUQUNLEAISHAoYUExB",
+            "WUVSX0FDVElPTl9UQUtFREFNQUdFEAMSFwoTUExBWUVSX0FDVElPTl9ET0RH",
+            "RRAEKmUKEFBsYXllckF0dGFja05hbWUSGQoVUExBWUVSX0FUVEFDS19VTktO",
+            "T1dOEAASDAoIQ09NQk9fMDEQARIMCghDT01CT18wMhACEgwKCENPTUJPXzAz",
+            "EAMSDAoIQ09NQk9fMDQQBCqdAQoNS25vY2tCYWNrVHlwZRIVChFLTk9DS0JB",
+            "Q0tfVU5LTk9XThAAEhIKDktOT0NLQkFDS19OT05FEAESEAoMS05PQ0tCQUNL",
+            "X1VQEAISEgoOS05PQ0tCQUNLX1BVU0gQAxISCg5LTk9DS0JBQ0tfUFVMTBAE",
+            "EhMKD0tOT0NLQkFDS19CT1VORBAFEhIKDktOT0NLQkFDS19ET1dOEAYqeQoN",
+            "UGFyYW1ldGVyVHlwZRIVChFQQVJBTUVURVJfVU5LTk9XThAAEhEKDVBBUkFN",
+            "RVRFUl9JTlQQARITCg9QQVJBTUVURVJfRkxPQVQQAhISCg5QQVJBTUVURVJf",
+            "Qk9PTBADEhUKEVBBUkFNRVRFUl9UUklHR0VSEAQqigEKCkFjdGlvblR5cGUS",
+            "GgoWTU9OU1RFUl9BQ1RJT05fVU5LTk9XThAAEh0KGU1PTlNURVJfQUNUSU9O",
+            "X1NFVF9TVEFUVVMQARIdChlNT05TVEVSX0FDVElPTl9TRVRfVEFSR0VUEAIS",
+            "IgoeTU9OU1RFUl9BQ1RJT05fU0VUX0RFU1RJTkFUSU9OEAMqxAEKDE1vbnN0",
+            "ZXJTdGF0ZRIaChZNT05TVEVSX1NUQVRVU19VTktOT1dOEAASGAoUTU9OU1RF",
+            "Ul9TVEFUVVNfU1BBV04QARIXChNNT05TVEVSX1NUQVRVU19JRExFEAISFwoT",
+            "TU9OU1RFUl9TVEFUVVNfTU9WRRADEhcKE01PTlNURVJfU1RBVFVTX0RBU0gQ",
+            "BBIYChRNT05TVEVSX1NUQVRVU19ET0RHRRAFEhkKFU1PTlNURVJfU1RBVFVT",
+            "X0FUVEFDSxAGKvACCgpBdHRhY2tUeXBlEhoKFk1PTlNURVJfQVRUQUNLX1VO",
+            "S05PV04QABIbChdNT05TVEVSX0FUVEFDS19DTE9TRV8wMRABEhsKF01PTlNU",
+            "RVJfQVRUQUNLX0NMT1NFXzAyEAISGwoXTU9OU1RFUl9BVFRBQ0tfQ0xPU0Vf",
+            "MDMQAxIgChxNT05TVEVSX0FUVEFDS19DTE9TRV9DT1VOVEVSEAQSIQodTU9O",
+            "U1RFUl9BVFRBQ0tfU0hPUlRfUkFOR0VfMDEQCxIhCh1NT05TVEVSX0FUVEFD",
+            "S19TSE9SVF9SQU5HRV8wMhAMEiEKHU1PTlNURVJfQVRUQUNLX1NIT1JUX1JB",
+            "TkdFXzAzEA0SHwobTU9OU1RFUl9BVFRBQ0tfTUlEX1JBTkdFXzAxEBUSIAoc",
+            "TU9OU1RFUl9BVFRBQ0tfTE9OR19SQU5HRV8wMRAfEiEKHU1PTlNURVJfQVRU",
+            "QUNLX0VYVFJBX1JBTkdFXzAxECkqUAoJU291bmRUeXBlEgsKB1VOS05PV04Q",
+            "ABIPCgtTV09SRF9TV0lORxABEggKBEtJQ0sQAhINCglTV09SRF9ISVQQAxIM",
+            "CghLSUNLX0hJVBAEQhFaD1NlcnZlci9tZXNzYWdlc2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Game.PlayerActionType), typeof(global::Game.PlayerAttackName), typeof(global::Game.KnockBackType), typeof(global::Game.ParameterType), typeof(global::Game.ActionType), typeof(global::Game.MonsterState), typeof(global::Game.AttackType), }, null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Game.PlayerActionType), typeof(global::Game.PlayerAttackName), typeof(global::Game.KnockBackType), typeof(global::Game.ParameterType), typeof(global::Game.ActionType), typeof(global::Game.MonsterState), typeof(global::Game.AttackType), typeof(global::Game.SoundType), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.GameMessage), global::Game.GameMessage.Parser, new[]{ "LoginRequest", "LoginResponse", "LogoutRequest", "LogoutResponse", "GameStart", "ChatMessage", "Ping", "Pong", "PlayerInput", "PlayerSpawn", "PlayerAttackAnim", "SetPlayerAttack", "MonsterSpawn", "MonsterPositionUpdate", "MonsterAnim", "MonsterAction", "MonsterTakeDamage", "ServerStarted" }, new[]{ "Payload" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.GoVector3), global::Game.GoVector3.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.Ping), global::Game.Ping.Parser, new[]{ "Timestamp" }, null, null, null, null),
@@ -142,7 +144,7 @@ namespace Game {
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterSpawn), global::Game.MonsterSpawn.Parser, new[]{ "MonsterId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterAnim), global::Game.MonsterAnim.Parser, new[]{ "MonsterId", "AnimHash", "ParameterType", "IntValue", "FloatValue", "BoolValue" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterAction), global::Game.MonsterAction.Parser, new[]{ "MonsterId", "ActionType", "MonsterState", "AttackType", "TargetId", "Destination", "DodgeOption" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterTakeDamage), global::Game.MonsterTakeDamage.Parser, new[]{ "MonsterId", "Damage", "CurrentHp" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Game.MonsterTakeDamage), global::Game.MonsterTakeDamage.Parser, new[]{ "MonsterId", "Damage", "CurrentHp", "SoundType" }, null, null, null, null)
           }));
     }
     #endregion
@@ -242,6 +244,14 @@ namespace Game {
     ///41~50 초장거리 공격
     /// </summary>
     [pbr::OriginalName("MONSTER_ATTACK_EXTRA_RANGE_01")] MonsterAttackExtraRange01 = 41,
+  }
+
+  public enum SoundType {
+    [pbr::OriginalName("UNKNOWN")] Unknown = 0,
+    [pbr::OriginalName("SWORD_SWING")] SwordSwing = 1,
+    [pbr::OriginalName("KICK")] Kick = 2,
+    [pbr::OriginalName("SWORD_HIT")] SwordHit = 3,
+    [pbr::OriginalName("KICK_HIT")] KickHit = 4,
   }
 
   #endregion
@@ -7557,6 +7567,7 @@ namespace Game {
       monsterId_ = other.monsterId_;
       damage_ = other.damage_;
       currentHp_ = other.currentHp_;
+      soundType_ = other.soundType_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -7605,6 +7616,21 @@ namespace Game {
       }
     }
 
+    /// <summary>Field number for the "sound_type" field.</summary>
+    public const int SoundTypeFieldNumber = 4;
+    private global::Game.SoundType soundType_ = global::Game.SoundType.Unknown;
+    /// <summary>
+    ///맞았을 때 재생할 사운드
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Game.SoundType SoundType {
+      get { return soundType_; }
+      set {
+        soundType_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -7623,6 +7649,7 @@ namespace Game {
       if (MonsterId != other.MonsterId) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Damage, other.Damage)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(CurrentHp, other.CurrentHp)) return false;
+      if (SoundType != other.SoundType) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -7633,6 +7660,7 @@ namespace Game {
       if (MonsterId.Length != 0) hash ^= MonsterId.GetHashCode();
       if (Damage != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Damage);
       if (CurrentHp != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(CurrentHp);
+      if (SoundType != global::Game.SoundType.Unknown) hash ^= SoundType.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -7663,6 +7691,10 @@ namespace Game {
         output.WriteRawTag(29);
         output.WriteFloat(CurrentHp);
       }
+      if (SoundType != global::Game.SoundType.Unknown) {
+        output.WriteRawTag(32);
+        output.WriteEnum((int) SoundType);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -7685,6 +7717,10 @@ namespace Game {
         output.WriteRawTag(29);
         output.WriteFloat(CurrentHp);
       }
+      if (SoundType != global::Game.SoundType.Unknown) {
+        output.WriteRawTag(32);
+        output.WriteEnum((int) SoundType);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -7703,6 +7739,9 @@ namespace Game {
       }
       if (CurrentHp != 0F) {
         size += 1 + 4;
+      }
+      if (SoundType != global::Game.SoundType.Unknown) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) SoundType);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -7724,6 +7763,9 @@ namespace Game {
       }
       if (other.CurrentHp != 0F) {
         CurrentHp = other.CurrentHp;
+      }
+      if (other.SoundType != global::Game.SoundType.Unknown) {
+        SoundType = other.SoundType;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -7756,6 +7798,10 @@ namespace Game {
             CurrentHp = input.ReadFloat();
             break;
           }
+          case 32: {
+            SoundType = (global::Game.SoundType) input.ReadEnum();
+            break;
+          }
         }
       }
     #endif
@@ -7785,6 +7831,10 @@ namespace Game {
           }
           case 29: {
             CurrentHp = input.ReadFloat();
+            break;
+          }
+          case 32: {
+            SoundType = (global::Game.SoundType) input.ReadEnum();
             break;
           }
         }

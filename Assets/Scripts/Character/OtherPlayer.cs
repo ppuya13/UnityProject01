@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Character;
 using Game;
 using Monster;
+using Sound;
 using UnityEngine;
 
 public class OtherPlayer: PlayerController
@@ -221,6 +222,7 @@ public class OtherPlayer: PlayerController
 
     public override void AttackEnd()
     {
+        CurrentHitSound = SoundType.Unknown;
     }
 
     private IEnumerator RotateBackToOriginal()

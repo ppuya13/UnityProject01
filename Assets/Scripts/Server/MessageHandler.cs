@@ -207,7 +207,7 @@ public class MessageHandler : DDSingletonManager<MessageHandler>
     private void HandleMonsterTakeDamage(MonsterTakeDamage msg)
     {
         Debug.Log("몬스터 테이크 데미지 메시지 수신");
-        SpawnManager.Instance.SpawnedMonsters[msg.MonsterId].TakeDamage(msg.Damage, msg.CurrentHp);
+        SpawnManager.Instance.SpawnedMonsters[msg.MonsterId].TakeDamage(msg.Damage, msg.CurrentHp, msg.SoundType);
     }
 
     #endregion

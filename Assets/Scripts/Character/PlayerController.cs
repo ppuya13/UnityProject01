@@ -69,7 +69,9 @@ public abstract class PlayerController : SerializedMonoBehaviour
     public Dictionary<PlayerAttackName, PlayerAttackConfig> AttackDict = new();
     public LayerMask targetLayer;
     public PlayerAttackConfig currentAttack;
+    
     private CharacterSounds characterSounds = new();
+    protected SoundType CurrentHitSound = SoundType.Unknown;
 
     [HideInInspector] public readonly int Stun = Animator.StringToHash("Stun");
     [HideInInspector] public readonly int Horizontal = Animator.StringToHash("Horizontal");
@@ -92,6 +94,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
         Animator = GetComponent<Animator>();
         lookAtIK = GetComponent<LookAtIK>();
         InitializeCharacter();
+        characterSounds.InitializeClips();
     }
 
     protected virtual void Update()
@@ -147,7 +150,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     }
 
     //플레이어에게 닿은 공격이 유효한지 체크
-    public void AttackValidation(AttackConfig config, AttackType attackType, int attackIdx, Transform monsterTransform)
+    public void AttackValidation(AttackConfig config, AttackType attackType, int attackIdx, Transform monsterTransform, SoundType hitSound)
     {
         if (dodgeInvincible) return; //회피무적상태면 리턴
         
@@ -168,6 +171,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
 
             StartCoroutine(HitIntervalTimer(attackType, attackIdx));
             TakeDamage(config, monsterTransform);
+            SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(hitSound), position: transform.position);
         }
         else //0이면 사실 불릴 일이 없음
         {
@@ -408,9 +412,25 @@ public abstract class PlayerController : SerializedMonoBehaviour
     //     }
     // }
     
-    public void PlayAttackSound(SoundType soundType)
+    public void PlayAttackSound(int index)
     {
-        SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(soundType), position: transform.position);
+        if (!currentAttack)
+        {
+            Debug.LogError("currentAttack이 null임");
+            return;
+        }
+        
+        if (currentAttack.SoundEffects != null && currentAttack.SoundEffects.Length > index)
+        {
+            SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(currentAttack.SoundEffects[index].Swing),
+                position: transform.position);
+            CurrentHitSound = currentAttack.SoundEffects[index].Hit;
+        }
+        else
+        {
+            Debug.LogWarning($"SoundEffects가 null이거나 index가 배열을 초과함: {currentAttack}");
+        }
+        
     }
     
     //애니메이션 이벤트로 호출됨

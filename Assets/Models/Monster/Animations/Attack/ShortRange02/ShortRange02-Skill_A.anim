@@ -68677,6 +68677,13 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.46666667
+    functionName: PlayAttackSound
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 1
+    messageOptions: 0
+  - time: 0.46666667
     functionName: MoveStop
     data: 
     objectReferenceParameter: {fileID: 0}

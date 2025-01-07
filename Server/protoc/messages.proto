@@ -231,6 +231,7 @@ message MonsterTakeDamage{
   string monster_id = 1;
   float damage = 2;
   float current_hp = 3; //맞은 이후의 체력
+  SoundType sound_type = 4; //맞았을 때 재생할 사운드
 }
 
 enum MonsterState{
@@ -265,4 +266,12 @@ enum AttackType{
 
   //41~50 초장거리 공격
   MONSTER_ATTACK_EXTRA_RANGE_01 = 41;
+}
+
+enum SoundType{
+  UNKNOWN = 0;
+  SWORD_SWING = 1;
+  KICK = 2;
+  SWORD_HIT = 3;
+  KICK_HIT = 4;
 }

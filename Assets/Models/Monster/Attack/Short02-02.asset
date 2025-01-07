@@ -13,15 +13,198 @@ MonoBehaviour:
   m_Name: Short02-02
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
-    SerializedBytes: 010109000000520061006e006700650054007900700065002f0000000001240000004d006f006e0073007400650072002e004d0065006c0065006500410074007400610063006b002c00200041007300730065006d0062006c0079002d00430053006800610072007000000000001f0108000000440069007300740061006e00630065000000803f030114000000410074007400610063006b0050006f0073006900740069006f006e004f00660066007300650074002f01000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720033002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065002000000000200000000020000000000501010f00000043006f006c006c00690064006500720043006f006e0066006900670073002f02000000012a0000004d006f006e0073007400650072002e00490043006f006c006c00690064006500720043006f006e006600690067005b005d002c00200041007300730065006d0062006c0079002d0043005300680061007200700001000000060100000000000000022f03000000012a0000004d006f006e0073007400650072002e0042006f00780043006f006c006c00690064006500720043006f006e006600690067002c00200041007300730065006d0062006c0079002d0043005300680061007200700002000000030104000000530069007a006500300100000020cdccbc40209a99993e209a99c14005030106000000430065006e0074006500720030010000002000000000200000803f205c8fc23e0503010800000052006f0074006100740069006f006e002f04000000012e00000055006e0069007400790045006e00670069006e0065002e005100750061007400650072006e0069006f006e002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065002000000000200000000020ad630c3e202b957dbf050507050501010d00000045006600660065006300740043006f006e0066006900670073002f0500000001270000004d006f006e0073007400650072002e0045006600660065006300740043006f006e006600690067005b005d002c00200041007300730065006d0062006c0079002d0043005300680061007200700003000000060100000000000000042f0600000001250000004d006f006e0073007400650072002e0045006600660065006300740043006f006e006600690067002c00200041007300730065006d0062006c0079002d004300530068006100720070000b010e0000005000610072007400690063006c0065004500660066006500630074000000000003010e00000045006600660065006300740050006f0073006900740069006f006e0030010000002000000000200000803f200000803f0503010e00000045006600660065006300740052006f0074006100740069006f006e0030040000002000000000200000000020b1a8053e2054cf7dbf0503010b0000004500660066006500630074005300630061006c0065003001000000206666a63f206666a63f209a99b93f05050705
+    SerializedFormat: 2
+    SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 1872147318604286, guid: 3fd0e4ff64fe4a441a08416e525e8a8a, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: RangeType
+      Entry: 7
+      Data: 0|Monster.MeleeAttack, Assembly-CSharp
+    - Name: Distance
+      Entry: 4
+      Data: 1
+    - Name: AttackPositionOffset
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: ColliderConfigs
+      Entry: 7
+      Data: 1|Monster.IColliderConfig[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 2|Monster.BoxColliderConfig, Assembly-CSharp
+    - Name: Size
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 5.9
+    - Name: 
+      Entry: 4
+      Data: 0.3
+    - Name: 
+      Entry: 4
+      Data: 6.05
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Center
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 4
+      Data: 0.38
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Rotation
+      Entry: 7
+      Data: UnityEngine.Quaternion, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0.137098983
+    - Name: 
+      Entry: 4
+      Data: -0.9905574
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectConfigs
+      Entry: 7
+      Data: 3|Monster.EffectConfig[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: Monster.EffectConfig, Assembly-CSharp
+    - Name: ParticleEffect
+      Entry: 10
+      Data: 0
+    - Name: EffectPosition
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectRotation
+      Entry: 7
+      Data: UnityEngine.Quaternion, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0.130526319
+    - Name: 
+      Entry: 4
+      Data: -0.9914448
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectScale
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1.3
+    - Name: 
+      Entry: 4
+      Data: 1.3
+    - Name: 
+      Entry: 4
+      Data: 1.45
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: SoundEffects
+      Entry: 7
+      Data: 4|Sound.CharacterSounds+SoundStruct[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: Sound.CharacterSounds+SoundStruct, Assembly-CSharp
+    - Name: Swing
+      Entry: 3
+      Data: 1
+    - Name: Hit
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   damageAmount: 10
   cooldown: 12
   moveSpeed: 7.5
@@ -33,4 +216,3 @@ MonoBehaviour:
   knockBackPower: 5
   stunDuration: 0.5
   knockBackForceMode: 0
-  soundEffects: []

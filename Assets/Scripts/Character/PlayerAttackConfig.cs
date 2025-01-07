@@ -23,7 +23,6 @@ namespace Character
         
         [Header("이펙트 설정")] public EffectConfig[] EffectConfigs;
 
-        // [Header("사운드 설정")] public AudioClip[][] SoundEffects; // 공격 시 재생할 소리 클립
-        public SoundEffectGroup[] SoundEffects;
+        [Header("사운드 설정")] public CharacterSounds.SoundStruct[] SoundEffects;
     }
 }
