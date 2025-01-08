@@ -192,10 +192,10 @@ MonoBehaviour:
       Data: Sound.CharacterSounds+SoundStruct, Assembly-CSharp
     - Name: Swing
       Entry: 3
-      Data: 1
+      Data: 2
     - Name: Hit
       Entry: 3
-      Data: 3
+      Data: 4
     - Name: 
       Entry: 8
       Data: 

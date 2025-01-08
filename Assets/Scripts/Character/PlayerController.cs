@@ -171,7 +171,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
 
             StartCoroutine(HitIntervalTimer(attackType, attackIdx));
             TakeDamage(config, monsterTransform);
-            SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(hitSound), position: transform.position);
+            SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(hitSound), volume: 0.2f, position: transform.position);
         }
         else //0이면 사실 불릴 일이 없음
         {
