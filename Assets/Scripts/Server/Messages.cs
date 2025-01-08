@@ -116,9 +116,10 @@ namespace Game {
             "S19TSE9SVF9SQU5HRV8wMhAMEiEKHU1PTlNURVJfQVRUQUNLX1NIT1JUX1JB",
             "TkdFXzAzEA0SHwobTU9OU1RFUl9BVFRBQ0tfTUlEX1JBTkdFXzAxEBUSIAoc",
             "TU9OU1RFUl9BVFRBQ0tfTE9OR19SQU5HRV8wMRAfEiEKHU1PTlNURVJfQVRU",
-            "QUNLX0VYVFJBX1JBTkdFXzAxECkqUAoJU291bmRUeXBlEgsKB1VOS05PV04Q",
+            "QUNLX0VYVFJBX1JBTkdFXzAxECkqWgoJU291bmRUeXBlEgsKB1VOS05PV04Q",
             "ABIPCgtTV09SRF9TV0lORxABEggKBEtJQ0sQAhINCglTV09SRF9ISVQQAxIM",
-            "CghLSUNLX0hJVBAEQhFaD1NlcnZlci9tZXNzYWdlc2IGcHJvdG8z"));
+            "CghLSUNLX0hJVBAEEggKBENBU1QQBUIRWg9TZXJ2ZXIvbWVzc2FnZXNiBnBy",
+            "b3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Game.PlayerActionType), typeof(global::Game.PlayerAttackName), typeof(global::Game.KnockBackType), typeof(global::Game.ParameterType), typeof(global::Game.ActionType), typeof(global::Game.MonsterState), typeof(global::Game.AttackType), typeof(global::Game.SoundType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -252,6 +253,7 @@ namespace Game {
     [pbr::OriginalName("KICK")] Kick = 2,
     [pbr::OriginalName("SWORD_HIT")] SwordHit = 3,
     [pbr::OriginalName("KICK_HIT")] KickHit = 4,
+    [pbr::OriginalName("CAST")] Cast = 5,
   }
 
   #endregion

@@ -3,13 +3,13 @@ using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using Game;
 using Sirenix.Utilities;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
+using ChatMessage = Game.ChatMessage;
 using Debug = UnityEngine.Debug;
 
 public class UIManager : DDSingletonManager<UIManager>
@@ -33,12 +33,17 @@ public class UIManager : DDSingletonManager<UIManager>
     public GameObject systemMessagePrefab;
     public TMP_InputField chatInput;
     public Button sendBtn;
-    
+
+    public GameObject inGamePanel;
     public GameObject invincibleMode;
-    
+    public Transform characterPanelParent;
+    public PlayerInfoPanel myCharacterPanel;
+    public PlayerInfoPanel characterPanel;
+        
     private volatile bool serverReady = false;
 
     public Action<bool> ChattingActivated;
+    
 
     protected override void Awake()
     {
@@ -102,6 +107,12 @@ public class UIManager : DDSingletonManager<UIManager>
                 chatInput.DeactivateInputField();
             }
         }
+    }
+
+    public void CreateCharacterPanel(PlayerController character)
+    {
+        PlayerInfoPanel panel = Instantiate(characterPanel, characterPanelParent);
+        panel.ConnectCharacter(character);
     }
 
 
@@ -342,9 +353,11 @@ public class UIManager : DDSingletonManager<UIManager>
     }
     
     #endregion
+    
     public void CloseMenu()
     {
         mainPanel.SetActive(false);
+        inGamePanel.SetActive(true);
     }
 
     public void DisableButton()

@@ -88,7 +88,7 @@ public class MyPlayer : PlayerController
             {
                 invincible = true;
                 UIManager.Instance.invincibleMode.SetActive(true);
-                currentHp = maxHp;
+                CurrentHp = maxHp;
             }
             else
             {
@@ -154,8 +154,8 @@ public class MyPlayer : PlayerController
         // 체력 감소
         if (!invincible)
         {
-            currentHp -= config.damageAmount;
-            if (currentHp <= 0) IsDie = true; // 사망 여부 플래그 처리
+            CurrentHp -= config.damageAmount;
+            if (CurrentHp <= 0) IsDie = true; // 사망 여부 플래그 처리
         }
 
         // 애니메이터 파라미터 설정
@@ -172,7 +172,7 @@ public class MyPlayer : PlayerController
 
         StunCoroutine = StartCoroutine(HandleStun(config.stunDuration));
 
-        TcpProtobufClient.Instance.SendPlayerTakeDamage(knockback, config.stunDuration, currentHp, IsDie, lr, fb,
+        TcpProtobufClient.Instance.SendPlayerTakeDamage(knockback, config.stunDuration, CurrentHp, IsDie, lr, fb,
             isBound, isDown, motionIndex);
     }
 

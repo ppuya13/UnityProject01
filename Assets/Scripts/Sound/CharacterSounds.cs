@@ -13,6 +13,7 @@ namespace Sound
         private AudioClip[] swordHitSounds;
         private AudioClip[] kickSounds;
         private AudioClip[] kickHitSounds;
+        private AudioClip[] castSound;
         
         public void InitializeClips()
         {
@@ -22,16 +23,20 @@ namespace Sound
             swordSwingSounds = Resources.LoadAll<AudioClip>("Sounds/Swing/Sword");
             if(swordSwingSounds.Length == 0) Debug.LogWarning("CharacterSounds: swordSwingSounds 할당안됨.");
             sounds.TryAdd(SoundType.SwordSwing, swordSwingSounds);
-            swordHitSounds = Resources.LoadAll<AudioClip>("Sounds/Hit");
+            swordHitSounds = Resources.LoadAll<AudioClip>("Sounds/Hit/Sword");
             if(swordHitSounds.Length == 0) Debug.LogWarning("CharacterSounds: swordHitSounds 할당안됨.");
             sounds.TryAdd(SoundType.SwordHit, swordHitSounds);
             
             kickSounds = Resources.LoadAll<AudioClip>("Sounds/Swing/Kick");
             if(kickSounds.Length == 0) Debug.LogWarning("CharacterSounds: kickSounds 할당안됨.");
             sounds.TryAdd(SoundType.Kick, kickSounds);
-            kickHitSounds = Resources.LoadAll<AudioClip>("Sounds/Hit");
+            kickHitSounds = Resources.LoadAll<AudioClip>("Sounds/Hit/Kick");
             if(kickHitSounds.Length == 0) Debug.LogWarning("CharacterSounds: kickHitSounds 할당안됨.");
             sounds.TryAdd(SoundType.KickHit, kickHitSounds);
+            
+            castSound = Resources.LoadAll<AudioClip>("Sounds/Cast");
+            if(castSound.Length == 0) Debug.LogWarning("CharacterSounds: castSound 할당안됨.");
+            sounds.TryAdd(SoundType.Cast, castSound);
                 
         }
 

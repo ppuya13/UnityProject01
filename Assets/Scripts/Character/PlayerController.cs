@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Character;
@@ -7,8 +6,8 @@ using Monster;
 using RootMotion.FinalIK;
 using Sirenix.OdinInspector;
 using Sound;
+using UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public abstract class PlayerController : SerializedMonoBehaviour
@@ -26,7 +25,19 @@ public abstract class PlayerController : SerializedMonoBehaviour
     public CharacterType type;
 
     public float maxHp;
-    public float currentHp;
+
+    private float currentHp;
+
+    protected float CurrentHp
+    {
+        get => currentHp;
+        set
+        {
+            if (Mathf.Approximately(currentHp, value)) return;
+            currentHp = value;
+            SetFill(value);
+        }
+    }
 
     public float yaw = 0f;
 
@@ -72,6 +83,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     
     private CharacterSounds characterSounds = new();
     protected SoundType CurrentHitSound = SoundType.Unknown;
+    public PlayerInfoPanel connectedPanel; //이 캐릭터와 연결된 패널(체력표시를 위함)
 
     [HideInInspector] public readonly int Stun = Animator.StringToHash("Stun");
     [HideInInspector] public readonly int Horizontal = Animator.StringToHash("Horizontal");
@@ -129,7 +141,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     private void InitializeCharacter()
     {
         maxHp = 100;
-        currentHp = maxHp;
+        CurrentHp = maxHp;
     }
 
 
@@ -171,7 +183,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
 
             StartCoroutine(HitIntervalTimer(attackType, attackIdx));
             TakeDamage(config, monsterTransform);
-            SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(hitSound), volume: 0.2f, position: transform.position);
+            SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(hitSound), position: transform.position);
         }
         else //0이면 사실 불릴 일이 없음
         {
@@ -441,4 +453,10 @@ public abstract class PlayerController : SerializedMonoBehaviour
 
     public abstract void AttackMoveStart();
     public abstract void AttackMoveStop();
+
+    private void SetFill(float curHp)
+    {
+        if (!connectedPanel) return;
+        connectedPanel.SetFill(curHp);
+    }
 }

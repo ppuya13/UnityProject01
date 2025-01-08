@@ -135,7 +135,7 @@ public class OtherPlayer: PlayerController
     public void OtherPlayerTakeDamage(PlayerInput msg)
     {
         Velocity += TcpProtobufClient.Instance.ConvertToVector3(msg.Knockback);
-        currentHp = msg.CurrentHp;
+        CurrentHp = msg.CurrentHp;
         IsDie = msg.IsDie;
         OtherPlayerSetAnimatorParameters(msg.Params.Lr, msg.Params.Fb, msg.Params.IsBound, msg.Params.MotionIndex);
         

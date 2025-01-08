@@ -558,7 +558,7 @@ namespace Monster
                 if (distance < 3.0f) //타겟과의 거리에 따라 패턴리스트에 패턴을 추가한다.
                 {
                     if (!attackCooldown.TryGetValue(AttackType.MonsterAttackCloseCounter, out v))
-                        patternList.Add(("Attack", AttackType.MonsterAttackCloseCounter, 20));
+                        patternList.Add(("Attack", AttackType.MonsterAttackCloseCounter, 25));
                     if (!attackCooldown.TryGetValue(AttackType.MonsterAttackClose01, out v))
                         patternList.Add(("Attack", AttackType.MonsterAttackClose01, 50));
                     if (!attackCooldown.TryGetValue(AttackType.MonsterAttackClose02, out v))
@@ -568,7 +568,7 @@ namespace Monster
                     // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackShortRange03, out v))
                     //     patternList.Add(("Attack", AttackType.MonsterAttackShortRange03, 20));
 
-                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 25));
+                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 50));
                     patternList.Add(("DodgeBack", AttackType.MonsterAttackUnknown, 8));
                     patternList.Add(("DodgeLeft", AttackType.MonsterAttackUnknown, 5));
                     patternList.Add(("DodgeRight", AttackType.MonsterAttackUnknown, 5));
@@ -588,7 +588,7 @@ namespace Monster
                     if (!attackCooldown.TryGetValue(AttackType.MonsterAttackShortRange03, out v))
                         patternList.Add(("Attack", AttackType.MonsterAttackShortRange03, 20));
                     
-                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 25));
+                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 50));
                     patternList.Add(("DodgeBack", AttackType.MonsterAttackUnknown, 8));
                     patternList.Add(("DodgeLeft", AttackType.MonsterAttackUnknown, 5));
                     patternList.Add(("DodgeRight", AttackType.MonsterAttackUnknown, 5));
@@ -599,7 +599,7 @@ namespace Monster
                     if (!attackCooldown.TryGetValue(AttackType.MonsterAttackShortRange01, out v))
                         patternList.Add(("Attack", AttackType.MonsterAttackShortRange01, 20));
                     
-                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 25));
+                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 50));
                     patternList.Add(("DodgeLeft", AttackType.MonsterAttackUnknown, 5));
                     patternList.Add(("DodgeRight", AttackType.MonsterAttackUnknown, 5));
                 }
@@ -609,13 +609,13 @@ namespace Monster
                     // if (!attackCooldown.TryGetValue(AttackType.MonsterAttackShortrange01, out v))
                     //     patternList.Add(("Attack", AttackType.MonsterAttackShortrange01, 20));
                     
-                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 25));
+                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 50));
                 }
                 else
                 {
                     //초장거리 패턴
                     //사라진 뒤 잠시 후에 타겟 옆에서 나타나서 공격
-                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 25));
+                    patternList.Add(("Move", AttackType.MonsterAttackUnknown, 50));
                 }
 
                 // 가중치 기반 패턴 선택
@@ -712,7 +712,14 @@ namespace Monster
 
         public void AttackEnd()
         {
-            Debug.Log("어택엔드");
+            // Debug.Log("어택엔드");
+            StartCoroutine(WaitFewSeconds());
+        }
+
+        private IEnumerator WaitFewSeconds()
+        {
+            float rd = Random.Range(0, 1.5f);
+            yield return new WaitForSeconds(rd);
             currentAttack = AttackType.MonsterAttackUnknown;
             currentHitSound = SoundType.Unknown;
             attackIdx = 0;
@@ -1234,7 +1241,7 @@ namespace Monster
             
             currentHp = msgHp;
             //이후 체력바 줄어드는 연출이나 데미지 표기 등 연출을 하면 됨.
-            SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(soundType), volume: 0.2f, position: transform.position);
+            SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(soundType), position: transform.position);
         }
 
         IEnumerator HitIntervalTimer(PlayerAttackConfig attackConfig, Transform player)

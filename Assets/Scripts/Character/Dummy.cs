@@ -68,8 +68,8 @@ public class Dummy: PlayerController
         Velocity += knockback;
         
         // 체력 감소
-        currentHp -= config.damageAmount;
-        if (currentHp <= 0) IsDie = true; // 사망 여부 플래그 처리
+        CurrentHp -= config.damageAmount;
+        if (CurrentHp <= 0) IsDie = true; // 사망 여부 플래그 처리
         
         // 애니메이터 파라미터 설정
         (float lr, float fb, bool isBound, bool isDown, float motionIndex) = SetAnimatorParameters(attackDirection, config);

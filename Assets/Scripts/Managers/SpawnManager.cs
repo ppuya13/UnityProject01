@@ -41,20 +41,24 @@ public class SpawnManager: DDSingletonManager<SpawnManager>
             pc = go.GetComponent<PlayerController>();
             pc.type = PlayerController.CharacterType.MyPlayer;
             MyCharacter = pc;
+            pc.playerId = playerId;
+            pc.nickname = nickname;
+            UIManager.Instance.myCharacterPanel.ConnectCharacter(pc);
         }
         else
         {
             go = Instantiate(otherPlayerPrefab, characterSpawner.position, Quaternion.identity);
             pc = go.GetComponent<PlayerController>();
             pc.type = PlayerController.CharacterType.OtherPlayer;
+            pc.playerId = playerId;
+            pc.nickname = nickname;
+            UIManager.Instance.CreateCharacterPanel(pc);
         }
 
         pc.attackConfigs = attackConfigs;
         pc.InitializeAttackConfigs();
         
         go.transform.SetParent(characters.transform);
-        pc.playerId = playerId;
-        pc.nickname = nickname;
         SpawnedPlayers.TryAdd(playerId, pc);
     }
         
