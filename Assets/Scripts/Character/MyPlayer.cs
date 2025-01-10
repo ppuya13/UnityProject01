@@ -604,8 +604,10 @@ public class MyPlayer : PlayerController
             MonsterController monster = hitCollider.GetComponent<MonsterController>();
             if (monster)
             {
+                Vector3 hitPoint = hitCollider.ClosestPoint(transform.position);
+                
                 // 데미지 적용
-                monster.AttackValidation(currentAttack, transform, CurrentHitSound);
+                monster.AttackValidation(currentAttack, transform, CurrentHitSound, hitPoint);
             }
         }
     }

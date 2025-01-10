@@ -832,8 +832,10 @@ namespace Monster
                     PlayerController player = hitCollider.GetComponent<PlayerController>();
                     if (player)
                     {
+                        Vector3 hitPoint = hitCollider.ClosestPoint(transform.position);
+                        
                         // 데미지 적용
-                        player.AttackValidation(attackConfig, currentAttack, attackIdx, transform, currentHitSound);
+                        player.AttackValidation(attackConfig, currentAttack, attackIdx, transform, currentHitSound, hitPoint);
                     }
                 }
             }
@@ -918,7 +920,8 @@ namespace Monster
                     PlayerController player = hitCollider.GetComponent<PlayerController>();
                     if (player)
                     {
-                        player.AttackValidation(attackConfig, currentAttack, attackIdx, transform, currentHitSound);
+                        Vector3 hitPoint = hitCollider.ClosestPoint(transform.position);
+                        player.AttackValidation(attackConfig, currentAttack, attackIdx, transform, currentHitSound, hitPoint);
                     }
                 }
             }
@@ -1192,7 +1195,7 @@ namespace Monster
         }
 
         //플레이어의 공격은 서버를 통한다.
-        public void AttackValidation(PlayerAttackConfig attackConfig, Transform player, SoundType hitSound)
+        public void AttackValidation(PlayerAttackConfig attackConfig, Transform player, SoundType hitSound, Vector3 hitPoint)
         {
             if (hitDict.TryGetValue((attackConfig, player), out bool value))
             {
@@ -1214,24 +1217,57 @@ namespace Monster
             //서버 통신
             TcpProtobufClient.Instance.SendMonsterTakeDamage(monsterId, attackConfig.damageAmount, hitSound);
 
-            //피격 이펙트 발생
-        }
+            //랜덤한 피격 파티클 생성
+            if (attackConfig.HitEffects != null && attackConfig.HitEffects.Length > 0)
+            {
+                // 랜덤한 이펙트를 선택
+                var effect = attackConfig.HitEffects[Random.Range(0, attackConfig.HitEffects.Length)];
+                if (effect.ParticleEffect)
+                {
+                    // 이펙트 생성
+                    GameObject particle = Instantiate(effect.ParticleEffect, hitPoint, effect.EffectRotation);
+                    particle.transform.localScale = effect.EffectScale != Vector3.zero ? effect.EffectScale : Vector3.one;
 
-        // OtherPlayer의 HitCheck가 비활성화됨에 따라 같이 비활성화됨.
-        // //OtherPlayer의 공격은 피격이펙트만 생성한다.
-        // public void OtherPlayerAttackValidation(PlayerAttackConfig attackConfig, Transform player)
-        // {
-        //     if (hitDict.TryGetValue((attackConfig, player), out bool value))
-        //     {
-        //         //value값은 의미없고, 일단 true면 같은 공격에 맞았다는 뜻
-        //         Debug.Log($"이미 맞은 공격임(AttackType: {attackConfig}, {player})");
-        //         return;
-        //     }
-        //
-        //     StartCoroutine(HitIntervalTimer(attackConfig, player));
-        //
-        //     //피격 이펙트 발생
-        // }
+                    // 일정 시간 후 제거
+                    Destroy(particle, 2f);
+                }
+            }
+            
+            //피격 사운드 재생
+            SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(hitSound), position: transform.position);
+        }
+        
+        //OtherPlayer의 공격은 피격이펙트만 생성한다.
+        public void OtherPlayerAttackValidation(PlayerAttackConfig attackConfig, Transform player, SoundType hitSound, Vector3 hitPoint)
+        {
+            if (hitDict.TryGetValue((attackConfig, player), out bool value))
+            {
+                //value값은 의미없고, 일단 true면 같은 공격에 맞았다는 뜻
+                Debug.Log($"이미 맞은 공격임(AttackType: {attackConfig}, {player})");
+                return;
+            }
+        
+            StartCoroutine(HitIntervalTimer(attackConfig, player));
+            
+            //랜덤한 피격 파티클 생성
+            if (attackConfig.HitEffects != null && attackConfig.HitEffects.Length > 0)
+            {
+                // 랜덤한 이펙트를 선택
+                var effect = attackConfig.HitEffects[Random.Range(0, attackConfig.HitEffects.Length)];
+                if (effect.ParticleEffect)
+                {
+                    // 이펙트 생성
+                    GameObject particle = Instantiate(effect.ParticleEffect, hitPoint, effect.EffectRotation);
+                    particle.transform.localScale = effect.EffectScale != Vector3.zero ? effect.EffectScale : Vector3.one;
+
+                    // 일정 시간 후 제거
+                    Destroy(particle, 2f);
+                }
+            }
+            
+            //피격 사운드 재생
+            SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(hitSound), position: transform.position);
+        }
 
         //실제 데미지를 적용하는 메소드(서버에서 메시지를 받아서 호출)
         public void TakeDamage(float damage, float msgHp, SoundType soundType)
@@ -1241,7 +1277,6 @@ namespace Monster
             
             currentHp = msgHp;
             //이후 체력바 줄어드는 연출이나 데미지 표기 등 연출을 하면 됨.
-            SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(soundType), position: transform.position);
         }
 
         IEnumerator HitIntervalTimer(PlayerAttackConfig attackConfig, Transform player)

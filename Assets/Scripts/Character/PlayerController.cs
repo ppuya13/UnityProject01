@@ -162,7 +162,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     }
 
     //플레이어에게 닿은 공격이 유효한지 체크
-    public void AttackValidation(AttackConfig config, AttackType attackType, int attackIdx, Transform monsterTransform, SoundType hitSound)
+    public void AttackValidation(AttackConfig config, AttackType attackType, int attackIdx, Transform monsterTransform, SoundType hitSound, Vector3 hitPoint)
     {
         if (dodgeInvincible) return; //회피무적상태면 리턴
         
@@ -183,7 +183,26 @@ public abstract class PlayerController : SerializedMonoBehaviour
 
             StartCoroutine(HitIntervalTimer(attackType, attackIdx));
             TakeDamage(config, monsterTransform);
+            
+            //랜덤한 피격 파티클 생성
+            if (config.HitEffects is { Length: > 0 })
+            {
+                // 랜덤한 이펙트를 선택
+                var effect = config.HitEffects[Random.Range(0, config.HitEffects.Length)];
+                if (effect.ParticleEffect)
+                {
+                    // 이펙트 생성
+                    GameObject particle = Instantiate(effect.ParticleEffect, hitPoint, effect.EffectRotation);
+                    particle.transform.localScale = effect.EffectScale != Vector3.zero ? effect.EffectScale : Vector3.one;
+
+                    // 일정 시간 후 제거
+                    Destroy(particle, 2f);
+                }
+            }
+            
+            //피격 사운드 재생
             SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(hitSound), position: transform.position);
+            
         }
         else //0이면 사실 불릴 일이 없음
         {

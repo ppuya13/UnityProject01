@@ -22,6 +22,7 @@ namespace Character
         public IColliderConfig ColliderConfig; //공격 판정에 사용될 콜라이더의 종류
         
         [Header("이펙트 설정")] public EffectConfig[] EffectConfigs;
+        public EffectConfig[] HitEffects; //HitEffect는 모든 배열의 내용물 중 랜덤한 이펙트를 사용한다.
 
         [Header("사운드 설정")] public CharacterSounds.SoundStruct[] SoundEffects;
     }

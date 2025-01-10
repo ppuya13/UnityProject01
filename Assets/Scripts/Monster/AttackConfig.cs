@@ -35,6 +35,7 @@ namespace Monster
 
         [Header("이펙트 설정")]
         public EffectConfig[] EffectConfigs;
+        public EffectConfig[] HitEffects;
         
         [Header("사운드 설정")]
         public CharacterSounds.SoundStruct[] SoundEffects; //공격 시 재생할 소리 클립, 공격 시 소리와 히트 시 소리로 구성되어 있으며, 추가 가능함.

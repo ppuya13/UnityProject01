@@ -51,8 +51,10 @@ namespace Monster
             var target = other.GetComponent<PlayerController>();
             if (target)
             {
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
+                
                 //일단 임시로 사운드이펙트는 첫번째껄 쓴다.
-                target.AttackValidation(config, attackType, attackIdx, transform, config.SoundEffects[0].Hit);
+                target.AttackValidation(config, attackType, attackIdx, transform, config.SoundEffects[0].Hit, hitPoint);
             }
         }
 
