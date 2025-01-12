@@ -2268,11 +2268,11 @@ MonoBehaviour:
     SerializationNodes:
     - Name: AttackDict
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[Character.PlayerAttackName,
-        Assembly-CSharp],[Character.PlayerAttackConfig, Assembly-CSharp]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[Game.PlayerAttackName, Assembly-CSharp],[Character.PlayerAttackConfig,
+        Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Character.PlayerAttackName,
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Game.PlayerAttackName,
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
@@ -2338,7 +2338,6 @@ MonoBehaviour:
   nickname: 
   type: 1
   maxHp: 0
-  currentHp: 0
   yaw: 0
   lookAtIK: {fileID: 0}
   disableKeyboard: 0
@@ -2350,6 +2349,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   currentAttack: {fileID: 0}
+  connectedPanel: {fileID: 0}
   axisSpeed: 5
   mouseSensitivity: 120
   characterCamera: {fileID: 1196573070657777092}

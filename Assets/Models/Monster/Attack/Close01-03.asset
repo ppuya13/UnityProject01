@@ -17,6 +17,7 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 1893033738566276, guid: 0e9d4687b55248b4e81572c039bfa1db, type: 3}
+    - {fileID: 9069211033069472179, guid: a04bbe1ed3c5b594fa2812ad00972890, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -181,9 +182,78 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: HitEffects
+      Entry: 7
+      Data: 4|Monster.EffectConfig[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: Monster.EffectConfig, Assembly-CSharp
+    - Name: ParticleEffect
+      Entry: 10
+      Data: 1
+    - Name: EffectPosition
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectRotation
+      Entry: 7
+      Data: UnityEngine.Quaternion, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectScale
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0.2
+    - Name: 
+      Entry: 4
+      Data: 0.2
+    - Name: 
+      Entry: 4
+      Data: 0.2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: SoundEffects
       Entry: 7
-      Data: 4|Sound.CharacterSounds+SoundStruct[], Assembly-CSharp
+      Data: 5|Sound.CharacterSounds+SoundStruct[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 1

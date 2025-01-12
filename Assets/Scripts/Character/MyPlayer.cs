@@ -604,7 +604,8 @@ public class MyPlayer : PlayerController
             MonsterController monster = hitCollider.GetComponent<MonsterController>();
             if (monster)
             {
-                Vector3 hitPoint = hitCollider.ClosestPoint(transform.position);
+                // 피격 대상이 피격된 위치 계산
+                Vector3 hitPoint = CalculateHitPointWithinAttackRange(hitCollider, attackPosition, currentAttack.ColliderConfig);
                 
                 // 데미지 적용
                 monster.AttackValidation(currentAttack, transform, CurrentHitSound, hitPoint);

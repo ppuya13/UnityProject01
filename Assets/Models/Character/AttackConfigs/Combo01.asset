@@ -17,6 +17,7 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 1789270911803724, guid: ae4120ecd0a5cd04bbcfbbc1ab9cc543, type: 3}
+    - {fileID: 9069211033069472179, guid: a04bbe1ed3c5b594fa2812ad00972890, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -30,13 +31,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1.97
+      Data: 2.364
     - Name: 
       Entry: 4
-      Data: 0.5
+      Data: 0.6
     - Name: 
       Entry: 4
-      Data: 2
+      Data: 2.4
     - Name: 
       Entry: 8
       Data: 
@@ -51,7 +52,7 @@ MonoBehaviour:
       Data: 0.7
     - Name: 
       Entry: 4
-      Data: -0.2
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -126,13 +127,82 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.55
+      Data: 0.66
     - Name: 
       Entry: 4
-      Data: 0.55
+      Data: 0.66
     - Name: 
       Entry: 4
-      Data: 0.55
+      Data: 0.66
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: HitEffects
+      Entry: 7
+      Data: 2|Monster.EffectConfig[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: Monster.EffectConfig, Assembly-CSharp
+    - Name: ParticleEffect
+      Entry: 10
+      Data: 1
+    - Name: EffectPosition
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectRotation
+      Entry: 7
+      Data: UnityEngine.Quaternion, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectScale
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0.2
+    - Name: 
+      Entry: 4
+      Data: 0.2
+    - Name: 
+      Entry: 4
+      Data: 0.2
     - Name: 
       Entry: 8
       Data: 
@@ -147,28 +217,19 @@ MonoBehaviour:
       Data: 
     - Name: SoundEffects
       Entry: 7
-      Data: 2|Sound.SoundEffectGroup[], Assembly-CSharp
+      Data: 3|Sound.CharacterSounds+SoundStruct[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 3|Sound.SoundEffectGroup, Assembly-CSharp
-    - Name: GroupName
-      Entry: 6
-      Data: 
-    - Name: Clips
-      Entry: 7
-      Data: 4|UnityEngine.AudioClip[], UnityEngine.AudioModule
-    - Name: 
-      Entry: 12
+      Data: Sound.CharacterSounds+SoundStruct, Assembly-CSharp
+    - Name: Swing
+      Entry: 3
       Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+    - Name: Hit
+      Entry: 3
+      Data: 0
     - Name: 
       Entry: 8
       Data: 

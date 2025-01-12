@@ -28,7 +28,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
 
     private float currentHp;
 
-    protected float CurrentHp
+    public float CurrentHp
     {
         get => currentHp;
         set
@@ -47,7 +47,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     protected float RunSpeed = 3.5f; // 달리기 이동속도
     protected float SpeedChangeRate = 10f; //이동속도 변경 속도
     protected float AttackMoveSpeed = 2.5f; //공격 중 전진 속도
-    protected float DodgeSpeed = 8.5f; //회피 중 날아가는 속도
+    protected float DodgeSpeed = 7.5f; //회피 중 날아가는 속도
     protected float JumpHeight = 2.0f; // 점프 높이 (추가적으로 점프를 적용할 경우)
     protected Vector3 Velocity;
 
@@ -83,7 +83,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     
     private CharacterSounds characterSounds = new();
     protected SoundType CurrentHitSound = SoundType.Unknown;
-    public PlayerInfoPanel connectedPanel; //이 캐릭터와 연결된 패널(체력표시를 위함)
+    public InfoPanel connectedPanel; //이 캐릭터와 연결된 패널(체력표시를 위함)
 
     [HideInInspector] public readonly int Stun = Animator.StringToHash("Stun");
     [HideInInspector] public readonly int Horizontal = Animator.StringToHash("Horizontal");
@@ -166,7 +166,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
     {
         if (dodgeInvincible) return; //회피무적상태면 리턴
         
-        Debug.LogWarning("인빈시블아님");
+        // Debug.LogWarning("인빈시블아님");
 
         if (attackIdx < 0) //0미만이면 다단히트라서 조건 계산 할 필요 없음 
         {
@@ -406,42 +406,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
         {
             Debug.LogWarning("AttackConfig의 EffectConfigs가 null이거나 idx가 배열을 초과합니다.");
         }
-
-        // 사운드 이펙트가 설정되어 있는지 확인하고 재생합니다.
-        // if (currentAttack.SoundEffects is { Length: > 0 })
-        // {
-        //     // AudioSource가 존재하는지 확인하고 없으면 추가합니다.
-        //     AudioSource audioSource = GetComponent<AudioSource>();
-        //     if (!audioSource)
-        //     {
-        //         audioSource = gameObject.AddComponent<AudioSource>();
-        //     }
-        //
-        //     // 사운드 클립을 랜덤으로 선택하여 재생합니다.
-        //     AudioClip selectedClip = currentAttack.SoundEffects[Random.Range(0, currentAttack.SoundEffects.Length)];
-        //     audioSource.PlayOneShot(selectedClip);
-        // }
     }
-    
-    // public void PlayAttackSound(int idx)
-    // {
-    //     if (!currentAttack)
-    //     {
-    //         Debug.LogError("currentAttack이 null임");
-    //         return;
-    //     }
-    //
-    //     if (currentAttack.SoundEffects != null && currentAttack.SoundEffects.Length > idx)
-    //     {
-    //         // config.soundEffects[idx]
-    //         // SoundManager.Instance.PlayRandomSound(currentAttack.SoundEffects[idx], position: transform.position);
-    //         SoundManager.Instance.PlayRandomSound(currentAttack.SoundEffects[idx].Clips, position: transform.position);
-    //     }
-    //     else
-    //     {
-    //         Debug.LogWarning("AttackConfig의 soundEffects가 null이거나 idx가 배열을 초과합니다.");
-    //     }
-    // }
     
     public void PlayAttackSound(int index)
     {
@@ -462,6 +427,24 @@ public abstract class PlayerController : SerializedMonoBehaviour
             Debug.LogWarning($"SoundEffects가 null이거나 index가 배열을 초과함: {currentAttack}");
         }
         
+    }
+    
+    protected Vector3 CalculateHitPointWithinAttackRange(Collider hitCollider, Vector3 attackCenter, IColliderConfig colliderConfig)
+    {
+        if (colliderConfig.ColliderType is ColliderType.Sphere or ColliderType.Capsule)
+        {
+            // Sphere 공격 범위 내에서 가장 가까운 점 계산
+            return hitCollider.ClosestPoint(attackCenter);
+        }
+        else if (colliderConfig.ColliderType == ColliderType.Box)
+        {
+            // Box 공격 범위 내에서 충돌 지점 계산
+            Vector3 boxCenter = attackCenter + transform.TransformDirection(((BoxColliderConfig)colliderConfig).Center);
+            return hitCollider.ClosestPoint(boxCenter);
+        }
+        
+        // 기본값: 콜라이더 중심 반환
+        return hitCollider.bounds.center;
     }
     
     //애니메이션 이벤트로 호출됨

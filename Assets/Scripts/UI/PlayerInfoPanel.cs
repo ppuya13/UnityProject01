@@ -1,12 +1,14 @@
-﻿using Sirenix.OdinInspector;
+﻿using Monster;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
 namespace UI
 {
-    public class PlayerInfoPanel: SerializedMonoBehaviour
+    public class InfoPanel: SerializedMonoBehaviour
     {
         public PlayerController connectedCharacter;
+        public MonsterController connectedMonster;
         public GameObject fill;
         public TextMeshProUGUI nameText;
 
@@ -15,6 +17,15 @@ namespace UI
             connectedCharacter = character;
             character.connectedPanel = this;
             nameText.text = character.nickname;
+            SetFill(character.CurrentHp);
+        }
+        
+        public void ConnectMonster(MonsterController character)
+        {
+            connectedMonster = character;
+            character.connectedPanel = this;
+            nameText.text = "Monster";
+            SetFill(character.CurrentHp);
         }
 
         public void SetFill(float currentHp)

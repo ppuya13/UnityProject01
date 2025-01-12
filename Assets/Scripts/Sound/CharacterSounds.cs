@@ -14,6 +14,7 @@ namespace Sound
         private AudioClip[] kickSounds;
         private AudioClip[] kickHitSounds;
         private AudioClip[] castSound;
+        private AudioClip[] guardSound;
         
         public void InitializeClips()
         {
@@ -37,6 +38,10 @@ namespace Sound
             castSound = Resources.LoadAll<AudioClip>("Sounds/Cast");
             if(castSound.Length == 0) Debug.LogWarning("CharacterSounds: castSound 할당안됨.");
             sounds.TryAdd(SoundType.Cast, castSound);
+            
+            guardSound = Resources.LoadAll<AudioClip>("Sounds/Guard");
+            if(guardSound.Length == 0) Debug.LogWarning("CharacterSounds: guardSound 할당안됨.");
+            sounds.TryAdd(SoundType.Guard, guardSound);
                 
         }
 
@@ -49,6 +54,7 @@ namespace Sound
         {
             public SoundType Swing;
             public SoundType Hit;
+            public SoundType Extra;
         }
     }
 }

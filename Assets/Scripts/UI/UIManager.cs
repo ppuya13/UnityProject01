@@ -37,8 +37,9 @@ public class UIManager : DDSingletonManager<UIManager>
     public GameObject inGamePanel;
     public GameObject invincibleMode;
     public Transform characterPanelParent;
-    public PlayerInfoPanel myCharacterPanel;
-    public PlayerInfoPanel characterPanel;
+    public InfoPanel myCharacterPanel;
+    public InfoPanel characterPanel;
+    public InfoPanel monsterPanel;
         
     private volatile bool serverReady = false;
 
@@ -111,7 +112,7 @@ public class UIManager : DDSingletonManager<UIManager>
 
     public void CreateCharacterPanel(PlayerController character)
     {
-        PlayerInfoPanel panel = Instantiate(characterPanel, characterPanelParent);
+        InfoPanel panel = Instantiate(characterPanel, characterPanelParent);
         panel.ConnectCharacter(character);
     }
 

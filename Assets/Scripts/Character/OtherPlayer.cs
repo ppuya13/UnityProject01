@@ -125,7 +125,8 @@ public class OtherPlayer: PlayerController
             MonsterController monster = hitCollider.GetComponent<MonsterController>();
             if (monster)
             {
-                Vector3 hitPoint = hitCollider.ClosestPoint(transform.position);
+                Vector3 hitPoint = CalculateHitPointWithinAttackRange(hitCollider, attackPosition, currentAttack.ColliderConfig);
+                
                 //OtherPlayer의 공격은 데미지를 적용하지 않고 이펙트만 적용한다.
                 monster.OtherPlayerAttackValidation(currentAttack, transform, CurrentHitSound, hitPoint);
             }

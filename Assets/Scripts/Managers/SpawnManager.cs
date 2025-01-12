@@ -93,6 +93,7 @@ public class SpawnManager: DDSingletonManager<SpawnManager>
     {
         GameObject go = Instantiate(monsterPrefab, monsterSpawner.position, Quaternion.Euler(0, 180, 0));
         MonsterController mc = go.GetComponent<MonsterController>();
+        UIManager.Instance.monsterPanel.ConnectMonster(mc);
         mc.monsterId = msg.MonsterId;
         mc.SendChangeState(MonsterState.MonsterStatusSpawn);
         SpawnedMonsters.Add(mc.monsterId, mc);

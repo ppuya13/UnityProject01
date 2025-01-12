@@ -275,4 +275,5 @@ enum SoundType{
   SWORD_HIT = 3;
   KICK_HIT = 4;
   CAST = 5;
+  GUARD = 6;
 }

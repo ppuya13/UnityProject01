@@ -17,6 +17,7 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 1789270911803724, guid: ae4120ecd0a5cd04bbcfbbc1ab9cc543, type: 3}
+    - {fileID: 9069211033069472179, guid: a04bbe1ed3c5b594fa2812ad00972890, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -30,13 +31,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1.97
+      Data: 2.8
     - Name: 
       Entry: 4
-      Data: 0.5
+      Data: 0.6
     - Name: 
       Entry: 4
-      Data: 1.67
+      Data: 2.7
     - Name: 
       Entry: 8
       Data: 
@@ -48,10 +49,10 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0.84
+      Data: 0.9
     - Name: 
       Entry: 4
-      Data: 0.21
+      Data: 0.3
     - Name: 
       Entry: 8
       Data: 
@@ -126,13 +127,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.55
+      Data: 0.66
     - Name: 
       Entry: 4
-      Data: 0.55
+      Data: 0.66
     - Name: 
       Entry: 4
-      Data: 0.55
+      Data: 0.66
     - Name: 
       Entry: 8
       Data: 
@@ -145,8 +146,79 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: HitEffects
+      Entry: 7
+      Data: 2|Monster.EffectConfig[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: Monster.EffectConfig, Assembly-CSharp
+    - Name: ParticleEffect
+      Entry: 10
+      Data: 1
+    - Name: EffectPosition
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectRotation
+      Entry: 7
+      Data: UnityEngine.Quaternion, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectScale
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0.2
+    - Name: 
+      Entry: 4
+      Data: 0.2
+    - Name: 
+      Entry: 4
+      Data: 0.2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: SoundEffects
+      Entry: 6
+      Data: 
   attackName: 3
   damageAmount: 3
   distance: 0
   attackPositionOffset: {x: 0, y: 0, z: 0}
-  soundEffects: []
