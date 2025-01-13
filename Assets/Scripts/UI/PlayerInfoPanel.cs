@@ -30,8 +30,9 @@ namespace UI
 
         public void SetFill(float currentHp)
         {
-            // currentHp가 0이 되는 것을 방지
-            float fillRatio = connectedCharacter.maxHp > 0 ? currentHp / connectedCharacter.maxHp : 0;
+            float fillRatio = default;
+            if(connectedCharacter) fillRatio = connectedCharacter.maxHp > 0 ? currentHp / connectedCharacter.maxHp : 0;
+            if(connectedMonster) fillRatio = connectedMonster.maxHp > 0 ? currentHp / connectedMonster.maxHp : 0;
 
             // Fill의 스케일을 업데이트
             Vector3 scale = fill.transform.localScale;
