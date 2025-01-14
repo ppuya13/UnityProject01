@@ -36,6 +36,9 @@ namespace Monster
                 case MonsterState.MonsterStatusDodge:
                     newState = new MonsterStateDodge();
                     break;
+                case MonsterState.MonsterStatusDie:
+                    newState = new MonsterStateDie();
+                    break;
                 default:
                     Debug.LogError($"정의되지 않은 State: {newMonsterState}");
                     return;

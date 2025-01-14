@@ -69,6 +69,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: HitEffects
+      Entry: 6
+      Data: 
     - Name: SoundEffects
       Entry: 7
       Data: 3|Sound.CharacterSounds+SoundStruct[], Assembly-CSharp
@@ -84,6 +87,9 @@ MonoBehaviour:
     - Name: Hit
       Entry: 3
       Data: 0
+    - Name: Extra
+      Entry: 3
+      Data: 6
     - Name: 
       Entry: 8
       Data: 

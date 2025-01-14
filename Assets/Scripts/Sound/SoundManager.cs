@@ -114,7 +114,7 @@ namespace Sound
             if (bgmClips.Length > 0)
             {
                 // PlayBGM(bgmClips[0], UIManager.Instance.bgmVolume);
-                PlayBGM(bgmClips[0], 0.5f);
+                // PlayBGM(bgmClips[0], 0.1f); //게임을 켜면 bgm을 재생
             }
         }
 
@@ -381,8 +381,10 @@ namespace Sound
         /// <summary>
         /// PlayBGM(사운드, 볼륨) : 실행 시 해당 사운드를 루프하여 재생한다. 재차 실행 시 FadeOut된 후 새로운 사운드가 FadeIn 된다. 또한, Resources/Sound/BGM 폴더에 있는 AudioClip들은 모두 SoundManager.Instance.bgmClip[]에 담기며, Start()에서 bgmClip[0]을 게임 시작 시 자동으로 재생한다.
         /// </summary>
-        public void PlayBGM(AudioClip bgmClip, float volume = -1.0f)
+        public void PlayBGM(AudioClip bgmClip = null, float volume = -1.0f)
         {
+            if (!bgmClip) bgmClip = bgmClips[0]; //클립을 비워놓을 경우 bgmClips의 첫 번째 곡을 재생
+            
             if (_bgmSource.clip == bgmClip) return; // 같은 BGM이면 다시 재생하지 않음
 
             float finalVolume = CalculateVolume(volume);

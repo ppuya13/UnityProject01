@@ -25088,6 +25088,9 @@ MonoBehaviour:
     - Name: MoveAnimSpeed
       Entry: 3
       Data: 541295930
+    - Name: Die
+      Entry: 3
+      Data: 20298039
     - Name: AttackCounter
       Entry: 3
       Data: 1130465550
@@ -25113,7 +25116,8 @@ MonoBehaviour:
       Entry: 3
       Data: 1655105142
   monsterId: 
-  maxHp: 1000
+  maxHp: 100
+  connectedPanel: {fileID: 0}
   lookAtThis: {fileID: 772563401325919270}
   currentState: 0
   currentAttack: 0
@@ -25135,6 +25139,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
+  isDie: 0
 --- !u!195 &7935232124976658901
 NavMeshAgent:
   m_ObjectHideFlags: 0

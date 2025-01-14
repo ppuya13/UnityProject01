@@ -230,8 +230,8 @@ func (mh *MessageHandler) handleMonsterSpawn(request *pb.MonsterSpawn, playerId 
 
 	monster := &manager.Monster{
 		MonsterId: monsterId,
-		MaxHp:     1000,
-		CurrentHp: 1000,
+		MaxHp:     100,
+		CurrentHp: 100,
 		Position:  &pb.GoVector3{X: 0, Y: 0, Z: 0}, // 기본 스폰 위치
 		Rotation:  &pb.GoVector3{X: 0, Y: 0, Z: 0}, // 기본 회전값
 	}

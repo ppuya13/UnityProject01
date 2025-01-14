@@ -13,9 +13,11 @@ namespace Monster
         public override void EnterState()
         {
             stateEnterTime = Time.time; // 상태 진입 시간을 기록
+            if (!Monster.currentTarget) return;
             Monster.SendDestination(Monster.FindMoveDestination());
             timeThreshold = GetRandomTime();
-            previousCategory = GetDistanceCategory(Vector3.Distance(Monster.transform.position, Monster.currentTarget.transform.position));
+            previousCategory = GetDistanceCategory(Vector3.Distance(Monster.transform.position,
+                    Monster.currentTarget.transform.position));
         }
 
         public override void ExitState()

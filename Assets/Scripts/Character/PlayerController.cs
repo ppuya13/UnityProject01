@@ -62,10 +62,26 @@ public abstract class PlayerController : SerializedMonoBehaviour
     private float hitInterval; //같은 속성의 공격을 더 이상 받지 않는 쿨타임
     private const float HitThreshold = 0.5f; //쿨타임이 임계점에 도달하면 같은 공격을 받을 수 있음
     private Dictionary<(AttackType, int), bool> hitDict = new(); //이미 맞은 공격들
-    protected bool IsStun = false; //공격의 스턴시간 (시간은 공격에서 설정되며 해당 시간동안 입력을 받지 않음)
-    protected bool IsDown = false; //다운상태 (시간은 따로 설정되지 않으며 일어나는 애니메이션이 끝날 때 false됨)
-    protected bool IsRun = false;
-    protected bool IsDie = false;
+    public bool IsStun = false; //공격의 스턴시간 (시간은 공격에서 설정되며 해당 시간동안 입력을 받지 않음)
+    public bool IsDown = false; //다운상태 (시간은 따로 설정되지 않으며 일어나는 애니메이션이 끝날 때 false됨)
+    public bool IsRun = false;
+
+    private bool isDie = false;
+    protected bool IsDie
+    {
+        get => isDie;
+        set
+        {
+            if (value == isDie) return;
+            isDie = value;
+
+            if (value)
+            {
+                PlayerDie();
+            }
+        }
+    }
+
     public bool isDodge = false; //회피 애니메이션 실행 중을 의미하는 상태
     public bool dodgeInvincible; //회피 애니메이션 안의 무적 상태를 의미함
     protected Coroutine StunCoroutine;
@@ -201,7 +217,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
             }
             
             //피격 사운드 재생
-            SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(hitSound), position: transform.position);
+            SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(hitSound), volume: 0.5f, position: transform.position);
             
         }
         else //0이면 사실 불릴 일이 없음
@@ -315,6 +331,18 @@ public abstract class PlayerController : SerializedMonoBehaviour
     {
         IsDown = false;
     }
+
+    //프로퍼티에서 isDie가 true가 됐을 때 불림. 몬스터의 타겟리스트에서 플레이어를 제거
+    private void PlayerDie()
+    {
+        Debug.Log("으앙쥬금");
+        SpawnManager.Instance.SpawnedPlayers.Remove(playerId);
+        foreach (MonsterController monsterController in SpawnManager.Instance.SpawnedMonsters.Values)
+        {
+            monsterController.targetList.Remove(this);
+            
+        }
+    }
     
     //가한 공격의 피격체크
     public abstract void HitCheck();
@@ -419,7 +447,7 @@ public abstract class PlayerController : SerializedMonoBehaviour
         if (currentAttack.SoundEffects != null && currentAttack.SoundEffects.Length > index)
         {
             SoundManager.Instance.PlayRandomSound(characterSounds.GetSounds(currentAttack.SoundEffects[index].Swing),
-                position: transform.position);
+                volume: 0.5f, position: transform.position);
             CurrentHitSound = currentAttack.SoundEffects[index].Hit;
         }
         else

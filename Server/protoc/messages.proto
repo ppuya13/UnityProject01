@@ -242,6 +242,7 @@ enum MonsterState{
   MONSTER_STATUS_DASH = 4;
   MONSTER_STATUS_DODGE = 5;
   MONSTER_STATUS_ATTACK = 6;
+  MONSTER_STATUS_DIE = 7;
 }
 
 enum AttackType{

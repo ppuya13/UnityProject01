@@ -1849,6 +1849,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster
       objectReference: {fileID: 0}
+    - target: {fileID: 5102316048502176271, guid: 22173fa182fd5fa49a8e624e92168909, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4530,6 +4534,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dummy
       objectReference: {fileID: 0}
+    - target: {fileID: 100096, guid: f71ced5a95d674a4eb11479deb2c1440, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400096, guid: f71ced5a95d674a4eb11479deb2c1440, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.73
@@ -5016,7 +5024,7 @@ Transform:
   m_GameObject: {fileID: 2068202732}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.363, y: 0.697, z: 0}
+  m_LocalPosition: {x: -2.363, y: 0.697, z: -17.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
