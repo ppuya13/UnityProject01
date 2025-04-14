@@ -48,6 +48,7 @@ public class OtherPlayer: PlayerController
 
     protected override void TakeDamage(AttackConfig config, Transform monsterTransform)
     {
+        //OtherPlayer의 TakeDamage는 OtherPlayerTakeDamage에서 처리한다.
     }
 
 
@@ -140,7 +141,7 @@ public class OtherPlayer: PlayerController
         Velocity += TcpProtobufClient.Instance.ConvertToVector3(msg.Knockback);
         CurrentHp = msg.CurrentHp;
         IsDie = msg.IsDie;
-        OtherPlayerSetAnimatorParameters(msg.Params.Lr, msg.Params.Fb, msg.Params.IsBound, msg.Params.MotionIndex);
+        OtherPlayerSetAnimatorParameters(msg.Params.Lr, msg.Params.Fb, msg.Params.IsBound, msg.Params.IsDown, msg.Params.MotionIndex);
         
         if (StunCoroutine != null)
         {
@@ -150,9 +151,10 @@ public class OtherPlayer: PlayerController
         StunCoroutine = StartCoroutine(HandleStun(msg.StunDuration));
     }
 
-    private void OtherPlayerSetAnimatorParameters(float lr, float fb, bool isBound, float motionIndex)
+    private void OtherPlayerSetAnimatorParameters(float lr, float fb, bool isBound, bool isDown, float motionIndex)
     {
         Animator.SetBool(FallDown, isBound);
+        Animator.SetBool(Down, isDown);
         
         if (!isBound)
         {

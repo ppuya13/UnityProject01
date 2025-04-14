@@ -343,12 +343,17 @@ public class UIManager : DDSingletonManager<UIManager>
 
     public void SendBtnClick()
     {
+        Debug.Log("샌드버튼클릭");
         SendChat(chatInput.text);
     }
 
     private void SendChat(string text)
     {
+        
+        Debug.Log("샌드버튼클릭2");
         if (text.IsNullOrWhitespace()) return;
+        
+        Debug.Log("샌드버튼클릭3");
         TcpProtobufClient.Instance.SendChatMessage(text);
         chatInput.text = string.Empty;
         chatInput.ActivateInputField();
@@ -379,6 +384,7 @@ public class UIManager : DDSingletonManager<UIManager>
 
     public void DisableChatting()
     {
+        Debug.Log("디스에이블");
         chatInput.interactable = false;
         sendBtn.interactable = false;
     }

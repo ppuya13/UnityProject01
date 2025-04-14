@@ -1,5 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
@@ -16,6 +17,7 @@ namespace UI
 
         private void ChattingActivated(bool b)
         {
+            // Debug.Log($"채팅액티베이티드: {b}");
             inputField.interactable = b;
             sendBtn.interactable = b;
         }
